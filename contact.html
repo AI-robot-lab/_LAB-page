@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    
+    <title>Rekrutacja - Dołącz do zespołu | Laboratorium Robotów Humanoidalnych</title>
+    <meta name="description" content="Dołącz do Laboratorium Robotów Humanoidalnych PRz. Aplikuj do zespołu Percepcji, Kognicji lub Akcji. Wypełnij formularz rekrutacyjny.">
+    
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Roboto:wght@300;400;700&family=Montserrat:wght@600&display=swap" rel="stylesheet">
+    <link href="styles.css" rel="stylesheet">
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Przejdź do głównej treści</a>
+
+    <!-- Header -->
+    <header role="banner">
+        <div class="container header-flex">
+            <div class="logos-left">
+                <img src="https://pkb.net.pl/wp-content/uploads/2019/06/politechnika_logo_JPG.jpg" 
+                     alt="Logo Politechniki Rzeszowskiej" 
+                     class="logo-main"
+                     loading="eager">
+                <div class="inst-title">
+                    <p>POLITECHNIKA RZESZOWSKA</p>
+                    <p>KATEDRA INFORMATYKI I AUTOMATYKI</p>
+                </div>
+            </div>
+            <div class="logos-right">
+                <img src="https://sprawozdania.kia.prz.edu.pl/app_images/kia1.png" 
+                     alt="Logo KIA" 
+                     class="logo-small"
+                     loading="eager">
+                <img src="https://sprawozdania.kia.prz.edu.pl/app_images/kia2.png" 
+                     alt="Logo KIA dodatkowe" 
+                     class="logo-small"
+                     loading="eager">
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav role="navigation" aria-label="Główna nawigacja">
+        <div class="container">
+            <button class="mobile-menu-toggle" aria-label="Menu" aria-expanded="false">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <div class="nav-flex">
+                <a href="index.html">Strona Główna</a>
+                <a href="index.html#pca">Framework PCA</a>
+                <a href="index.html#teams">Zespoły</a>
+                <a href="wiki.html">WIKI</a>
+                <a href="contact.html" class="active">Rekrutacja</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main id="main-content">
+        <!-- Hero Section -->
+        <section class="hero contact-hero">
+            <div class="container">
+                <div class="hero-content" style="text-align: center; max-width: 800px; margin: 0 auto;">
+                    <h1>Dołącz do Naszego Zespołu</h1>
+                    <p class="hero-subtitle">
+                        Szukamy zmotywowanych studentów i doktorantów zainteresowanych robotyką humanoidalną, 
+                        sztuczną inteligencją i zaawansowanymi systemami autonomicznymi.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Benefits Section -->
+        <section style="background: var(--bg-light); padding: 50px 0;">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Co Oferujemy</h2>
+                </div>
+                <div class="benefits-grid">
+                    <div class="benefit-card">
+                        <i class="fa-solid fa-robot"></i>
+                        <h3>Dostęp do technologii</h3>
+                        <p>Praca z robotem Unitree G1, NVIDIA Jetson Orin, LiDAR 3D i najnowszymi narzędziami AI</p>
+                    </div>
+                    <div class="benefit-card">
+                        <i class="fa-solid fa-graduation-cap"></i>
+                        <h3>Rozwój kompetencji</h3>
+                        <p>Szkolenia z ROS2, PyTorch, Isaac Lab, computer vision i deep learning</p>
+                    </div>
+                    <div class="benefit-card">
+                        <i class="fa-solid fa-users"></i>
+                        <h3>Praca w zespole</h3>
+                        <p>Współpraca z doświadczonymi badaczami i pasjonatami robotyki</p>
+                    </div>
+                    <div class="benefit-card">
+                        <i class="fa-solid fa-file-lines"></i>
+                        <h3>Publikacje naukowe</h3>
+                        <p>Możliwość współautorstwa artykułów i prezentacji na konferencjach</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Application Form -->
+        <section id="application-form" style="padding: 60px 0;">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Formularz rekrutacyjny</h2>
+                    <p>Wypełnij poniższy formularz, aby zgłosić swoją kandydaturę</p>
+                </div>
+
+                <div class="form-container">
+                    <form id="recruitmentForm" action="https://formspree.io/f/xlgwgjrp" method="POST" novalidate>
+                        
+                        <!-- Personal Information -->
+                        <fieldset class="form-section">
+                            <legend>Dane osobowe</legend>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="gender">
+                                        Płeć <span class="required">*</span>
+                                    </label>
+                                    <select id="gender" name="gender" required>
+                                        <option value="">Wybierz...</option>
+                                        <option value="kobieta">Kobieta</option>
+                                        <option value="mężczyzna">Mężczyzna</option>
+                                    </select>
+                                    <span class="error-message"></span>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="firstName">
+                                        Imię <span class="required">*</span>
+                                    </label>
+                                    <input 
+                                        type="text" 
+                                        id="firstName" 
+                                        name="firstName" 
+                                        required
+                                        pattern="[A-Za-zĄĆĘŁŃÓŚŹŻąćęłńóśźż\s\-]{2,50}"
+                                        placeholder="Jan">
+                                    <span class="error-message"></span>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="lastName">
+                                        Nazwisko <span class="required">*</span>
+                                    </label>
+                                    <input 
+                                        type="text" 
+                                        id="lastName" 
+                                        name="lastName" 
+                                        required
+                                        pattern="[A-Za-zĄĆĘŁŃÓŚŹŻąćęłńóśźż\s\-]{2,50}"
+                                        placeholder="Kowalski">
+                                    <span class="error-message"></span>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="email">
+                                        Adres e-mail <span class="required">*</span>
+                                    </label>
+                                    <input 
+                                        type="email" 
+                                        id="email" 
+                                        name="email" 
+                                        required
+                                        placeholder="jan.kowalski@student.prz.edu.pl">
+                                    <span class="error-message"></span>
+                                </div>
+                            </div>
+                        </fieldset>
+
+                        <!-- Academic Information -->
+                        <fieldset class="form-section">
+                            <legend>Informacje akademickie</legend>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="studyField">
+                                        Kierunek studiów <span class="required">*</span>
+                                    </label>
+                                    <select id="studyField" name="studyField" required>
+                                        <option value="">Wybierz kierunek...</option>
+                                        <option value="informatyka">Informatyka</option>
+                                        <option value="automatyka-robotyka">Automatyka i Robotyka</option>
+                                        <option value="elektronika">Elektronika i Telekomunikacja</option>
+                                        <option value="mechatronika">Mechatronika</option>
+                                        <option value="matematyka">Matematyka</option>
+                                        <option value="fizyka">Fizyka Techniczna</option>
+                                        <option value="inny">Inny</option>
+                                    </select>
+                                    <span class="error-message"></span>
+                                </div>
+
+                                <div class="form-group" id="otherFieldGroup" style="display: none;">
+                                    <label for="otherField">
+                                        Podaj kierunek <span class="required">*</span>
+                                    </label>
+                                    <input 
+                                        type="text" 
+                                        id="otherField" 
+                                        name="otherField"
+                                        placeholder="Nazwa kierunku">
+                                    <span class="error-message"></span>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="studyLevel">
+                                        Poziom Studiów <span class="required">*</span>
+                                    </label>
+                                    <select id="studyLevel" name="studyLevel" required>
+                                        <option value="">Wybierz poziom...</option>
+                                        <option value="I stopnia">I stopnia (inżynierskie)</option>
+                                        <option value="II stopnia">II stopnia (magisterskie)</option>
+                                        <option value="doktoranckie">Szkoła doktorska</option>
+                                    </select>
+                                    <span class="error-message"></span>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="semester">
+                                        Semestr <span class="required">*</span>
+                                    </label>
+                                    <select id="semester" name="semester" required>
+                                        <option value="">Wybierz semestr...</option>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                        <option value="6">6</option>
+                                        <option value="7">7</option>
+                                        <option value="8">8+</option>
+                                    </select>
+                                    <span class="error-message"></span>
+                                </div>
+                            </div>
+                        </fieldset>
+
+                        <!-- Availability and Preferences -->
+                        <fieldset class="form-section">
+                            <legend>Dostępność i preferencje</legend>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="hoursPerWeek">
+                                        Dostępność (godziny/tydzień) <span class="required">*</span>
+                                    </label>
+                                    <input 
+                                        type="number" 
+                                        id="hoursPerWeek" 
+                                        name="hoursPerWeek" 
+                                        required
+                                        min="2"
+                                        max="40"
+                                        placeholder="np. 10">
+                                    <small class="form-hint">Ile godzin tygodniowo możesz przeznaczyć na pracę w projekcie?</small>
+                                    <span class="error-message"></span>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label>
+                                    Zespół, do którego chcesz dołączyć <span class="required">*</span>
+                                </label>
+                                <div class="team-selection">
+                                    <div class="team-option">
+                                        <input 
+                                            type="radio" 
+                                            id="teamPerception" 
+                                            name="team" 
+                                            value="percepcja"
+                                            required>
+                                        <label for="teamPerception" class="team-label">
+                                            <strong>Zespół Percepcji</strong>
+                                            <p>Fuzja danych LiDAR 3D, wizja głębi, analiza afektywna, mapowanie przestrzeni</p>
+                                        </label>
+                                    </div>
+
+                                    <div class="team-option">
+                                        <input 
+                                            type="radio" 
+                                            id="teamCognition" 
+                                            name="team" 
+                                            value="kognicja"
+                                            required>
+                                        <label for="teamCognition" class="team-label">
+                                            <strong>Zespół Kognicji</strong>
+                                            <p>Modele VLM, LLM, agent AI, predykcja empatyczna</p>
+                                        </label>
+                                    </div>
+
+                                    <div class="team-option">
+                                        <input 
+                                            type="radio" 
+                                            id="teamInteraction" 
+                                            name="team" 
+                                            value="akcja"
+                                            required>
+                                        <label for="teamAction" class="team-label">
+                                            <strong>Zespół Interakcji</strong>
+                                            <p>Transfer wytycznych ruchu Sim-to-Real, precyzyjna manipulacja</p>
+                                        </label>
+                                    </div>
+                                </div>
+                                <span class="error-message"></span>
+                            </div>
+                        </fieldset>
+
+                        <!-- Skills and Motivation -->
+                        <fieldset class="form-section">
+                            <legend>Umiejętności i motywacja</legend>
+                            
+                            <div class="form-group">
+                                <label for="skills">
+                                    Umiejętności techniczne
+                                </label>
+                                <textarea 
+                                    id="skills" 
+                                    name="skills"
+                                    rows="4"
+                                    placeholder="Wymień swoje umiejętności: języki programowania, frameworki, narzędzia, technologie..."></textarea>
+                                <small class="form-hint">Opcjonalnie: np. Python, C++, ROS2, TensorFlow, OpenCV, Git...</small>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="motivation">
+                                    Dlaczego chcesz dołączyć do laboratorium?
+                                </label>
+                                <textarea 
+                                    id="motivation" 
+                                    name="motivation"
+                                    rows="5"
+                                    placeholder="Opisz swoją motywację, zainteresowania i cele..."></textarea>
+                                <small class="form-hint">Opcjonalnie: Co Cię motywuje? Czego chcesz się nauczyć?</small>
+                            </div>
+                        </fieldset>
+
+                        <!-- GDPR Consent -->
+                        <fieldset class="form-section">
+                            <legend>Zgody</legend>
+                            
+                            <div class="form-group checkbox-group">
+                                <label class="checkbox-label">
+                                    <input 
+                                        type="checkbox" 
+                                        id="gdprConsent" 
+                                        name="gdprConsent" 
+                                        required>
+                                    <span>
+                                        Zgadzam się na przetwarzanie moich danych osobowych przez Politechnikę Rzeszowską 
+                                        w celu rekrutacji do Laboratorium Robotów Humanoidalnych zgodnie z 
+                                        <a href="https://www.prz.edu.pl/uczelnia/ochrona-danych-osobowych/" target="_blank" rel="noopener">
+                                            polityką prywatności PRz
+                                        </a>. <span class="required">*</span>
+                                    </span>
+                                </label>
+                                <span class="error-message"></span>
+                            </div>
+                        </fieldset>
+
+                        <!-- Submit Button -->
+                        <div class="form-actions">
+                            <button type="submit" class="btn-primary btn-submit">
+                                <i class="fa-solid fa-paper-plane"></i> Wyślij zgłoszenie
+                            </button>
+                            <button type="reset" class="btn-secondary">
+                                <i class="fa-solid fa-rotate-left"></i> Wyczyść formularz
+                            </button>
+                        </div>
+
+                        <!-- Form Messages -->
+                        <div id="formMessage" class="form-message" role="alert"></div>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Info -->
+        <section style="background: var(--bg-light); padding: 50px 0;">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Masz pytania?</h2>
+                    <p>Skontaktuj się z nami</p>
+                </div>
+                <div class="contact-info-grid">
+                    <div class="contact-info-card">
+                        <i class="fa-solid fa-envelope"></i>
+                        <h3>Email</h3>
+                        <p><a href="mailto:tomz@prz.edu.pl">tomz@prz.edu.pl</a></p>
+                    </div>
+                    <div class="contact-info-card">
+                        <i class="fa-solid fa-building"></i>
+                        <h3>Adres</h3>
+                        <p>Al. Powstańców Warszawy 12<br>35-959 Rzeszów</p>
+                    </div>
+                    <div class="contact-info-card">
+                        <i class="fa-brands fa-github"></i>
+                        <h3>GitHub</h3>
+                        <p><a href="https://github.com/AI-robot-lab" target="_blank">@AI-robot-lab</a></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer role="contentinfo">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-about">
+                    <h3>O Laboratorium</h3>
+                    <p>
+                        Jednostka badawcza Katedry Informatyki i Automatyki Politechniki Rzeszowskiej, 
+                        specjalizująca się w integracji Sztucznej Inteligencji z robotyką humanoidalną.
+                    </p>
+                </div>
+                <div class="footer-address">
+                    <h3>Adres</h3>
+                    <address>
+                        <p>Al. Powstańców Warszawy 12</p>
+                        <p>35-959 Rzeszów</p>
+                        <p>Polska</p>
+                    </address>
+                </div>
+                <div class="footer-contact">
+                    <h3>Kontakt</h3>
+                    <p>
+                        <a href="https://github.com/AI-robot-lab" 
+                           target="_blank" 
+                           rel="noopener noreferrer">
+                            <i class="fa-brands fa-github"></i> GitHub: AI Robot Lab
+                        </a>
+                    </p>
+                    <p>dr inż. Mateusz Pomianek</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Politechnika Rzeszowska im. Ignacego Łukasiewicza</p>
+                <p class="version-tag">System Version: 2.3.0-stable</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js" defer></script>
+    <script src="contact-form.js" defer></script>
+</body>
+</html>

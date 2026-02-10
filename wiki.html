@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    
+    <title>WIKI - Baza Wiedzy | Laboratorium Robotów Humanoidalnych</title>
+    <meta name="description" content="Baza wiedzy Laboratorium Robotów Humanoidalnych i technologiach AI.">
+    
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Roboto:wght@300;400;700&family=Montserrat:wght@600&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css" rel="stylesheet">
+    <link href="styles.css" rel="stylesheet">
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Przejdź do głównej treści</a>
+
+    <!-- Header -->
+    <header role="banner">
+        <div class="container header-flex">
+            <div class="logos-left">
+                <img src="https://pkb.net.pl/wp-content/uploads/2019/06/politechnika_logo_JPG.jpg" 
+                     alt="Logo Politechniki Rzeszowskiej" 
+                     class="logo-main"
+                     loading="eager">
+                <div class="inst-title">
+                    <p>POLITECHNIKA RZESZOWSKA</p>
+                    <p>KATEDRA INFORMATYKI I AUTOMATYKI</p>
+                </div>
+            </div>
+            <div class="logos-right">
+                <img src="https://sprawozdania.kia.prz.edu.pl/app_images/kia1.png" 
+                     alt="Logo KIA" 
+                     class="logo-small"
+                     loading="eager">
+                <img src="https://sprawozdania.kia.prz.edu.pl/app_images/kia2.png" 
+                     alt="Logo KIA dodatkowe" 
+                     class="logo-small"
+                     loading="eager">
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav role="navigation" aria-label="Główna nawigacja">
+        <div class="container">
+            <button class="mobile-menu-toggle" aria-label="Menu" aria-expanded="false">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <div class="nav-flex">
+                <a href="index.html">Strona Główna</a>
+                <a href="index.html#pca">Framework PCA</a>
+                <a href="index.html#teams">Zespoły</a>
+                <a href="wiki.html" class="active">WIKI</a>
+                <a href="contact.html">Rekrutacja</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main id="main-content">
+        <!-- Hero Section -->
+        <section class="hero wiki-hero">
+            <div class="container">
+                <div class="hero-content" style="text-align: center; max-width: 900px; margin: 0 auto;">
+                    <h1><i class="fa-solid fa-book"></i> Baza Wiedzy</h1>
+                    <p class="hero-subtitle">
+                        Kompendium wiedzy o technologiach, narzędziach i koncepcjach używanych 
+                        w Laboratorium Robotów Humanoidalnych.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Wiki Navigation -->
+        <section style="padding: 60px 0;">
+            <div class="container">
+                <div class="wiki-layout">
+                    <!-- Sidebar -->
+                    <aside class="wiki-sidebar">
+                        <div class="wiki-search">
+                            <i class="fa-solid fa-search"></i>
+                            <input type="text" id="wikiSearch" placeholder="Szukaj w WIKI...">
+                        </div>
+
+                        <nav class="wiki-nav" aria-label="Nawigacja WIKI">
+                            <h3><i class="fa-solid fa-layer-group"></i> Kategorie</h3>
+                            
+                            <div class="wiki-category">
+                                <h4><i class="fa-solid fa-robot"></i> Robotyka</h4>
+                                <ul>
+                                    <li><a href="#" data-article="wiki/ros2">ROS2 - Robot Operating System</a></li>
+                                    <li><a href="#" data-article="wiki/isaac-lab">NVIDIA Isaac Lab</a></li>
+                                    <li><a href="#" data-article="wiki/unitree-g1">Unitree G1 - Specyfikacja</a></li>
+                                    <li><a href="#" data-article="wiki/pca-framework">Framework PCA</a></li>
+                                </ul>
+                            </div>
+
+                            <div class="wiki-category">
+                                <h4><i class="fa-solid fa-eye"></i> Percepcja</h4>
+                                <ul>
+                                    <li><a href="#" data-article="wiki/computer-vision">Computer Vision</a></li>
+                                    <li><a href="#" data-article="wiki/affective-computing">Informatyka Afektywna</a></li>
+                                    <li><a href="#" data-article="wiki/emotion-recognition">Rozpoznawanie Emocji</a></li>
+                                    <li><a href="#" data-article="wiki/face-detection">Detekcja Twarzy</a></li>
+                                    <li><a href="#" data-article="wiki/lidar">LiDAR 3D</a></li>
+                                </ul>
+                            </div>
+
+                            <div class="wiki-category">
+                                <h4><i class="fa-solid fa-brain"></i> Kognicja</h4>
+                                <ul>
+                                    <li><a href="#" data-article="wiki/llm">Large Language Models (LLM)</a></li>
+                                    <li><a href="#" data-article="wiki/vlm">Vision-Language Models (VLM)</a></li>
+                                    <li><a href="#" data-article="wiki/reinforcement-learning">Uczenie przez Wzmacnianie</a></li>
+                                    <li><a href="#" data-article="wiki/deep-learning">Deep Learning</a></li>
+                                </ul>
+                            </div>
+
+                            <div class="wiki-category">
+                                <h4><i class="fa-solid fa-hand"></i> Akcja</h4>
+                                <ul>
+                                    <li><a href="#" data-article="wiki/motion-planning">Planowanie Ruchu</a></li>
+                                    <li><a href="#" data-article="wiki/manipulation">Manipulacja Robotyczna</a></li>
+                                    <li><a href="#" data-article="wiki/sim-to-real">Transfer Sim-to-Real</a></li>
+                                </ul>
+                            </div>
+
+                            <div class="wiki-category">
+                                <h4><i class="fa-solid fa-code"></i> Technologie</h4>
+                                <ul>
+                                    <li><a href="#" data-article="wiki/pytorch">PyTorch</a></li>
+                                    <li><a href="#" data-article="wiki/opencv">OpenCV</a></li>
+                                    <li><a href="#" data-article="wiki/mediapipe">MediaPipe</a></li>
+                                    <li><a href="#" data-article="wiki/deepface">DeepFace</a></li>
+                                </ul>
+                            </div>
+                        </nav>
+                    </aside>
+
+                    <!-- Main Content Area -->
+                    <div class="wiki-content">
+                        <article id="wikiArticle" class="wiki-article">
+                            <!-- Welcome content -->
+                            <div class="wiki-welcome">
+                                <h2>Witamy w Bazie Wiedzy</h2>
+                                <p>
+                                    To kompendium zawiera szczegółowe informacje o technologiach, metodach 
+                                    i narzędziach wykorzystywanych w Laboratorium Robotów Humanoidalnych.
+                                </p>
+
+                                <div class="wiki-stats">
+                                    <div class="stat-card">
+                                        <i class="fa-solid fa-file-lines"></i>
+                                        <strong>15+</strong>
+                                        <span>Artykułów</span>
+                                    </div>
+                                    <div class="stat-card">
+                                        <i class="fa-solid fa-layer-group"></i>
+                                        <strong>5</strong>
+                                        <span>Kategorii</span>
+                                    </div>
+                                    <div class="stat-card">
+                                        <i class="fa-solid fa-rotate"></i>
+                                        <strong>2025</strong>
+                                        <span>Aktualizacja</span>
+                                    </div>
+                                </div>
+
+                                <div class="quick-start">
+                                    <h3><i class="fa-solid fa-rocket"></i> Szybki Start</h3>
+                                    <p>Najpopularniejsze artykuły dla nowych członków zespołu:</p>
+                                    <div class="quick-links">
+                                        <a href="#" data-article="ros2" class="quick-link">
+                                            <i class="fa-solid fa-arrow-right"></i> Wprowadzenie do ROS2
+                                        </a>
+                                        <a href="#" data-article="pca-framework" class="quick-link">
+                                            <i class="fa-solid fa-arrow-right"></i> Framework PCA
+                                        </a>
+                                        <a href="#" data-article="affective-computing" class="quick-link">
+                                            <i class="fa-solid fa-arrow-right"></i> Informatyka Afektywna
+                                        </a>
+                                        <a href="#" data-article="isaac-lab" class="quick-link">
+                                            <i class="fa-solid fa-arrow-right"></i> NVIDIA Isaac Lab
+                                        </a>
+                                    </div>
+                                </div>
+
+                                <div class="wiki-note">
+                                    <i class="fa-solid fa-lightbulb"></i>
+                                    <p>
+                                        <strong>Wskazówka:</strong> Użyj wyszukiwarki powyżej lub wybierz 
+                                        artykuł z menu po lewej stronie. Wszystkie artykuły zawierają 
+                                        przykłady kodu i odnośniki do dokumentacji.
+                                    </p>
+                                </div>
+                            </div>
+                        </article>
+
+                        <!-- Breadcrumbs -->
+                        <div id="breadcrumbs" class="breadcrumbs" style="display: none;">
+                            <a href="wiki.html">WIKI</a>
+                            <span class="separator">/</span>
+                            <span id="currentCategory"></span>
+                            <span class="separator">/</span>
+                            <strong id="currentArticle"></strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer role="contentinfo">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-about">
+                    <h3>O Laboratorium</h3>
+                    <p>
+                        Jednostka badawcza Katedry Informatyki i Automatyki Politechniki Rzeszowskiej, 
+                        specjalizująca się w integracji Sztucznej Inteligencji z robotyką humanoidalną.
+                    </p>
+                </div>
+                <div class="footer-address">
+                    <h3>Adres</h3>
+                    <address>
+                        <p>Al. Powstańców Warszawy 12</p>
+                        <p>35-959 Rzeszów</p>
+                        <p>Polska</p>
+                    </address>
+                </div>
+                <div class="footer-contact">
+                    <h3>Kontakt</h3>
+                    <p>
+                        <a href="https://github.com/AI-robot-lab" 
+                           target="_blank" 
+                           rel="noopener noreferrer">
+                            <i class="fa-brands fa-github"></i> GitHub: AI Robot Lab
+                        </a>
+                    </p>
+                    <p>dr inż. Mateusz Pomianek</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Politechnika Rzeszowska im. Ignacego Łukasiewicza</p>
+                <p class="version-tag">System Version: 2.3.0-stable</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/11.1.1/marked.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="script.js" defer></script>
+    <script src="wiki.js" defer></script>
+</body>
+</html>

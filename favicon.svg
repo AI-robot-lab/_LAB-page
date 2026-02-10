@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- Background Circle -->
+  <circle cx="32" cy="32" r="32" fill="#003366"/>
+  
+  <!-- Robot Head -->
+  <rect x="20" y="22" width="24" height="20" rx="3" fill="#c5a059"/>
+  
+  <!-- Eyes -->
+  <circle cx="26" cy="30" r="2.5" fill="#003366"/>
+  <circle cx="38" cy="30" r="2.5" fill="#003366"/>
+  
+  <!-- Antenna -->
+  <line x1="32" y1="22" x2="32" y2="16" stroke="#c5a059" stroke-width="2" stroke-linecap="round"/>
+  <circle cx="32" cy="14" r="2" fill="#c5a059"/>
+  
+  <!-- Mouth -->
+  <path d="M 26 36 Q 32 38 38 36" stroke="#003366" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+  
+  <!-- Body indicator -->
+  <rect x="28" y="42" width="8" height="4" rx="1" fill="#c5a059"/>
+</svg>

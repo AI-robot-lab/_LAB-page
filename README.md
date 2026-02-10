@@ -33,14 +33,30 @@ Laboratorium skupia się na:
 ## 📦 Struktura Projektu
 
 ```
-├── index.html          # Główny plik HTML
+├── index.html          # Strona główna
+├── contact.html        # Formularz rekrutacyjny
+├── wiki.html           # Strona WIKI
 ├── styles.css          # Arkusz stylów
 ├── script.js           # Interakcje JavaScript
+├── contact-form.js     # Walidacja formularza
+├── wiki.js             # Renderowanie WIKI
+├── favicon.svg         # Favicon SVG
+├── wiki/               # Artykuły WIKI (markdown)
+│   ├── ros2.md
+│   ├── isaac-lab.md
+│   ├── affective-computing.md
+│   ├── emotion-recognition.md
+│   ├── pca-framework.md
+│   ├── face-detection.md
+│   └── deepface.md
 ├── README.md           # Dokumentacja
+├── CONTRIBUTING.md     # Przewodnik współpracy
+├── DEPLOYMENT.md       # Instrukcje wdrożenia
+├── CHANGELOG.md        # Historia zmian
 ├── .nojekyll           # Wyłączenie Jekyll (GitHub Pages)
+├── .gitignore          # Ignorowane pliki
 ├── robots.txt          # Instrukcje dla robotów
-├── sitemap.xml         # Mapa strony (SEO)
-└── favicon.ico         # Ikona strony
+└── sitemap.xml         # Mapa strony (SEO)
 ```
 
 ## 🌐 Hostowanie na GitHub Pages
