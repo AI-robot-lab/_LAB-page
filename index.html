@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laboratorium Robotów Humanoidalnych | PRz</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Roboto:wght@300;400;700&family=Montserrat:wght@600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --prz-blue: #003366; --prz-gold: #c5a059; --text-dark: #1a1a1a;
+            --text-light: #5e6d77; --bg-light: #f4f7f9; --white: #ffffff;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Roboto', sans-serif; color: var(--text-dark); background-color: var(--white); line-height: 1.6; -webkit-font-smoothing: antialiased; }
+        h1, h2, h3, h4 { font-family: 'Montserrat', sans-serif; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; }
+        .container { width: 92%; max-width: 1200px; margin: 0 auto; }
+        section { padding: 60px 0; border-bottom: 1px solid #eee; }
+
+        /* --- LOGO SCALING FIXES --- */
+        header { border-bottom: 2px solid var(--prz-blue); background: var(--white); padding: 10px 0; }
+        .header-flex { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; }
+        .logos-left { display: flex; align-items: center; gap: 15px; }
+        
+        /* Zmniejszone logotypy */
+        .logo-main { height: 45px; width: auto; object-fit: contain; }
+        .logo-small { height: 35px; width: auto; object-fit: contain; }
+        
+        .inst-title { border-left: 1px solid #ddd; padding-left: 12px; }
+        .inst-title p { font-size: 0.75rem; font-weight: 700; color: var(--prz-blue); margin: 0; line-height: 1.1; }
+        .logos-right { display: flex; gap: 10px; align-items: center; }
+
+        /* Navigation */
+        nav { background: var(--prz-blue); position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .nav-flex { display: flex; justify-content: center; flex-wrap: wrap; }
+        nav a { color: var(--white); text-decoration: none; padding: 12px 18px; font-size: 0.75rem; transition: 0.3s; text-transform: uppercase; }
+        nav a:hover { background: rgba(255,255,255,0.1); color: var(--prz-gold); }
+
+        /* Hero */
+        .hero { background: linear-gradient(135deg, #fdfdfd 0%, #eceef1 100%); padding: 80px 0; }
+        .hero-flex { display: flex; align-items: center; gap: 50px; }
+        .hero-content { flex: 1.2; }
+        .hero-content h1 { font-family: 'Playfair Display', serif; font-size: 2.5rem; color: var(--prz-blue); text-transform: none; margin-bottom: 20px; line-height: 1.1; }
+        .hero-visual { flex: 0.8; text-align: right; }
+        .hero-visual img { max-width: 100%; border-radius: 4px; box-shadow: 15px 15px 0px var(--prz-blue); }
+
+        /* Framework PCA */
+        .section-header { text-align: center; margin-bottom: 40px; }
+        .section-header h2 { font-size: 1.8rem; color: var(--prz-blue); position: relative; padding-bottom: 12px; }
+        .section-header h2::after { content: ''; width: 60px; height: 3px; background: var(--prz-gold); position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); }
+        .pca-box { background: var(--white); padding: 25px; border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); text-align: center; margin-bottom: 50px; }
+        .pca-img { max-width: 100%; height: auto; max-height: 500px; }
+
+        /* Teams Grid */
+        .teams-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; }
+        .team-card { background: var(--bg-light); padding: 30px; border-top: 4px solid var(--prz-blue); }
+        .team-card h3 { color: var(--prz-blue); margin-bottom: 15px; font-size: 1rem; border-bottom: 1px solid #ddd; padding-bottom: 8px; }
+        .team-card ul { list-style: none; }
+        .team-card li { margin-bottom: 10px; font-size: 0.85rem; color: var(--text-light); padding-left: 18px; position: relative; }
+        .team-card li::before { content: '●'; position: absolute; left: 0; color: var(--prz-gold); font-size: 0.7rem; }
+
+        /* Software Stack */
+        .software-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; }
+        .soft-item { background: var(--white); border: 1px solid #eee; padding: 20px; text-align: center; transition: 0.2s; }
+        .soft-item:hover { border-color: var(--prz-gold); box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+        .soft-item i { font-size: 1.5rem; color: var(--prz-blue); margin-bottom: 8px; display: block; }
+        .soft-item span { font-weight: 700; font-size: 0.85rem; display: block; }
+        .soft-item small { font-size: 0.7rem; color: var(--text-light); display: block; }
+
+        /* Rehabilitacja */
+        .rehab-box { background: #fff; border-left: 8px solid var(--prz-gold); padding: 35px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+        .rehab-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px; margin-top: 20px; }
+        .rehab-grid p { font-size: 0.9rem; color: var(--text-light); }
+
+        /* Specyfikacja */
+        .robot-dark { background: var(--prz-blue); color: var(--white); padding: 60px 0; }
+        .spec-table { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+        .spec-item { border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 8px; }
+        .spec-item strong { color: var(--prz-gold); font-size: 0.7rem; text-transform: uppercase; display: block; }
+        .spec-item p { font-size: 0.9rem; margin-top: 3px; font-weight: 300; }
+
+        /* Footer */
+        footer { background: #111; color: #888; padding: 50px 0 20px; font-size: 0.8rem; }
+        .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 40px; }
+        .footer-bottom { border-top: 1px solid #222; margin-top: 40px; padding-top: 20px; text-align: center; }
+        .version-tag { color: var(--prz-gold); font-family: 'Montserrat'; font-size: 0.7rem; margin-top: 5px; opacity: 0.7; }
+
+        /* Mobile Adjustments */
+        @media (max-width: 1024px) {
+            .hero-flex, .rehab-grid { flex-direction: column; text-align: center; }
+            .teams-grid, .software-grid { grid-template-columns: repeat(2, 1fr); }
+            .hero-visual { text-align: center; margin-top: 30px; }
+        }
+        @media (max-width: 768px) {
+            .header-flex { justify-content: center; flex-direction: column; }
+            .logos-left { flex-direction: column; gap: 10px; }
+            .inst-title { border-left: none; text-align: center; border-top: 1px solid #ddd; padding-top: 10px; }
+            .teams-grid, .software-grid, .spec-table, .footer-grid { grid-template-columns: 1fr; }
+            .hero-content h1 { font-size: 1.8rem; }
+            .logo-main { height: 35px; }
+            .logo-small { height: 28px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Units -->
+    <header>
+        <div class="container header-flex">
+            <div class="logos-left">
+                <img src="https://pkb.net.pl/wp-content/uploads/2019/06/politechnika_logo_JPG.jpg" alt="PRz" class="logo-main">
+                <div class="inst-title">
+                    <p>POLITECHNIKA RZESZOWSKA</p>
+                    <p>KATEDRA INFORMATYKI I AUTOMATYKI</p>
+                </div>
+            </div>
+            <div class="logos-right">
+                <img src="https://sprawozdania.kia.prz.edu.pl/app_images/kia1.png" alt="KIA 1" class="logo-small">
+                <img src="https://sprawozdania.kia.prz.edu.pl/app_images/kia2.png" alt="KIA 2" class="logo-small">
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="container nav-flex">
+            <a href="#hero">O Laboratorium</a>
+            <a href="#pca">Framework PCA</a>
+            <a href="#teams">Zespoły</a>
+            <a href="#software">Technologie</a>
+            <a href="#rehabilitacja">Rehabilitacja</a>
+            <a href="#robot">Specyfikacja</a>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="hero" id="hero">
+        <div class="container hero-flex">
+            <div class="hero-content">
+                <h1>Badania nad Sztuczną Inteligencją i Robotyką Humanoidalną</h1>
+                <p>Laboratorium Zastosowań AI koncentruje się na systemach <strong>Embodied AI</strong>. Wykorzystujemy platformę Unitree G1 do realizacji zaawansowanych zadań w środowisku rzeczywistym, wspieranych przez cyfrowe bliźniaki oraz modele świata.</p>
+                <div style="margin-top: 25px;">
+                    <a href="https://github.com/AI-robot-lab" target="_blank" style="background: var(--prz-blue); color: white; padding: 12px 25px; text-decoration: none; font-weight: bold; font-size: 0.75rem; text-transform: uppercase;">GitHub Repozytoria</a>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <img src="https://via.placeholder.com/500x350/003366/FFFFFF?text=Unitree+G1+U6+EDU+Lab" alt="G1 Research">
+            </div>
+        </div>
+    </section>
+
+    <!-- PCA & Teams -->
+    <section id="pca">
+        <div class="container">
+            <div class="section-header">
+                <h2>Framework PCA (Perception-Cognition-Action)</h2>
+                <p>Metodyka obiegu informacji w autonomicznych systemach humanoidalnych.</p>
+            </div>
+            <div class="pca-box">
+                <img src="https://i.postimg.cc/qM3Z9N5q/PCA-Framework.jpg" alt="PCA Framework" class="pca-img">
+            </div>
+
+            <div class="teams-grid" id="teams">
+                <div class="team-card">
+                    <h3>Zespół Percepcji</h3>
+                    <ul>
+                        <li>Fuzja danych LiDAR 3D i wizji głębi</li>
+                        <li>Analiza afektywna użytkownika (DeepFace)</li>
+                        <li>Mapowanie przestrzeni i strefy proxemics</li>
+                        <li>Lokalizacja źródła dźwięku (8 mikrofonów)</li>
+                    </ul>
+                </div>
+                <div class="team-card">
+                    <h3>Zespół Kognicji</h3>
+                    <ul>
+                        <li>Modele zunifikowane UnifoLM-WMA-0</li>
+                        <li>Wdrażanie modeli VLM (Vision-Language-Action)</li>
+                        <li>Wnioskowanie LLM w czasie rzeczywistym</li>
+                        <li>Predykcja potrzeb i trendów emocjonalnych</li>
+                    </ul>
+                </div>
+                <div class="team-card">
+                    <h3>Zespół Akcji</h3>
+                    <ul>
+                        <li>Transfer polityk ruchu Sim-to-Real (Isaac Lab)</li>
+                        <li>Manipulacja precyzyjna dłońmi Dex3-1</li>
+                        <li>Badanie stabilności (momenty do 90 Nm)</li>
+                        <li>Rehabilitacja wspomagana (Assist-as-needed)</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Software -->
+    <section id="software" style="background: var(--bg-light);">
+        <div class="container">
+            <div class="section-header">
+                <h2>Ekosystem Programistyczny</h2>
+                <p>Nowoczesne frameworki i biblioteki AI integrowane w laboratorium.</p>
+            </div>
+            <div class="software-grid">
+                <div class="soft-item"><i class="fa-solid fa-code"></i><span>ROS2 Humble</span><small>DDS Middleware</small></div>
+                <div class="soft-item"><i class="fa-solid fa-cube"></i><span>NVIDIA Isaac Lab</span><small>RL Simulation</small></div>
+                <div class="soft-item"><i class="fa-solid fa-hand"></i><span>Moveit2</span><small>Motion Planning</small></div>
+                <div class="soft-item"><i class="fa-solid fa-brain"></i><span>UnifoLM-WMA-0</span><small>World Models</small></div>
+                <div class="soft-item"><i class="fa-solid fa-microchip"></i><span>nanoLLM</span><small>Edge AI for Jetson</small></div>
+                <div class="soft-item"><i class="fa-solid fa-fire"></i><span>PyTorch</span><small>Deep Learning</small></div>
+                <div class="soft-item"><i class="fa-solid fa-person-running"></i><span>MediaPipe</span><small>Tracking & Pose</small></div>
+                <div class="soft-item"><i class="fa-solid fa-face-smile"></i><span>DeepFace</span><small>Affective Computing</small></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Rehabilitacja -->
+    <section id="rehabilitacja">
+        <div class="container">
+            <div class="section-header">
+                <h2>Zastosowania w Rehabilitacji</h2>
+                <p>Robot jako asystent w terapiach neurologicznych i poznawczych.</p>
+            </div>
+            <div class="rehab-box">
+                <div class="rehab-grid">
+                    <div>
+                        <h4 style="color: var(--prz-blue); margin-bottom: 10px;">Rehabilitacja Ruchowa</h4>
+                        <p>Wsparcie po udarach mózgu oraz urazach układu nerwowego. Wykorzystanie modelu "assist-as-needed" w celu stopniowego przywracania mobilności.</p>
+                    </div>
+                    <div>
+                        <h4 style="color: var(--prz-blue); margin-bottom: 10px;">Wsparcie Poznawcze</h4>
+                        <p>Trening neuropoznawczy w chorobie Alzheimera, Parkinsona oraz MCI. Stymulacja funkcji wykonawczych poprzez interakcję dialogową.</p>
+                    </div>
+                </div>
+                <div style="margin-top: 30px; padding-top: 20px; border-top: 1px dashed #ddd; display: flex; gap: 20px; flex-wrap: wrap; justify-content: center;">
+                    <span style="font-size: 0.75rem; background: var(--bg-light); padding: 5px 12px;">Serious Games</span>
+                    <span style="font-size: 0.75rem; background: var(--bg-light); padding: 5px 12px;">Dual-Task Training</span>
+                    <span style="font-size: 0.75rem; background: var(--bg-light); padding: 5px 12px;">Teleoperacja Immersyjna</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Robot Specs -->
+    <section class="robot-dark" id="robot">
+        <div class="container">
+            <div class="spec-table" style="grid-template-columns: 1fr 1fr; gap: 50px;">
+                <div>
+                    <h2 style="color: var(--prz-gold); margin-bottom: 20px;">Unitree G1 U6 EDU</h2>
+                    <p style="margin-bottom: 30px; opacity: 0.8; font-size: 0.9rem;">Platforma flagowa zintegrowana z jednostką pokładową NVIDIA Jetson Orin do zaawansowanych obliczeń krawędziowych AI.</p>
+                    <div class="spec-table" style="grid-template-columns: 1fr 1fr; gap: 20px;">
+                        <div class="spec-item"><strong>Hardware</strong><p>8-core ARM + NVIDIA Orin</p></div>
+                        <div class="spec-item"><strong>Manipulacja</strong><p>Dłonie Dex3-1 (12 DOF)</p></div>
+                        <div class="spec-item"><strong>LiDAR 3D</strong><p>Livox MID360 (FOV 360°)</p></div>
+                        <div class="spec-item"><strong>Komunikacja</strong><p>DDS / CycloneDDS</p></div>
+                    </div>
+                </div>
+                <div style="background: rgba(255,255,255,0.05); padding: 30px; border: 1px solid var(--prz-gold);">
+                    <h4 style="color: var(--prz-gold); margin-bottom: 15px;">Infrastruktura VR</h4>
+                    <p style="font-size: 0.85rem; margin-bottom: 15px;">System teleoperacji oparty na goglach Meta Quest 3, zapewniający immersyjne sterowanie poprzez protokół WebRTC i tunelowanie SSL.</p>
+                    <p style="font-size: 0.75rem; color: #aaa;">Status systemu: Active-Research</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container footer-grid">
+            <div>
+                <h4 style="color: white; margin-bottom: 15px;">O Laboratorium</h4>
+                <p>Jednostka badawcza Katedry Informatyki i Automatyki Politechniki Rzeszowskiej, specjalizująca się w integracji Sztucznej Inteligencji z robotyką humanoidalną.</p>
+            </div>
+            <div>
+                <h4 style="color: white; margin-bottom: 15px;">Adres</h4>
+                <p>Al. Powstańców Warszawy 12</p>
+                <p>35-959 Rzeszów</p>
+            </div>
+            <div>
+                <h4 style="color: white; margin-bottom: 15px;">Kontakt</h4>
+                <a href="https://github.com/AI-robot-lab" style="color: var(--prz-gold); text-decoration: none;"><i class="fa-brands fa-github"></i> GitHub: AI Robot Lab</a>
+                <p style="margin-top: 10px;">dr inż. Mateusz Pomianek</p>
+            </div>
+        </div>
+        <div class="container footer-bottom">
+            <p>&copy; 2024 Politechnika Rzeszowska im. Ignacego Łukasiewicza</p>
+            <div class="version-tag">System Version: 2.2.26-build.stable</div>
+        </div>
+    </footer>
+
+</body>
+</html>
