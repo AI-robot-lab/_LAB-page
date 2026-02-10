@@ -1,0 +1,14 @@
+# robots.txt for Humanoid Robotics Lab | PRz
+# https://ai-robot-lab.github.io/
+
+User-agent: *
+Allow: /
+
+# Disallow specific paths if needed
+# Disallow: /private/
+
+# Sitemap
+Sitemap: https://ai-robot-lab.github.io/sitemap.xml
+
+# Crawl-delay (optional)
+# Crawl-delay: 10

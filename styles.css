@@ -1,0 +1,895 @@
+/* ====================================
+   CSS Variables
+   ==================================== */
+:root {
+    --prz-blue: #003366;
+    --prz-gold: #c5a059;
+    --text-dark: #1a1a1a;
+    --text-light: #5e6d77;
+    --bg-light: #f4f7f9;
+    --white: #ffffff;
+    --transition: 0.3s ease;
+    --shadow-sm: 0 2px 10px rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 5px 15px rgba(0, 0, 0, 0.08);
+    --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+/* ====================================
+   Reset & Base Styles
+   ==================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    color: var(--text-dark);
+    background-color: var(--white);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* ====================================
+   Typography
+   ==================================== */
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    line-height: 1.2;
+}
+
+h1 {
+    font-size: 2.5rem;
+}
+
+h2 {
+    font-size: 1.8rem;
+}
+
+h3 {
+    font-size: 1.2rem;
+}
+
+p {
+    margin-bottom: 1rem;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+    transition: var(--transition);
+}
+
+/* ====================================
+   Layout Components
+   ==================================== */
+.container {
+    width: 92%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+section {
+    padding: 60px 0;
+    border-bottom: 1px solid #eee;
+}
+
+/* Skip Link for Accessibility */
+.skip-link {
+    position: absolute;
+    top: -40px;
+    left: 0;
+    background: var(--prz-blue);
+    color: var(--white);
+    padding: 8px 16px;
+    text-decoration: none;
+    z-index: 10000;
+}
+
+.skip-link:focus {
+    top: 0;
+}
+
+/* ====================================
+   Header
+   ==================================== */
+header {
+    border-bottom: 2px solid var(--prz-blue);
+    background: var(--white);
+    padding: 10px 0;
+    position: relative;
+    z-index: 100;
+}
+
+.header-flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.logos-left {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.logo-main {
+    height: 45px;
+    width: auto;
+    object-fit: contain;
+}
+
+.logo-small {
+    height: 35px;
+    width: auto;
+    object-fit: contain;
+}
+
+.inst-title {
+    border-left: 1px solid #ddd;
+    padding-left: 12px;
+}
+
+.inst-title p {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--prz-blue);
+    margin: 0;
+    line-height: 1.1;
+}
+
+.logos-right {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+/* ====================================
+   Navigation
+   ==================================== */
+nav {
+    background: var(--prz-blue);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: var(--shadow-md);
+}
+
+.mobile-menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.mobile-menu-toggle span {
+    display: block;
+    width: 25px;
+    height: 3px;
+    background: var(--white);
+    transition: var(--transition);
+}
+
+.nav-flex {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+
+nav a {
+    color: var(--white);
+    padding: 14px 20px;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    display: block;
+    position: relative;
+}
+
+nav a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background: var(--prz-gold);
+    transition: var(--transition);
+    transform: translateX(-50%);
+}
+
+nav a:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--prz-gold);
+}
+
+nav a:hover::after {
+    width: 80%;
+}
+
+nav a:focus {
+    outline: 2px solid var(--prz-gold);
+    outline-offset: -2px;
+}
+
+/* ====================================
+   Hero Section
+   ==================================== */
+.hero {
+    background: linear-gradient(135deg, #fdfdfd 0%, #eceef1 100%);
+    padding: 80px 0;
+}
+
+.hero-flex {
+    display: flex;
+    align-items: center;
+    gap: 50px;
+}
+
+.hero-content {
+    flex: 1.2;
+}
+
+.hero-content h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.8rem;
+    color: var(--prz-blue);
+    text-transform: none;
+    margin-bottom: 20px;
+    line-height: 1.1;
+}
+
+.hero-subtitle {
+    font-size: 1.2rem;
+    color: var(--text-light);
+    margin-bottom: 20px;
+    font-weight: 300;
+}
+
+.hero-description {
+    font-size: 1rem;
+    color: var(--text-light);
+    margin-bottom: 30px;
+    line-height: 1.7;
+}
+
+.hero-cta {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.btn-primary,
+.btn-secondary {
+    padding: 12px 30px;
+    border-radius: 4px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    transition: var(--transition);
+    display: inline-block;
+}
+
+.btn-primary {
+    background: var(--prz-blue);
+    color: var(--white);
+    box-shadow: var(--shadow-sm);
+}
+
+.btn-primary:hover {
+    background: #002244;
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+}
+
+.btn-secondary {
+    background: transparent;
+    color: var(--prz-blue);
+    border: 2px solid var(--prz-blue);
+}
+
+.btn-secondary:hover {
+    background: var(--prz-blue);
+    color: var(--white);
+}
+
+.hero-visual {
+    flex: 0.8;
+    text-align: right;
+}
+
+.hero-visual img {
+    max-width: 100%;
+    border-radius: 8px;
+    box-shadow: 15px 15px 0px var(--prz-blue);
+}
+
+/* ====================================
+   Section Headers
+   ==================================== */
+.section-header {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.section-header h2 {
+    color: var(--prz-blue);
+    position: relative;
+    padding-bottom: 15px;
+    display: inline-block;
+}
+
+.section-header h2::after {
+    content: '';
+    width: 60px;
+    height: 3px;
+    background: var(--prz-gold);
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.section-header p {
+    color: var(--text-light);
+    font-size: 1rem;
+    margin-top: 15px;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* ====================================
+   PCA Framework Section
+   ==================================== */
+.pca-box {
+    background: var(--white);
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: var(--shadow-lg);
+    text-align: center;
+}
+
+.pca-img {
+    max-width: 100%;
+    height: auto;
+    max-height: 600px;
+    border-radius: 4px;
+}
+
+/* ====================================
+   Teams Grid
+   ==================================== */
+.teams-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    margin-top: 20px;
+}
+
+.team-card {
+    background: var(--bg-light);
+    padding: 30px;
+    border-top: 4px solid var(--prz-blue);
+    border-radius: 4px;
+    transition: var(--transition);
+}
+
+.team-card:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-5px);
+}
+
+.team-card h3 {
+    color: var(--prz-blue);
+    margin-bottom: 20px;
+    font-size: 1.1rem;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 10px;
+}
+
+.team-card ul {
+    list-style: none;
+}
+
+.team-card li {
+    margin-bottom: 12px;
+    font-size: 0.9rem;
+    color: var(--text-light);
+    padding-left: 20px;
+    position: relative;
+    line-height: 1.5;
+}
+
+.team-card li::before {
+    content: '●';
+    position: absolute;
+    left: 0;
+    color: var(--prz-gold);
+    font-size: 0.8rem;
+}
+
+/* ====================================
+   Software Section
+   ==================================== */
+.software-section {
+    background: var(--bg-light);
+}
+
+.software-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+
+.soft-item {
+    background: var(--white);
+    border: 1px solid #e0e0e0;
+    padding: 25px;
+    text-align: center;
+    border-radius: 8px;
+    transition: var(--transition);
+}
+
+.soft-item:hover {
+    border-color: var(--prz-gold);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-3px);
+}
+
+.soft-item i {
+    font-size: 2rem;
+    color: var(--prz-blue);
+    margin-bottom: 12px;
+    display: block;
+}
+
+.soft-item span {
+    font-weight: 700;
+    font-size: 0.95rem;
+    display: block;
+    color: var(--text-dark);
+    margin-bottom: 5px;
+}
+
+.soft-item small {
+    font-size: 0.75rem;
+    color: var(--text-light);
+    display: block;
+}
+
+/* ====================================
+   Rehabilitation Section
+   ==================================== */
+.rehab-box {
+    background: var(--white);
+    border-left: 8px solid var(--prz-gold);
+    padding: 40px;
+    box-shadow: var(--shadow-md);
+    border-radius: 4px;
+}
+
+.rehab-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 40px;
+    margin-top: 20px;
+}
+
+.rehab-grid h3 {
+    color: var(--prz-blue);
+    margin-bottom: 15px;
+    font-size: 1.1rem;
+}
+
+.rehab-grid p {
+    font-size: 0.95rem;
+    color: var(--text-light);
+    line-height: 1.7;
+}
+
+.rehab-tags {
+    margin-top: 30px;
+    padding-top: 25px;
+    border-top: 1px dashed #ddd;
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.tag {
+    font-size: 0.8rem;
+    background: var(--bg-light);
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-weight: 500;
+    color: var(--text-dark);
+}
+
+/* ====================================
+   Robot Specifications Section
+   ==================================== */
+.robot-dark {
+    background: var(--prz-blue);
+    color: var(--white);
+    padding: 80px 0;
+}
+
+.robot-grid {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: 50px;
+    align-items: start;
+}
+
+.robot-specs h2 {
+    color: var(--prz-gold);
+    margin-bottom: 20px;
+    font-size: 2rem;
+}
+
+.robot-intro {
+    margin-bottom: 40px;
+    opacity: 0.9;
+    font-size: 1rem;
+    line-height: 1.7;
+}
+
+.spec-table {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 25px;
+}
+
+.spec-item {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+    padding-bottom: 12px;
+}
+
+.spec-item strong {
+    color: var(--prz-gold);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 5px;
+    letter-spacing: 1px;
+}
+
+.spec-item p {
+    font-size: 0.95rem;
+    margin: 0;
+    font-weight: 300;
+}
+
+.vr-infrastructure {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 35px;
+    border: 2px solid var(--prz-gold);
+    border-radius: 8px;
+}
+
+.vr-infrastructure h3 {
+    color: var(--prz-gold);
+    margin-bottom: 20px;
+    font-size: 1.2rem;
+}
+
+.vr-infrastructure p {
+    font-size: 0.9rem;
+    margin-bottom: 15px;
+    line-height: 1.7;
+}
+
+.vr-infrastructure .status {
+    font-size: 0.8rem;
+    color: #aaa;
+    margin: 0;
+}
+
+/* ====================================
+   Footer
+   ==================================== */
+footer {
+    background: #111;
+    color: #888;
+    padding: 60px 0 20px;
+    font-size: 0.85rem;
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 50px;
+    margin-bottom: 40px;
+}
+
+footer h3 {
+    color: var(--white);
+    margin-bottom: 20px;
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+footer p {
+    line-height: 1.7;
+    margin-bottom: 10px;
+}
+
+footer address {
+    font-style: normal;
+}
+
+footer a {
+    color: var(--prz-gold);
+    transition: var(--transition);
+}
+
+footer a:hover {
+    color: var(--white);
+    text-decoration: underline;
+}
+
+.footer-bottom {
+    border-top: 1px solid #222;
+    padding-top: 25px;
+    text-align: center;
+}
+
+.version-tag {
+    color: var(--prz-gold);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.7rem;
+    margin-top: 10px;
+    opacity: 0.7;
+}
+
+/* ====================================
+   Responsive Design
+   ==================================== */
+
+/* Tablet */
+@media (max-width: 1024px) {
+    .hero-flex {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .hero-visual {
+        text-align: center;
+        margin-top: 40px;
+    }
+
+    .hero-content h1 {
+        font-size: 2.2rem;
+    }
+
+    .teams-grid,
+    .software-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .robot-grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+
+    .footer-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 30px;
+    }
+
+    .footer-about {
+        grid-column: 1 / -1;
+    }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+    .container {
+        width: 95%;
+    }
+
+    section {
+        padding: 40px 0;
+    }
+
+    /* Header */
+    .header-flex {
+        justify-content: center;
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .logos-left {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .inst-title {
+        border-left: none;
+        border-top: 1px solid #ddd;
+        padding-left: 0;
+        padding-top: 15px;
+        text-align: center;
+    }
+
+    .logo-main {
+        height: 40px;
+    }
+
+    .logo-small {
+        height: 30px;
+    }
+
+    /* Navigation */
+    .mobile-menu-toggle {
+        display: flex;
+        margin: 10px auto;
+    }
+
+    .nav-flex {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .nav-flex.active {
+        display: flex;
+    }
+
+    nav a {
+        padding: 12px 20px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    /* Hero */
+    .hero {
+        padding: 50px 0;
+    }
+
+    .hero-content h1 {
+        font-size: 1.8rem;
+    }
+
+    .hero-subtitle {
+        font-size: 1rem;
+    }
+
+    .hero-cta {
+        flex-direction: column;
+    }
+
+    .btn-primary,
+    .btn-secondary {
+        width: 100%;
+        text-align: center;
+    }
+
+    .hero-visual img {
+        box-shadow: 10px 10px 0px var(--prz-blue);
+    }
+
+    /* Grids */
+    .teams-grid,
+    .software-grid,
+    .rehab-grid,
+    .spec-table,
+    .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    /* Section Headers */
+    .section-header h2 {
+        font-size: 1.5rem;
+    }
+
+    /* Robot Section */
+    .robot-specs h2 {
+        font-size: 1.6rem;
+    }
+
+    .robot-dark {
+        padding: 50px 0;
+    }
+
+    /* Footer */
+    footer {
+        padding: 40px 0 20px;
+    }
+
+    .footer-grid {
+        gap: 30px;
+    }
+}
+
+/* Small Mobile */
+@media (max-width: 480px) {
+    .hero-content h1 {
+        font-size: 1.5rem;
+    }
+
+    .section-header h2 {
+        font-size: 1.3rem;
+    }
+
+    .soft-item i {
+        font-size: 1.5rem;
+    }
+
+    .team-card,
+    .soft-item,
+    .rehab-box,
+    .vr-infrastructure {
+        padding: 20px;
+    }
+}
+
+/* ====================================
+   Print Styles
+   ==================================== */
+@media print {
+    nav,
+    .hero-cta,
+    .mobile-menu-toggle {
+        display: none;
+    }
+
+    body {
+        font-size: 12pt;
+        color: #000;
+    }
+
+    a {
+        color: #000;
+        text-decoration: underline;
+    }
+
+    .hero-visual img {
+        box-shadow: none;
+    }
+}
+
+/* ====================================
+   Accessibility Improvements
+   ==================================== */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* High Contrast Mode */
+@media (prefers-contrast: high) {
+    :root {
+        --prz-blue: #000080;
+        --prz-gold: #996600;
+        --text-dark: #000000;
+    }
+}
+
+/* Focus Visible */
+:focus-visible {
+    outline: 3px solid var(--prz-gold);
+    outline-offset: 2px;
+}
