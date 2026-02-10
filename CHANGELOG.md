@@ -44,7 +44,7 @@ i projekt stosuje [Semantic Versioning](https://semver.org/lang/pl/).
 - Inline CSS (przeniesione do styles.css)
 - Inline JavaScript (przeniesione do script.js)
 
-## [2.2.26] - 2024-XX-XX (Poprzednia wersja)
+## [10.2.26] - 2026-02-X08 (Poprzednia wersja)
 
 ### Zawartość
 - Bazowa struktura strony
