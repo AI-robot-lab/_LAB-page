@@ -1,11 +1,13 @@
 /**
  * WIKI System - Markdown Article Loader and Renderer
  * Laboratorium Robotów Humanoidalnych
+ * Version: 2.0
  */
 
 'use strict';
 
 // Article database - maps article IDs to markdown files
+// Wszystkie pliki są w folderze wiki/
 const ARTICLES = {
     // Robotyka
     'ros2': 'wiki/ros2.md',
@@ -63,6 +65,9 @@ const METADATA = {
     'isaac-lab': { category: 'Robotyka', title: 'NVIDIA Isaac Lab' },
     'unitree-g1': { category: 'Robotyka', title: 'Unitree G1 - Specyfikacja' },
     'pca-framework': { category: 'Robotyka', title: 'Framework PCA' },
+    'slam': { category: 'Robotyka', title: 'SLAM - Lokalizacja i Mapowanie' },
+    'imu': { category: 'Robotyka', title: 'IMU - Inertial Measurement Unit' },
+    'sensor-fusion': { category: 'Robotyka', title: 'Fuzja Sensoryczna' },
     
     // Percepcja
     'computer-vision': { category: 'Percepcja', title: 'Computer Vision' },
@@ -70,12 +75,17 @@ const METADATA = {
     'emotion-recognition': { category: 'Percepcja', title: 'Rozpoznawanie Emocji' },
     'face-detection': { category: 'Percepcja', title: 'Detekcja Twarzy' },
     'lidar': { category: 'Percepcja', title: 'LiDAR 3D' },
+    'object-detection': { category: 'Percepcja', title: 'Detekcja Obiektów' },
+    'pose-estimation': { category: 'Percepcja', title: 'Estymacja Pozy' },
     
     // Kognicja
     'llm': { category: 'Kognicja', title: 'Large Language Models (LLM)' },
     'vlm': { category: 'Kognicja', title: 'Vision-Language Models (VLM)' },
     'reinforcement-learning': { category: 'Kognicja', title: 'Uczenie przez Wzmacnianie' },
     'deep-learning': { category: 'Kognicja', title: 'Deep Learning' },
+    'neural-networks': { category: 'Kognicja', title: 'Sieci Neuronowe' },
+    'transformers': { category: 'Kognicja', title: 'Architektury Transformer' },
+    'transfer-learning': { category: 'Kognicja', title: 'Transfer Learning' },
     
     // Akcja
     'motion-planning': { category: 'Akcja', title: 'Planowanie Ruchu' },
@@ -96,29 +106,16 @@ const METADATA = {
     // Inne
     'hri': { category: 'Inne', title: 'Interakcja Człowiek-Robot' },
     'safety': { category: 'Inne', title: 'Bezpieczeństwo Robotów' },
-    'ethics': { category: 'Etyka', title: 'Etyka w Robotyce' },
-    
-    // Percepcja - dodatkowe
-    'object-detection': { category: 'Percepcja', title: 'Detekcja Obiektów' },
-    'pose-estimation': { category: 'Percepcja', title: 'Estymacja Pozy' },
-    
-    // Kognicja - dodatkowe
-    'neural-networks': { category: 'Kognicja', title: 'Sieci Neuronowe' },
-    'transformers': { category: 'Kognicja', title: 'Architektury Transformer' },
-    'transfer-learning': { category: 'Kognicja', title: 'Transfer Learning' },
-    
-    // Robotyka - dodatkowe
-    'slam': { category: 'Robotyka', title: 'SLAM - Lokalizacja i Mapowanie' },
-    'imu': { category: 'Robotyka', title: 'IMU - Inertial Measurement Unit' },
-    'sensor-fusion': { category: 'Robotyka', title: 'Fuzja Sensoryczna' }
+    'ethics': { category: 'Inne', title: 'Etyka w Robotyce' }
 };
 
+// Initialize on page load
 document.addEventListener('DOMContentLoaded', function() {
     initWiki();
 });
 
 function initWiki() {
-    // Initialize marked.js
+    // Initialize marked.js for markdown rendering
     if (typeof marked !== 'undefined') {
         marked.setOptions({
             highlight: function(code, lang) {
@@ -132,195 +129,205 @@ function initWiki() {
         });
     }
 
-    // Handle article links
-    const articleLinks = document.querySelectorAll('[data-article]');
-    articleLinks.forEach(link => {
-        link.addEventListener('click', function(e) {
-            e.preventDefault();
-            const articleId = this.getAttribute('data-article');
-            loadArticle(articleId);
-            
-            // Update active state
-            articleLinks.forEach(l => l.classList.remove('active'));
-            this.classList.add('active');
-            
-            // Scroll to top on mobile
-            if (window.innerWidth <= 768) {
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            }
-        });
-    });
-
-    // Search functionality
-    const searchInput = document.getElementById('wikiSearch');
-    if (searchInput) {
-        searchInput.addEventListener('input', debounce(function() {
-            searchArticles(this.value);
-        }, 300));
-    }
-
-    // Load article from URL hash
-    const hash = window.location.hash.slice(1);
-    if (hash && ARTICLES[hash]) {
+    // Set up event listeners
+    setupArticleLinks();
+    setupSearch();
+    
+    // Load article from URL hash if present
+    const hash = window.location.hash.substring(1);
+    if (hash) {
         loadArticle(hash);
     }
 }
 
-/**
- * Load and render markdown article
- */
+function setupArticleLinks() {
+    // Get all article links
+    const articleLinks = document.querySelectorAll('[data-article]');
+    
+    articleLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            // Remove active class from all links
+            articleLinks.forEach(l => l.classList.remove('active'));
+            
+            // Add active class to clicked link
+            this.classList.add('active');
+            
+            // Get article ID (remove 'wiki/' prefix if present)
+            let articleId = this.dataset.article;
+            articleId = articleId.replace('wiki/', '');
+            
+            // Update URL hash
+            window.location.hash = articleId;
+            
+            // Load article
+            loadArticle(articleId);
+            
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    });
+}
+
+function setupSearch() {
+    const searchInput = document.getElementById('wikiSearch');
+    if (!searchInput) return;
+    
+    let searchTimeout;
+    
+    searchInput.addEventListener('input', function() {
+        clearTimeout(searchTimeout);
+        
+        searchTimeout = setTimeout(() => {
+            const query = this.value.toLowerCase().trim();
+            filterArticles(query);
+        }, 300);
+    });
+}
+
+function filterArticles(query) {
+    const categories = document.querySelectorAll('.wiki-category');
+    
+    if (!query) {
+        // Show all
+        categories.forEach(cat => {
+            cat.style.display = 'block';
+            const links = cat.querySelectorAll('li');
+            links.forEach(li => li.style.display = 'block');
+        });
+        return;
+    }
+    
+    categories.forEach(cat => {
+        const links = cat.querySelectorAll('li');
+        let hasVisibleLinks = false;
+        
+        links.forEach(li => {
+            const link = li.querySelector('a');
+            const text = link.textContent.toLowerCase();
+            const articleId = link.dataset.article.replace('wiki/', '');
+            
+            if (text.includes(query) || articleId.includes(query)) {
+                li.style.display = 'block';
+                hasVisibleLinks = true;
+            } else {
+                li.style.display = 'none';
+            }
+        });
+        
+        // Hide category if no visible links
+        cat.style.display = hasVisibleLinks ? 'block' : 'none';
+    });
+}
+
 async function loadArticle(articleId) {
     const articleContainer = document.getElementById('wikiArticle');
     const breadcrumbs = document.getElementById('breadcrumbs');
-    const welcomeContent = document.querySelector('.wiki-welcome');
     
+    if (!articleContainer) return;
+    
+    // Show loading
+    articleContainer.innerHTML = '<div class="loading"><i class="fa-solid fa-spinner fa-spin"></i> Ładowanie...</div>';
+    
+    // Check if article exists
     if (!ARTICLES[articleId]) {
         showError('Artykuł nie został znaleziony');
         return;
     }
-
-    // Show loading state
-    articleContainer.innerHTML = '<div class="loading"><i class="fa-solid fa-spinner fa-spin"></i> Ładowanie...</div>';
     
-    // Hide welcome content
-    if (welcomeContent) {
-        welcomeContent.style.display = 'none';
-    }
-
     try {
+        // Fetch markdown file
         const response = await fetch(ARTICLES[articleId]);
         
         if (!response.ok) {
-            throw new Error('Nie udało się załadować artykułu');
+            throw new Error('Nie można załadować artykułu');
         }
-
-        const markdown = await response.text();
-        const html = typeof marked !== 'undefined' ? marked.parse(markdown) : markdown;
         
-        // Render article
+        const markdown = await response.text();
+        
+        // Render markdown
+        const html = marked.parse(markdown);
         articleContainer.innerHTML = html;
         
         // Highlight code blocks
         if (typeof hljs !== 'undefined') {
-            articleContainer.querySelectorAll('pre code').forEach(block => {
+            articleContainer.querySelectorAll('pre code').forEach((block) => {
                 hljs.highlightElement(block);
             });
         }
-
+        
         // Update breadcrumbs
-        if (breadcrumbs && METADATA[articleId]) {
-            const meta = METADATA[articleId];
-            document.getElementById('currentCategory').textContent = meta.category;
-            document.getElementById('currentArticle').textContent = meta.title;
-            breadcrumbs.style.display = 'block';
-        }
-
-        // Update URL hash
-        window.location.hash = articleId;
-
-        // Add "Edit on GitHub" link
-        addEditLink(articleId);
-
+        updateBreadcrumbs(articleId);
+        
+        // Process internal links
+        processInternalLinks(articleContainer);
+        
     } catch (error) {
         console.error('Error loading article:', error);
-        showError('Nie udało się załadować artykułu. Spróbuj ponownie później.');
+        showError('Błąd podczas ładowania artykułu');
     }
 }
 
-/**
- * Show error message
- */
+function updateBreadcrumbs(articleId) {
+    const breadcrumbs = document.getElementById('breadcrumbs');
+    if (!breadcrumbs || !METADATA[articleId]) return;
+    
+    const metadata = METADATA[articleId];
+    
+    document.getElementById('currentCategory').textContent = metadata.category;
+    document.getElementById('currentArticle').textContent = metadata.title;
+    
+    breadcrumbs.style.display = 'flex';
+}
+
+function processInternalLinks(container) {
+    // Find all links that start with #wiki-
+    const links = container.querySelectorAll('a[href^="#wiki-"]');
+    
+    links.forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            const articleId = this.getAttribute('href').replace('#wiki-', '');
+            window.location.hash = articleId;
+            loadArticle(articleId);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    });
+}
+
 function showError(message) {
     const articleContainer = document.getElementById('wikiArticle');
+    
     articleContainer.innerHTML = `
         <div class="wiki-error">
             <i class="fa-solid fa-triangle-exclamation"></i>
-            <h3>Błąd</h3>
-            <p>${message}</p>
-            <a href="wiki.html" class="btn-secondary">Powrót do strony głównej</a>
+            <h3>${message}</h3>
+            <p>Wybierz artykuł z menu po lewej stronie.</p>
         </div>
     `;
-}
-
-/**
- * Add "Edit on GitHub" link
- */
-function addEditLink(articleId) {
-    const articleContainer = document.getElementById('wikiArticle');
-    const editLink = document.createElement('div');
-    editLink.className = 'wiki-edit-link';
-    editLink.innerHTML = `
-        <a href="https://github.com/AI-robot-lab/ai-robot-lab.github.io/edit/main/${ARTICLES[articleId]}" 
-           target="_blank" 
-           rel="noopener noreferrer">
-            <i class="fa-brands fa-github"></i> Edytuj na GitHub
-        </a>
-    `;
-    articleContainer.appendChild(editLink);
-}
-
-/**
- * Search articles
- */
-function searchArticles(query) {
-    const links = document.querySelectorAll('[data-article]');
-    const lowerQuery = query.toLowerCase();
-
-    links.forEach(link => {
-        const text = link.textContent.toLowerCase();
-        const category = link.closest('.wiki-category');
-        
-        if (text.includes(lowerQuery)) {
-            link.style.display = 'block';
-            if (category) {
-                category.style.display = 'block';
-            }
-        } else {
-            link.style.display = 'none';
-        }
-    });
-
-    // Hide empty categories
-    document.querySelectorAll('.wiki-category').forEach(category => {
-        const visibleLinks = category.querySelectorAll('[data-article][style*="display: block"], [data-article]:not([style*="display: none"])');
-        if (query && visibleLinks.length === 0) {
-            category.style.display = 'none';
-        } else {
-            category.style.display = 'block';
-        }
-    });
-}
-
-/**
- * Debounce function
- */
-function debounce(func, wait) {
-    let timeout;
-    return function executedFunction(...args) {
-        const later = () => {
-            clearTimeout(timeout);
-            func(...args);
-        };
-        clearTimeout(timeout);
-        timeout = setTimeout(later, wait);
-    };
-}
-
-/**
- * Handle internal wiki links
- */
-document.addEventListener('click', function(e) {
-    if (e.target.matches('a[href^="#wiki-"]')) {
-        e.preventDefault();
-        const articleId = e.target.getAttribute('href').replace('#wiki-', '');
-        loadArticle(articleId);
+    
+    const breadcrumbs = document.getElementById('breadcrumbs');
+    if (breadcrumbs) {
+        breadcrumbs.style.display = 'none';
     }
-});
+}
 
-// Handle browser back/forward
+// Handle back/forward navigation
 window.addEventListener('hashchange', function() {
-    const hash = window.location.hash.slice(1);
-    if (hash && ARTICLES[hash]) {
+    const hash = window.location.hash.substring(1);
+    if (hash) {
         loadArticle(hash);
+        
+        // Update active link
+        const articleLinks = document.querySelectorAll('[data-article]');
+        articleLinks.forEach(link => {
+            const linkId = link.dataset.article.replace('wiki/', '');
+            if (linkId === hash) {
+                link.classList.add('active');
+            } else {
+                link.classList.remove('active');
+            }
+        });
     }
 });
