@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     
     <title>WIKI - Baza Wiedzy | Laboratorium Robotów Humanoidalnych</title>
-    <meta name="description" content="Baza wiedzy Laboratorium Robotów Humanoidalnych i technologiach AI.">
+    <meta name="description" content="Baza wiedzy Laboratorium Robotów Humanoidalnych. Artykuły o ROS2, Isaac Lab, informatyce afektywnej, rozpoznawaniu emocji i technologiach AI.">
     
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -71,7 +71,7 @@
         <section class="hero wiki-hero">
             <div class="container">
                 <div class="hero-content" style="text-align: center; max-width: 900px; margin: 0 auto;">
-                    <h1><i class="fa-solid fa-book"></i> Baza Wiedzy</h1>
+                    <h1><i class="fa-solid fa-book"></i> Baza wiedzy</h1>
                     <p class="hero-subtitle">
                         Kompendium wiedzy o technologiach, narzędziach i koncepcjach używanych 
                         w Laboratorium Robotów Humanoidalnych.
@@ -99,8 +99,11 @@
                                 <ul>
                                     <li><a href="#" data-article="wiki/ros2">ROS2 - Robot Operating System</a></li>
                                     <li><a href="#" data-article="wiki/isaac-lab">NVIDIA Isaac Lab</a></li>
-                                    <li><a href="#" data-article="wiki/unitree-g1">Unitree G1 - Specyfikacja</a></li>
+                                    <li><a href="#" data-article="wiki/unitree-g1">Unitree G1 - specyfikacja</a></li>
                                     <li><a href="#" data-article="wiki/pca-framework">Framework PCA</a></li>
+                                    <li><a href="#" data-article="wiki/slam">SLAM - lokalizacja i mapowanie</a></li>
+                                    <li><a href="#" data-article="wiki/imu">IMU - Pomiary inercjalne</a></li>
+                                    <li><a href="#" data-article="wiki/sensor-fusion">Fuzja sensoryczna</a></li>
                                 </ul>
                             </div>
 
@@ -108,9 +111,11 @@
                                 <h4><i class="fa-solid fa-eye"></i> Percepcja</h4>
                                 <ul>
                                     <li><a href="#" data-article="wiki/computer-vision">Computer Vision</a></li>
-                                    <li><a href="#" data-article="wiki/affective-computing">Informatyka Afektywna</a></li>
-                                    <li><a href="#" data-article="wiki/emotion-recognition">Rozpoznawanie Emocji</a></li>
-                                    <li><a href="#" data-article="wiki/face-detection">Detekcja Twarzy</a></li>
+                                    <li><a href="#" data-article="wiki/affective-computing">Informatyka afektywna</a></li>
+                                    <li><a href="#" data-article="wiki/emotion-recognition">Rozpoznawanie emocji</a></li>
+                                    <li><a href="#" data-article="wiki/face-detection">Detekcja twarzy</a></li>
+                                    <li><a href="#" data-article="wiki/object-detection">Detekcja obiektów</a></li>
+                                    <li><a href="#" data-article="wiki/pose-estimation">Estymacja pozy</a></li>
                                     <li><a href="#" data-article="wiki/lidar">LiDAR 3D</a></li>
                                 </ul>
                             </div>
@@ -120,16 +125,22 @@
                                 <ul>
                                     <li><a href="#" data-article="wiki/llm">Large Language Models (LLM)</a></li>
                                     <li><a href="#" data-article="wiki/vlm">Vision-Language Models (VLM)</a></li>
-                                    <li><a href="#" data-article="wiki/reinforcement-learning">Uczenie przez Wzmacnianie</a></li>
                                     <li><a href="#" data-article="wiki/deep-learning">Deep Learning</a></li>
+                                    <li><a href="#" data-article="wiki/neural-networks">Sieci neuronowe</a></li>
+                                    <li><a href="#" data-article="wiki/transformers">Architektury transformer</a></li>
+                                    <li><a href="#" data-article="wiki/reinforcement-learning">Uczenie przez wzmacnianie</a></li>
+                                    <li><a href="#" data-article="wiki/transfer-learning">Transfer Learning</a></li>
                                 </ul>
                             </div>
 
                             <div class="wiki-category">
                                 <h4><i class="fa-solid fa-hand"></i> Akcja</h4>
                                 <ul>
-                                    <li><a href="#" data-article="wiki/motion-planning">Planowanie Ruchu</a></li>
-                                    <li><a href="#" data-article="wiki/manipulation">Manipulacja Robotyczna</a></li>
+                                    <li><a href="#" data-article="wiki/motion-planning">Planowanie ruchu</a></li>
+                                    <li><a href="#" data-article="wiki/kinematics">Kinematyka robotów</a></li>
+                                    <li><a href="#" data-article="wiki/control-theory">Teoria sterowania</a></li>
+                                    <li><a href="#" data-article="wiki/manipulation">Manipulacja robotyczna</a></li>
+                                    <li><a href="#" data-article="wiki/trajectory-optimization">Optymalizacja trajektorii</a></li>
                                     <li><a href="#" data-article="wiki/sim-to-real">Transfer Sim-to-Real</a></li>
                                 </ul>
                             </div>
@@ -141,6 +152,17 @@
                                     <li><a href="#" data-article="wiki/opencv">OpenCV</a></li>
                                     <li><a href="#" data-article="wiki/mediapipe">MediaPipe</a></li>
                                     <li><a href="#" data-article="wiki/deepface">DeepFace</a></li>
+                                    <li><a href="#" data-article="wiki/moveit2">MoveIt2</a></li>
+                                    <li><a href="#" data-article="wiki/docker">Docker dla robotyki</a></li>
+                                </ul>
+                            </div>
+
+                            <div class="wiki-category">
+                                <h4><i class="fa-solid fa-users"></i> Inne</h4>
+                                <ul>
+                                    <li><a href="#" data-article="wiki/hri">Interakcja Człowiek-Robot</a></li>
+                                    <li><a href="#" data-article="wiki/safety">Bezpieczeństwo Robotów</a></li>
+                                    <li><a href="#" data-article="wiki/ethics">Etyka w robotyce</a></li>
                                 </ul>
                             </div>
                         </nav>
@@ -160,12 +182,12 @@
                                 <div class="wiki-stats">
                                     <div class="stat-card">
                                         <i class="fa-solid fa-file-lines"></i>
-                                        <strong>15+</strong>
+                                        <strong>35+</strong>
                                         <span>Artykułów</span>
                                     </div>
                                     <div class="stat-card">
                                         <i class="fa-solid fa-layer-group"></i>
-                                        <strong>5</strong>
+                                        <strong>6</strong>
                                         <span>Kategorii</span>
                                     </div>
                                     <div class="stat-card">
@@ -176,20 +198,26 @@
                                 </div>
 
                                 <div class="quick-start">
-                                    <h3><i class="fa-solid fa-rocket"></i> Szybki Start</h3>
+                                    <h3><i class="fa-solid fa-rocket"></i> Szybki start</h3>
                                     <p>Najpopularniejsze artykuły dla nowych członków zespołu:</p>
                                     <div class="quick-links">
-                                        <a href="#" data-article="ros2" class="quick-link">
+                                        <a href="#" data-article="wiki/ros2" class="quick-link">
                                             <i class="fa-solid fa-arrow-right"></i> Wprowadzenie do ROS2
                                         </a>
-                                        <a href="#" data-article="pca-framework" class="quick-link">
+                                        <a href="#" data-article="wiki/pca-framework" class="quick-link">
                                             <i class="fa-solid fa-arrow-right"></i> Framework PCA
                                         </a>
-                                        <a href="#" data-article="affective-computing" class="quick-link">
-                                            <i class="fa-solid fa-arrow-right"></i> Informatyka Afektywna
+                                        <a href="#" data-article="wiki/affective-computing" class="quick-link">
+                                            <i class="fa-solid fa-arrow-right"></i> Informatyka afektywna
                                         </a>
-                                        <a href="#" data-article="isaac-lab" class="quick-link">
+                                        <a href="#" data-article="wiki/isaac-lab" class="quick-link">
                                             <i class="fa-solid fa-arrow-right"></i> NVIDIA Isaac Lab
+                                        </a>
+                                        <a href="#" data-article="wiki/pytorch" class="quick-link">
+                                            <i class="fa-solid fa-arrow-right"></i> PyTorch dla robotyki
+                                        </a>
+                                        <a href="#" data-article="wiki/computer-vision" class="quick-link">
+                                            <i class="fa-solid fa-arrow-right"></i> Computer Vision
                                         </a>
                                     </div>
                                 </div>
@@ -251,14 +279,17 @@
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2025 Politechnika Rzeszowska im. Ignacego Łukasiewicza</p>
-                <p class="version-tag">System Version: 2.3.0-stable</p>
+                <p>&copy; 2026 Politechnika Rzeszowska im. Ignacego Łukasiewicza</p>
+                <p class="version-tag">System version: 26.2.11</p>
             </div>
         </div>
     </footer>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/11.1.1/marked.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/11.1.1/marked.min.js" integrity="sha512-I3LftbcShRiHgFbe1L35p/6FBZ46NOZvyCS3l7T0N7EYe9gRLZkQPAiJUGsZ7X2hc5V/IqOXFKnxTF7FOrUOgQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/python.min.js" integrity="sha512-o7msp1d5BE0494dHDH23XGu8bBYc5kJw4z3mj5o6p1MZZE5U/k3Y2SKKxYz3OhcuD1d/OADr0MHOp5aUbHsKJQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/javascript.min.js" integrity="sha512-GdG0BUqQC4nOqo38GJ04gG/BrVdCOVNa3VGQy0BhBkiRgZb7e3LrZJ+jh8vwPm8TKfM0kPlp5kKcQ6RXE5vKpg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/bash.min.js" integrity="sha512-TpcEHO0m5VDQUXxZHBV7K3WbOWBWqbAGsO8gCK2QHhqNHGGOEGXNO1UPLLjVtD8nZh/lZ8kCg4Qk7qvxQxIWJQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="script.js" defer></script>
     <script src="wiki.js" defer></script>
 </body>

@@ -7,37 +7,110 @@
 
 // Article database - maps article IDs to markdown files
 const ARTICLES = {
+    // Robotyka
     'ros2': 'wiki/ros2.md',
     'isaac-lab': 'wiki/isaac-lab.md',
     'unitree-g1': 'wiki/unitree-g1.md',
     'pca-framework': 'wiki/pca-framework.md',
+    'slam': 'wiki/slam.md',
+    'imu': 'wiki/imu.md',
+    'sensor-fusion': 'wiki/sensor-fusion.md',
+    
+    // Percepcja
     'computer-vision': 'wiki/computer-vision.md',
     'affective-computing': 'wiki/affective-computing.md',
     'emotion-recognition': 'wiki/emotion-recognition.md',
     'face-detection': 'wiki/face-detection.md',
     'lidar': 'wiki/lidar.md',
+    'object-detection': 'wiki/object-detection.md',
+    'pose-estimation': 'wiki/pose-estimation.md',
+    
+    // Kognicja
     'llm': 'wiki/llm.md',
     'vlm': 'wiki/vlm.md',
     'reinforcement-learning': 'wiki/reinforcement-learning.md',
     'deep-learning': 'wiki/deep-learning.md',
+    'neural-networks': 'wiki/neural-networks.md',
+    'transformers': 'wiki/transformers.md',
+    'transfer-learning': 'wiki/transfer-learning.md',
+    
+    // Akcja
     'motion-planning': 'wiki/motion-planning.md',
     'manipulation': 'wiki/manipulation.md',
     'sim-to-real': 'wiki/sim-to-real.md',
+    'control-theory': 'wiki/control-theory.md',
+    'kinematics': 'wiki/kinematics.md',
+    'trajectory-optimization': 'wiki/trajectory-optimization.md',
+    
+    // Technologie
     'pytorch': 'wiki/pytorch.md',
     'opencv': 'wiki/opencv.md',
     'mediapipe': 'wiki/mediapipe.md',
-    'deepface': 'wiki/deepface.md'
+    'deepface': 'wiki/deepface.md',
+    'moveit2': 'wiki/moveit2.md',
+    'docker': 'wiki/docker.md',
+    
+    // Inne
+    'hri': 'wiki/hri.md',
+    'safety': 'wiki/safety.md',
+    'ethics': 'wiki/ethics.md'
 };
 
 // Article metadata
 const METADATA = {
+    // Robotyka
     'ros2': { category: 'Robotyka', title: 'ROS2 - Robot Operating System' },
     'isaac-lab': { category: 'Robotyka', title: 'NVIDIA Isaac Lab' },
+    'unitree-g1': { category: 'Robotyka', title: 'Unitree G1 - Specyfikacja' },
+    'pca-framework': { category: 'Robotyka', title: 'Framework PCA' },
+    
+    // Percepcja
+    'computer-vision': { category: 'Percepcja', title: 'Computer Vision' },
     'affective-computing': { category: 'Percepcja', title: 'Informatyka Afektywna' },
     'emotion-recognition': { category: 'Percepcja', title: 'Rozpoznawanie Emocji' },
     'face-detection': { category: 'Percepcja', title: 'Detekcja Twarzy' },
-    'pca-framework': { category: 'Robotyka', title: 'Framework PCA' },
-    // ... more metadata
+    'lidar': { category: 'Percepcja', title: 'LiDAR 3D' },
+    
+    // Kognicja
+    'llm': { category: 'Kognicja', title: 'Large Language Models (LLM)' },
+    'vlm': { category: 'Kognicja', title: 'Vision-Language Models (VLM)' },
+    'reinforcement-learning': { category: 'Kognicja', title: 'Uczenie przez Wzmacnianie' },
+    'deep-learning': { category: 'Kognicja', title: 'Deep Learning' },
+    
+    // Akcja
+    'motion-planning': { category: 'Akcja', title: 'Planowanie Ruchu' },
+    'manipulation': { category: 'Akcja', title: 'Manipulacja Robotyczna' },
+    'sim-to-real': { category: 'Akcja', title: 'Transfer Sim-to-Real' },
+    'control-theory': { category: 'Akcja', title: 'Teoria Sterowania' },
+    'kinematics': { category: 'Akcja', title: 'Kinematyka Robotów' },
+    'trajectory-optimization': { category: 'Akcja', title: 'Optymalizacja Trajektorii' },
+    
+    // Technologie
+    'pytorch': { category: 'Technologie', title: 'PyTorch' },
+    'opencv': { category: 'Technologie', title: 'OpenCV' },
+    'mediapipe': { category: 'Technologie', title: 'MediaPipe' },
+    'deepface': { category: 'Technologie', title: 'DeepFace' },
+    'moveit2': { category: 'Technologie', title: 'MoveIt2' },
+    'docker': { category: 'Technologie', title: 'Docker dla Robotyki' },
+    
+    // Inne
+    'hri': { category: 'Inne', title: 'Interakcja Człowiek-Robot' },
+    'safety': { category: 'Inne', title: 'Bezpieczeństwo Robotów' },
+    'ethics': { category: 'Etyka', title: 'Etyka w Robotyce' },
+    
+    // Percepcja - dodatkowe
+    'object-detection': { category: 'Percepcja', title: 'Detekcja Obiektów' },
+    'pose-estimation': { category: 'Percepcja', title: 'Estymacja Pozy' },
+    
+    // Kognicja - dodatkowe
+    'neural-networks': { category: 'Kognicja', title: 'Sieci Neuronowe' },
+    'transformers': { category: 'Kognicja', title: 'Architektury Transformer' },
+    'transfer-learning': { category: 'Kognicja', title: 'Transfer Learning' },
+    
+    // Robotyka - dodatkowe
+    'slam': { category: 'Robotyka', title: 'SLAM - Lokalizacja i Mapowanie' },
+    'imu': { category: 'Robotyka', title: 'IMU - Inertial Measurement Unit' },
+    'sensor-fusion': { category: 'Robotyka', title: 'Fuzja Sensoryczna' }
 };
 
 document.addEventListener('DOMContentLoaded', function() {
