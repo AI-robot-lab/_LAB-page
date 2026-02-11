@@ -112,7 +112,67 @@ const METADATA = {
 // Initialize on page load
 document.addEventListener('DOMContentLoaded', function() {
     initWiki();
+    initDarkMode();
+    initScrollProgress();
 });
+
+function initDarkMode() {
+    const darkModeToggle = document.getElementById('darkModeToggle');
+    
+    // Check saved preference
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    document.documentElement.setAttribute('data-theme', savedTheme);
+    
+    // Update icon
+    updateDarkModeIcon(savedTheme);
+    
+    // Toggle functionality
+    if (darkModeToggle) {
+        darkModeToggle.addEventListener('click', function() {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            
+            // Smooth transition
+            document.documentElement.style.transition = 'background-color 0.3s ease, color 0.3s ease';
+            
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            
+            updateDarkModeIcon(newTheme);
+            
+            // Remove transition after animation
+            setTimeout(() => {
+                document.documentElement.style.transition = '';
+            }, 300);
+        });
+    }
+}
+
+function updateDarkModeIcon(theme) {
+    const darkModeToggle = document.getElementById('darkModeToggle');
+    if (!darkModeToggle) return;
+    
+    const icon = darkModeToggle.querySelector('i');
+    if (theme === 'dark') {
+        icon.className = 'fa-solid fa-sun';
+    } else {
+        icon.className = 'fa-solid fa-moon';
+    }
+}
+
+function initScrollProgress() {
+    // Create scroll progress bar
+    const progressBar = document.createElement('div');
+    progressBar.className = 'scroll-progress';
+    document.body.appendChild(progressBar);
+    
+    // Update on scroll
+    window.addEventListener('scroll', function() {
+        const windowHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        const scrolled = (window.scrollY / windowHeight) * 100;
+        progressBar.style.width = scrolled + '%';
+    });
+}
 
 function initWiki() {
     // Initialize marked.js for markdown rendering
@@ -129,6 +189,9 @@ function initWiki() {
         });
     }
 
+    // Add smooth scroll to html
+    document.documentElement.style.scrollBehavior = 'smooth';
+    
     // Set up event listeners
     setupArticleLinks();
     setupSearch();
@@ -138,6 +201,30 @@ function initWiki() {
     if (hash) {
         loadArticle(hash);
     }
+    
+    // Add fade-in animation to sidebar
+    const sidebar = document.querySelector('.wiki-sidebar');
+    if (sidebar) {
+        sidebar.style.opacity = '0';
+        sidebar.style.transform = 'translateX(-20px)';
+        setTimeout(() => {
+            sidebar.style.transition = 'all 0.5s ease';
+            sidebar.style.opacity = '1';
+            sidebar.style.transform = 'translateX(0)';
+        }, 100);
+    }
+    
+    // Add stagger animation to category links
+    const categories = document.querySelectorAll('.wiki-category');
+    categories.forEach((category, index) => {
+        category.style.opacity = '0';
+        category.style.transform = 'translateY(10px)';
+        setTimeout(() => {
+            category.style.transition = 'all 0.4s ease';
+            category.style.opacity = '1';
+            category.style.transform = 'translateY(0)';
+        }, 150 + (index * 50));
+    });
 }
 
 function setupArticleLinks() {
@@ -227,8 +314,16 @@ async function loadArticle(articleId) {
     
     if (!articleContainer) return;
     
-    // Show loading
-    articleContainer.innerHTML = '<div class="loading"><i class="fa-solid fa-spinner fa-spin"></i> Ładowanie...</div>';
+    // Show loading with progress bar
+    articleContainer.innerHTML = `
+        <div class="loading">
+            <i class="fa-solid fa-spinner fa-spin"></i>
+            <div class="loading-text">Ładowanie artykułu...</div>
+            <div class="loading-progress">
+                <div class="loading-progress-bar"></div>
+            </div>
+        </div>
+    `;
     
     // Check if article exists
     if (!ARTICLES[articleId]) {
@@ -248,7 +343,16 @@ async function loadArticle(articleId) {
         
         // Render markdown
         const html = marked.parse(markdown);
+        
+        // Fade in animation
+        articleContainer.style.opacity = '0';
         articleContainer.innerHTML = html;
+        
+        // Smooth fade in
+        setTimeout(() => {
+            articleContainer.style.transition = 'opacity 0.3s ease';
+            articleContainer.style.opacity = '1';
+        }, 50);
         
         // Highlight code blocks
         if (typeof hljs !== 'undefined') {
@@ -257,11 +361,34 @@ async function loadArticle(articleId) {
             });
         }
         
+        // Add copy buttons to code blocks
+        addCopyButtons(articleContainer);
+        
+        // Add reading time estimate
+        addReadingTime(articleContainer);
+        
+        // Generate table of contents
+        generateTableOfContents(articleContainer);
+        
         // Update breadcrumbs
         updateBreadcrumbs(articleId);
         
         // Process internal links
         processInternalLinks(articleContainer);
+        
+        // Add smooth scroll behavior
+        articleContainer.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
         
     } catch (error) {
         console.error('Error loading article:', error);
@@ -303,13 +430,162 @@ function showError(message) {
         <div class="wiki-error">
             <i class="fa-solid fa-triangle-exclamation"></i>
             <h3>${message}</h3>
-            <p>Wybierz artykuł z menu po lewej stronie.</p>
+            <p>Wybierz artykuł z menu po lewej stronie lub użyj wyszukiwarki.</p>
+            <div style="margin-top: 25px;">
+                <a href="#" onclick="window.location.reload()" style="
+                    display: inline-flex;
+                    align-items: center;
+                    gap: 8px;
+                    padding: 12px 24px;
+                    background: linear-gradient(135deg, var(--prz-blue) 0%, #004d99 100%);
+                    color: white;
+                    border-radius: 8px;
+                    text-decoration: none;
+                    font-weight: 600;
+                    transition: all 0.3s ease;
+                ">
+                    <i class="fa-solid fa-rotate-right"></i>
+                    Odśwież stronę
+                </a>
+            </div>
         </div>
     `;
     
     const breadcrumbs = document.getElementById('breadcrumbs');
     if (breadcrumbs) {
         breadcrumbs.style.display = 'none';
+    }
+}
+
+// Handle back/forward navigation
+window.addEventListener('hashchange', function() {
+    const hash = window.location.hash.substring(1);
+    if (hash) {
+        loadArticle(hash);
+        
+        // Update active link
+        const articleLinks = document.querySelectorAll('[data-article]');
+        articleLinks.forEach(link => {
+            const linkId = link.dataset.article.replace('wiki/', '');
+            if (linkId === hash) {
+                link.classList.add('active');
+            } else {
+                link.classList.remove('active');
+            }
+        });
+    }
+});
+
+function addCopyButtons(container) {
+    /**
+     * Dodaj przyciski kopiowania do wszystkich bloków kodu
+     */
+    const codeBlocks = container.querySelectorAll('pre');
+    
+    codeBlocks.forEach((pre, index) => {
+        // Wrap in container
+        const wrapper = document.createElement('div');
+        wrapper.className = 'code-block-wrapper';
+        pre.parentNode.insertBefore(wrapper, pre);
+        wrapper.appendChild(pre);
+        
+        // Create copy button
+        const button = document.createElement('button');
+        button.className = 'copy-code-btn';
+        button.innerHTML = '<i class="fa-solid fa-copy"></i> Copy';
+        
+        button.addEventListener('click', async function() {
+            const code = pre.querySelector('code').textContent;
+            
+            try {
+                await navigator.clipboard.writeText(code);
+                
+                // Visual feedback
+                button.innerHTML = '<i class="fa-solid fa-check"></i> Copied!';
+                button.classList.add('copied');
+                
+                setTimeout(() => {
+                    button.innerHTML = '<i class="fa-solid fa-copy"></i> Copy';
+                    button.classList.remove('copied');
+                }, 2000);
+            } catch (err) {
+                console.error('Failed to copy:', err);
+                button.innerHTML = '<i class="fa-solid fa-xmark"></i> Failed';
+            }
+        });
+        
+        wrapper.appendChild(button);
+    });
+}
+
+function addReadingTime(container) {
+    /**
+     * Oblicz i wyświetl szacowany czas czytania
+     */
+    const text = container.textContent;
+    const wordsPerMinute = 200;
+    const words = text.trim().split(/\s+/).length;
+    const minutes = Math.ceil(words / wordsPerMinute);
+    
+    // Create reading time badge
+    const badge = document.createElement('div');
+    badge.className = 'reading-time';
+    badge.innerHTML = `
+        <i class="fa-solid fa-clock"></i>
+        <span>${minutes} min czytania</span>
+    `;
+    
+    // Insert after h1
+    const h1 = container.querySelector('h1');
+    if (h1 && h1.nextSibling) {
+        h1.parentNode.insertBefore(badge, h1.nextSibling);
+    }
+}
+
+function generateTableOfContents(container) {
+    /**
+     * Generuj spis treści z nagłówków
+     */
+    const headings = container.querySelectorAll('h2, h3');
+    
+    if (headings.length < 3) return; // Don't show TOC for short articles
+    
+    const toc = document.createElement('div');
+    toc.className = 'article-toc';
+    toc.innerHTML = '<h3><i class="fa-solid fa-list"></i> Spis Treści</h3><ul></ul>';
+    
+    const ul = toc.querySelector('ul');
+    
+    headings.forEach((heading, index) => {
+        // Add ID for linking
+        const id = `heading-${index}`;
+        heading.id = id;
+        
+        // Create TOC item
+        const li = document.createElement('li');
+        const level = heading.tagName === 'H2' ? 0 : 20;
+        li.style.paddingLeft = level + 'px';
+        
+        const link = document.createElement('a');
+        link.href = `#${id}`;
+        link.textContent = heading.textContent;
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            heading.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+        
+        li.appendChild(link);
+        ul.appendChild(li);
+    });
+    
+    // Insert after reading time or h1
+    const readingTime = container.querySelector('.reading-time');
+    const h1 = container.querySelector('h1');
+    
+    if (readingTime) {
+        readingTime.parentNode.insertBefore(toc, readingTime.nextSibling);
+    } else if (h1) {
+        h1.parentNode.insertBefore(toc, h1.nextSibling);
     }
 }
 

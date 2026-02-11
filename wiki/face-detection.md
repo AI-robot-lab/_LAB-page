@@ -1,12 +1,12 @@
-# Detekcja twarzy (Face Detection)
+# Detekcja Twarzy (Face Detection)
 
 ## Wprowadzenie
 
 **Detekcja twarzy** to proces lokalizacji i identyfikacji twarzy ludzkich na obrazach lub w sekwencjach wideo. Jest to fundamentalny krok dla większości aplikacji związanych z analizą twarzy, rozpoznawaniem emocji i biometrią.
 
-## Metody detekcji
+## Metody Detekcji
 
-### 1. Klasyczne metody (Pre-Deep Learning)
+### 1. Klasyczne Metody (Pre-Deep Learning)
 
 #### Viola-Jones Algorithm (2001)
 

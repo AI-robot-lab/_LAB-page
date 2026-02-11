@@ -1,4 +1,4 @@
-# DeepFace - Framework do analizy twarzy
+# DeepFace - Framework do Analizy Twarzy
 
 ## Wprowadzenie
 
@@ -19,7 +19,7 @@ Zależności:
 - OpenCV
 - Keras
 
-## Podstawowe użycie
+## Podstawowe Użycie
 
 ### 1. Face Recognition
 

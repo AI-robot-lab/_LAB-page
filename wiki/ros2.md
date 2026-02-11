@@ -16,7 +16,7 @@ ROS2 bazuje na standardzie **DDS** (Data Distribution Service), który zapewnia:
 
 ### Główne Komponenty
 
-1. **Nodes (węzły)** - podstawowe jednostki wykonawcze
+1. **Nodes (Węzły)** - podstawowe jednostki wykonawcze
 2. **Topics** - kanały komunikacji asynchronicznej
 3. **Services** - komunikacja synchroniczna request-response
 4. **Actions** - długotrwałe zadania z feedbackiem

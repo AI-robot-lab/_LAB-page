@@ -1,4 +1,4 @@
-# Rozpoznawanie emocji
+# Rozpoznawanie Emocji
 
 ## Wprowadzenie
 
@@ -6,7 +6,7 @@
 
 ## Metody Rozpoznawania
 
-### 1. Analiza ekspresji twarzy (FER)
+### 1. Analiza Ekspresji Twarzy (FER)
 
 #### Facial Action Coding System (FACS)
 
