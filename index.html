@@ -138,9 +138,12 @@
                         </div>
                     </div>
                     <div class="hero-visual">
-                        <img src="https://imgs.search.brave.com/4t8oG0xn_xS_CqObXR_Jq42BZaUlqYfnUGLd4sWgKh0/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9tLm1l/ZGlhLWFtYXpvbi5j/b20vaW1hZ2VzL0kv/NzF6czdKVS1VMEwu/anBn" 
-                             alt="Robot humanoidalny Unitree G1 w laboratorium" 
-                             loading="eager">
+                        <div class="robot-gallery">
+                            <img src="assets/images/robot/robot-1.jpg" 
+                                 alt="Robot humanoidalny Unitree G1 w Laboratorium Robotów Humanoidalnych PRz" 
+                                 loading="eager"
+                                 onerror="this.src='https://imgs.search.brave.com/4t8oG0xn_xS_CqObXR_Jq42BZaUlqYfnUGLd4sWgKh0/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9tLm1l/ZGlhLWFtYXpvbi5j/b20vaW1hZ2VzL0kv/NzF6czdKVS1VMEwu/anBn'">
+                        </div>
                     </div>
                 </div>
             </div>
@@ -158,6 +161,39 @@
                          alt="Diagram Framework PCA - Perception, Cognition, Action" 
                          class="pca-img"
                          loading="lazy">
+                </div>
+            </div>
+        </section>
+
+        <!-- Robot Gallery Section -->
+        <section id="robot-gallery" class="robot-gallery-section" aria-labelledby="gallery-title">
+            <div class="container">
+                <div class="section-header">
+                    <h2 id="gallery-title">Unitree G1 w Laboratorium</h2>
+                    <p>Robot humanoidalny nowej generacji w działaniu</p>
+                </div>
+                <div class="gallery-grid">
+                    <figure class="gallery-item">
+                        <img src="assets/images/robot/robot-1.jpg" 
+                             alt="Unitree G1 - widok z przodu podczas demonstracji w laboratorium"
+                             loading="lazy"
+                             onerror="this.src='https://via.placeholder.com/800x600/003366/ffffff?text=Robot+G1'">
+                        <figcaption>Unitree G1 podczas testów percepcji</figcaption>
+                    </figure>
+                    <figure class="gallery-item">
+                        <img src="assets/images/robot/robot-2.jpg" 
+                             alt="Unitree G1 - widok boczny z systemem sensorycznym"
+                             loading="lazy"
+                             onerror="this.src='https://via.placeholder.com/800x600/003366/ffffff?text=Robot+G1'">
+                        <figcaption>System sensoryczny - LiDAR i kamery RGB-D</figcaption>
+                    </figure>
+                    <figure class="gallery-item">
+                        <img src="assets/images/robot/robot-3.jpg" 
+                             alt="Unitree G1 - prezentacja manipulacji z dłońmi Dex3-1"
+                             loading="lazy"
+                             onerror="this.src='https://via.placeholder.com/800x600/003366/ffffff?text=Robot+G1'">
+                        <figcaption>Manipulacja precyzyjna - dłonie Dex3-1</figcaption>
+                    </figure>
                 </div>
             </div>
         </section>
@@ -189,7 +225,7 @@
                         </ul>
                     </article>
                     <article class="team-card">
-                        <h3>Zespół Akcji</h3>
+                        <h3>Zespół Interakcji</h3>
                         <ul>
                             <li>Transfer polityk ruchu Sim-to-Real (Isaac Lab)</li>
                             <li>Manipulacja precyzyjna dłońmi Dex3-1</li>
@@ -351,6 +387,17 @@
                 <div class="footer-contact">
                     <h3>Kontakt</h3>
                     <p>
+                        <strong>Opiekun Laboratorium:</strong><br>
+                        <a href="mailto:tomza@prz.edu.pl" aria-label="E-mail do opiekuna">
+                            <i class="fa-solid fa-envelope" aria-hidden="true"></i> dr inż. Tomasz Żabiński
+                        </a><br>
+                        <a href="mailto:tomza@prz.edu.pl">tomza@prz.edu.pl</a>
+                    </p>
+                    <p>
+                        <strong>Współpraca:</strong><br>
+                        dr inż. Mateusz Pomianek
+                    </p>
+                    <p>
                         <a href="https://github.com/AI-robot-lab" 
                            target="_blank" 
                            rel="noopener noreferrer"
@@ -358,7 +405,6 @@
                             <i class="fa-brands fa-github" aria-hidden="true"></i> GitHub: AI Robot Lab
                         </a>
                     </p>
-                    <p>dr inż. Mateusz Pomianek</p>
                 </div>
             </div>
             <div class="footer-bottom">

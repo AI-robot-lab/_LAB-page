@@ -4,6 +4,10 @@
 
 **Framework PCA** to architektura przetwarzania informacji w autonomicznych systemach robotycznych, wykorzystywana w Laboratorium Robotów Humanoidalnych PRz. Składa się z trzech głównych modułów działających w zamkniętej pętli poznawczej.
 
+![Diagram Framework PCA](../assets/images/graf-1.jpg)
+
+*Rysunek 1: Architektura Framework PCA - pętla Percepcja-Kognicja-Interakcja*
+
 ```
 ┌─────────────────────────────────────────┐
 │           PERCEPCJA (P)                 │
@@ -22,7 +26,7 @@
 └──────────────┬──────────────────────────┘
                ↓
 ┌─────────────────────────────────────────┐
-│              AKCJA (A)                  │
+│           INTERAKCJA (A)                │
 │   ┌──────────────────────────────┐     │
 │   │ Planning → Control →         │     │
 │   │ Execution                    │     │
@@ -309,7 +313,7 @@ def generate_launch_description():
             name='reasoning_engine'
         ),
         
-        # Akcja
+        # Interakcja
         Node(
             package='humanoid_action',
             executable='motion_controller',
@@ -415,13 +419,13 @@ class AsyncPCAFramework:
 
 - **Percepcja**: Analiza ruchu pacjenta, detekcja błędów
 - **Kognicja**: Ocena postępu, dostosowanie trudności
-- **Akcja**: Assist-as-needed, korekcja ruchu
+- **Interakcja**: Assist-as-needed, korekcja ruchu
 
 ### Interakcja Społeczna
 
 - **Percepcja**: Rozpoznawanie emocji, intencji
 - **Kognicja**: Teoria umysłu, empatie
-- **Akcja**: Gesty, ekspresje, mowa
+- **Interakcja**: Gesty, ekspresje, mowa
 
 ## Powiązane Artykuły
 

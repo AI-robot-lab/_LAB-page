@@ -10,52 +10,52 @@
 // Wszystkie pliki są w folderze wiki/
 const ARTICLES = {
     // Robotyka
-    'ros2': 'ros2.md',
-    'isaac-lab': 'isaac-lab.md',
-    'unitree-g1': 'unitree-g1.md',
-    'pca-framework': 'pca-framework.md',
-    'slam': 'slam.md',
-    'imu': 'imu.md',
-    'sensor-fusion': 'sensor-fusion.md',
+    'ros2': 'wiki/ros2.md',
+    'isaac-lab': 'wiki/isaac-lab.md',
+    'unitree-g1': 'wiki/unitree-g1.md',
+    'pca-framework': 'wiki/pca-framework.md',
+    'slam': 'wiki/slam.md',
+    'imu': 'wiki/imu.md',
+    'sensor-fusion': 'wiki/sensor-fusion.md',
     
     // Percepcja
-    'computer-vision': 'computer-vision.md',
-    'affective-computing': 'affective-computing.md',
-    'emotion-recognition': 'emotion-recognition.md',
-    'face-detection': 'face-detection.md',
-    'lidar': 'lidar.md',
-    'object-detection': 'object-detection.md',
-    'pose-estimation': 'pose-estimation.md',
+    'computer-vision': 'wiki/computer-vision.md',
+    'affective-computing': 'wiki/affective-computing.md',
+    'emotion-recognition': 'wiki/emotion-recognition.md',
+    'face-detection': 'wiki/face-detection.md',
+    'lidar': 'wiki/lidar.md',
+    'object-detection': 'wiki/object-detection.md',
+    'pose-estimation': 'wiki/pose-estimation.md',
     
     // Kognicja
-    'llm': 'llm.md',
-    'vlm': 'vlm.md',
-    'reinforcement-learning': 'reinforcement-learning.md',
-    'deep-learning': 'deep-learning.md',
-    'neural-networks': 'neural-networks.md',
-    'transformers': 'transformers.md',
-    'transfer-learning': 'transfer-learning.md',
+    'llm': 'wiki/llm.md',
+    'vlm': 'wiki/vlm.md',
+    'reinforcement-learning': 'wiki/reinforcement-learning.md',
+    'deep-learning': 'wiki/deep-learning.md',
+    'neural-networks': 'wiki/neural-networks.md',
+    'transformers': 'wiki/transformers.md',
+    'transfer-learning': 'wiki/transfer-learning.md',
     
     // Akcja
-    'motion-planning': 'motion-planning.md',
-    'manipulation': 'manipulation.md',
-    'sim-to-real': 'sim-to-real.md',
-    'control-theory': 'control-theory.md',
-    'kinematics': 'kinematics.md',
-    'trajectory-optimization': 'trajectory-optimization.md',
+    'motion-planning': 'wiki/motion-planning.md',
+    'manipulation': 'wiki/manipulation.md',
+    'sim-to-real': 'wiki/sim-to-real.md',
+    'control-theory': 'wiki/control-theory.md',
+    'kinematics': 'wiki/kinematics.md',
+    'trajectory-optimization': 'wiki/trajectory-optimization.md',
     
     // Technologie
-    'pytorch': 'pytorch.md',
-    'opencv': 'opencv.md',
-    'mediapipe': 'mediapipe.md',
-    'deepface': 'deepface.md',
-    'moveit2': 'moveit2.md',
-    'docker': 'docker.md',
+    'pytorch': 'wiki/pytorch.md',
+    'opencv': 'wiki/opencv.md',
+    'mediapipe': 'wiki/mediapipe.md',
+    'deepface': 'wiki/deepface.md',
+    'moveit2': 'wiki/moveit2.md',
+    'docker': 'wiki/docker.md',
     
     // Inne
-    'hri': 'hri.md',
-    'safety': 'safety.md',
-    'ethics': 'ethics.md'
+    'hri': 'wiki/hri.md',
+    'safety': 'wiki/safety.md',
+    'ethics': 'wiki/ethics.md'
 };
 
 // Article metadata
@@ -63,37 +63,37 @@ const METADATA = {
     // Robotyka
     'ros2': { category: 'Robotyka', title: 'ROS2 - Robot Operating System' },
     'isaac-lab': { category: 'Robotyka', title: 'NVIDIA Isaac Lab' },
-    'unitree-g1': { category: 'Robotyka', title: 'Unitree G1 - specyfikacja' },
+    'unitree-g1': { category: 'Robotyka', title: 'Unitree G1 - Specyfikacja' },
     'pca-framework': { category: 'Robotyka', title: 'Framework PCA' },
-    'slam': { category: 'Robotyka', title: 'SLAM - lokalizacja i mapowanie' },
+    'slam': { category: 'Robotyka', title: 'SLAM - Lokalizacja i Mapowanie' },
     'imu': { category: 'Robotyka', title: 'IMU - Inertial Measurement Unit' },
-    'sensor-fusion': { category: 'Robotyka', title: 'Fuzja sensoryczna' },
+    'sensor-fusion': { category: 'Robotyka', title: 'Fuzja Sensoryczna' },
     
     // Percepcja
     'computer-vision': { category: 'Percepcja', title: 'Computer Vision' },
-    'affective-computing': { category: 'Percepcja', title: 'Informatyka afektywna' },
-    'emotion-recognition': { category: 'Percepcja', title: 'Rozpoznawanie emocji' },
-    'face-detection': { category: 'Percepcja', title: 'Detekcja twarzy' },
+    'affective-computing': { category: 'Percepcja', title: 'Informatyka Afektywna' },
+    'emotion-recognition': { category: 'Percepcja', title: 'Rozpoznawanie Emocji' },
+    'face-detection': { category: 'Percepcja', title: 'Detekcja Twarzy' },
     'lidar': { category: 'Percepcja', title: 'LiDAR 3D' },
-    'object-detection': { category: 'Percepcja', title: 'Detekcja obiektów' },
+    'object-detection': { category: 'Percepcja', title: 'Detekcja Obiektów' },
     'pose-estimation': { category: 'Percepcja', title: 'Estymacja Pozy' },
     
     // Kognicja
     'llm': { category: 'Kognicja', title: 'Large Language Models (LLM)' },
     'vlm': { category: 'Kognicja', title: 'Vision-Language Models (VLM)' },
-    'reinforcement-learning': { category: 'Kognicja', title: 'Uczenie przez wzmacnianie' },
-    'deep-learning': { category: 'Kognicja', title: 'Deep learning' },
-    'neural-networks': { category: 'Kognicja', title: 'Sieci neuronowe' },
-    'transformers': { category: 'Kognicja', title: 'Architektury transformer' },
-    'transfer-learning': { category: 'Kognicja', title: 'Transfer learning' },
+    'reinforcement-learning': { category: 'Kognicja', title: 'Uczenie przez Wzmacnianie' },
+    'deep-learning': { category: 'Kognicja', title: 'Deep Learning' },
+    'neural-networks': { category: 'Kognicja', title: 'Sieci Neuronowe' },
+    'transformers': { category: 'Kognicja', title: 'Architektury Transformer' },
+    'transfer-learning': { category: 'Kognicja', title: 'Transfer Learning' },
     
     // Akcja
-    'motion-planning': { category: 'Akcja', title: 'Planowanie ruchu' },
-    'manipulation': { category: 'Akcja', title: 'Manipulacja robotyczna' },
+    'motion-planning': { category: 'Akcja', title: 'Planowanie Ruchu' },
+    'manipulation': { category: 'Akcja', title: 'Manipulacja Robotyczna' },
     'sim-to-real': { category: 'Akcja', title: 'Transfer Sim-to-Real' },
-    'control-theory': { category: 'Akcja', title: 'Teoria sterowania' },
-    'kinematics': { category: 'Akcja', title: 'Kinematyka robotów' },
-    'trajectory-optimization': { category: 'Akcja', title: 'Optymalizacja trajektorii' },
+    'control-theory': { category: 'Akcja', title: 'Teoria Sterowania' },
+    'kinematics': { category: 'Akcja', title: 'Kinematyka Robotów' },
+    'trajectory-optimization': { category: 'Akcja', title: 'Optymalizacja Trajektorii' },
     
     // Technologie
     'pytorch': { category: 'Technologie', title: 'PyTorch' },
@@ -101,26 +101,42 @@ const METADATA = {
     'mediapipe': { category: 'Technologie', title: 'MediaPipe' },
     'deepface': { category: 'Technologie', title: 'DeepFace' },
     'moveit2': { category: 'Technologie', title: 'MoveIt2' },
-    'docker': { category: 'Technologie', title: 'Docker dla robotyki' },
+    'docker': { category: 'Technologie', title: 'Docker dla Robotyki' },
     
     // Inne
-    'hri': { category: 'Inne', title: 'Interakcja człowiek-robot' },
-    'safety': { category: 'Inne', title: 'Bezpieczeństwo robotów' },
-    'ethics': { category: 'Inne', title: 'Etyka w robotyce' }
+    'hri': { category: 'Inne', title: 'Interakcja Człowiek-Robot' },
+    'safety': { category: 'Inne', title: 'Bezpieczeństwo Robotów' },
+    'ethics': { category: 'Inne', title: 'Etyka w Robotyce' }
 };
 
 // Initialize on page load
 document.addEventListener('DOMContentLoaded', function() {
-    initWiki();
-    initDarkMode();
-    initScrollProgress();
+    // Wait for marked.js to load
+    if (typeof marked === 'undefined') {
+        console.error('Marked library not loaded! Waiting...');
+        setTimeout(() => {
+            if (typeof marked !== 'undefined') {
+                console.log('Marked loaded successfully');
+                initWiki();
+                initDarkMode();
+                initScrollProgress();
+            } else {
+                console.error('Marked library failed to load');
+            }
+        }, 500);
+    } else {
+        console.log('Starting WIKI initialization...');
+        initWiki();
+        initDarkMode();
+        initScrollProgress();
+    }
 });
 
 function initDarkMode() {
     const darkModeToggle = document.getElementById('darkModeToggle');
     
     // Check saved preference
-    const savedTheme = localStorage.getItem('theme') || 'dark';
+    const savedTheme = localStorage.getItem('theme') || 'light';
     document.documentElement.setAttribute('data-theme', savedTheme);
     
     // Update icon
@@ -312,7 +328,10 @@ async function loadArticle(articleId) {
     const articleContainer = document.getElementById('wikiArticle');
     const breadcrumbs = document.getElementById('breadcrumbs');
     
-    if (!articleContainer) return;
+    if (!articleContainer) {
+        console.error('Article container not found');
+        return;
+    }
     
     // Show loading with progress bar
     articleContainer.innerHTML = `
@@ -327,19 +346,29 @@ async function loadArticle(articleId) {
     
     // Check if article exists
     if (!ARTICLES[articleId]) {
+        console.error('Article not found:', articleId);
         showError('Artykuł nie został znaleziony');
         return;
     }
     
     try {
+        const articlePath = ARTICLES[articleId];
+        console.log('Loading article from:', articlePath);
+        
         // Fetch markdown file
-        const response = await fetch(ARTICLES[articleId]);
+        const response = await fetch(articlePath);
         
         if (!response.ok) {
-            throw new Error('Nie można załadować artykułu');
+            throw new Error(`HTTP error! status: ${response.status}`);
         }
         
         const markdown = await response.text();
+        console.log('Markdown loaded, length:', markdown.length);
+        
+        // Check if marked is available
+        if (typeof marked === 'undefined') {
+            throw new Error('Marked library not loaded');
+        }
         
         // Render markdown
         const html = marked.parse(markdown);

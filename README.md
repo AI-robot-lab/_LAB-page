@@ -5,7 +5,7 @@
 
 Oficjalna strona internetowa Laboratorium Robotów Humanoidalnych działającego w ramach Katedry Informatyki i Automatyki Politechniki Rzeszowskiej im. Ignacego Łukasiewicza.
 
-## 🤖 O Laboratorium
+## 🤖 O naszym Laboratorium
 
 Laboratorium skupia się na:
 - **Framework PCA** (Perception-Cognition-Action) - metodyka autonomicznych systemów humanoidalnych
@@ -171,14 +171,14 @@ Jeśli znajdziesz błąd:
 
 ## 📄 Licencja
 
-Copyright © 2025 Politechnika Rzeszowska im. Ignacego Łukasiewicza
+Copyright © 2026 Politechnika Rzeszowska im. Ignacego Łukasiewicza
 
 ## 📞 Kontakt
 
 **Laboratorium Robotów Humanoidalnych**
 - **Adres**: Al. Powstańców Warszawy 12, 35-959 Rzeszów
 - **GitHub**: [@AI-robot-lab](https://github.com/AI-robot-lab)
-- **Kierownik**: dr inż. Mateusz Pomianek
+- **Kierownik organizacyjny**: dr inż. Mateusz Pomianek
 
 ## 🔗 Linki
 
@@ -189,6 +189,6 @@ Copyright © 2025 Politechnika Rzeszowska im. Ignacego Łukasiewicza
 
 ---
 
-**System Version**: 2.3.0-stable  
-**Last Updated**: 2025-02-10  
+**System Version**: 26.2.12 
+**Last Updated**: 2026-02-12 
 **Built with**: ❤️ by Humanoid Robotics Lab Team
