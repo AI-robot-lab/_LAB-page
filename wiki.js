@@ -11,7 +11,7 @@
 const ARTICLES = {
     // Robotyka
     'ros2': 'wiki/ros2.md',
-    'isaac-lab': 'wiki/isaac-lab.md',
+    'isaac-lab': 'isaac-lab.md',
     'unitree-g1': 'wiki/unitree-g1.md',
     'pca-framework': 'wiki/pca-framework.md',
     'slam': 'wiki/slam.md',
@@ -149,7 +149,7 @@ function initDarkMode() {
             const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
             
             // Smooth transition
-            document.documentElement.style.transition = 'background-color 0.3s ease, color 0.3s ease';
+            document.documentElement.style.transition = 'background-color 0.2s ease, color 0.2s ease';
             
             document.documentElement.setAttribute('data-theme', newTheme);
             localStorage.setItem('theme', newTheme);
