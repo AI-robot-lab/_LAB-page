@@ -1639,6 +1639,7 @@ footer a:hover {
     font-size: 0.95rem;
     line-height: 1.7;
     color: #d4d4d4;
+    overflow-x: auto;
     background: transparent;
     padding: 0;
     border: none;
