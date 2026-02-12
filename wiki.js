@@ -11,7 +11,7 @@
 const ARTICLES = {
     // Robotyka
     'ros2': 'wiki/ros2.md',
-    'isaac-lab': 'isaac-lab.md',
+    'isaac-lab': 'wiki/isaac-lab.md',
     'unitree-g1': 'wiki/unitree-g1.md',
     'pca-framework': 'wiki/pca-framework.md',
     'slam': 'wiki/slam.md',
