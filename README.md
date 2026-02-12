@@ -13,7 +13,7 @@ Laboratorium skupia się na:
 - **Sztuczna inteligencja** - modele VLM, LLM, uczenie przez wzmacnianie
 - **Rehabilitacja wspomagana** - zastosowania w terapii neurologicznej i poznawczej
 
-## 🚀 Technologie
+## Technologie
 
 ### Frontend
 - **HTML5** - semantyczny markup
@@ -30,7 +30,7 @@ Laboratorium skupia się na:
 - MediaPipe
 - DeepFace
 
-## 📦 Struktura Projektu
+## Struktura Projektu
 
 ```
 ├── index.html          # Główny plik HTML
@@ -43,28 +43,6 @@ Laboratorium skupia się na:
 └── favicon.ico         # Ikona strony
 ```
 
-## 🌐 Hostowanie na GitHub Pages
-
-### Krok 1: Utworzenie repozytorium
-```bash
-# Inicjalizacja repo
-git init
-git add .
-git commit -m "Initial commit: Humanoid Robotics Lab website"
-
-# Dodanie remote
-git remote add origin https://github.com/AI-robot-lab/ai-robot-lab.github.io.git
-git branch -M main
-git push -u origin main
-```
-
-### Krok 2: Konfiguracja GitHub Pages
-1. Przejdź do Settings → Pages
-2. Source: Deploy from a branch
-3. Branch: `main` / `root`
-4. Save
-
-### Krok 3: Dostęp do strony
 Strona będzie dostępna pod adresem:
 ```
 https://ai-robot-lab.github.io/
@@ -77,38 +55,7 @@ https://ai-robot-lab.github.io/
 - Edytor kodu (VS Code, Sublime Text)
 - Opcjonalnie: Python (dla lokalnego serwera)
 
-### Uruchomienie lokalnie
-```bash
-# Metoda 1: Python 3
-python -m http.server 8000
-
-# Metoda 2: Python 2
-python -m SimpleHTTPServer 8000
-
-# Metoda 3: VS Code Live Server extension
-# Kliknij prawym → "Open with Live Server"
-```
-
-Otwórz przeglądarkę: `http://localhost:8000`
-
-## ✅ Checklist przed wdrożeniem
-
-- [x] Walidacja HTML5 (https://validator.w3.org/)
-- [x] Walidacja CSS3 (https://jigsaw.w3.org/css-validator/)
-- [x] Test responsywności (mobile, tablet, desktop)
-- [x] Test dostępności WCAG 2.1 (Level AA)
-- [x] Optymalizacja obrazów
-- [x] Meta tagi SEO
-- [x] Open Graph tags
-- [x] Schema.org structured data
-- [x] Lazy loading dla obrazów
-- [x] Smooth scrolling
-- [x] Cross-browser testing
-- [ ] Favicon (do dodania)
-- [ ] robots.txt (opcjonalnie)
-- [ ] sitemap.xml (opcjonalnie)
-
-## 📱 Responsywność
+## Responsywność
 
 Strona jest w pełni responsywna i obsługuje:
 - **Desktop**: ≥1200px
@@ -117,7 +64,7 @@ Strona jest w pełni responsywna i obsługuje:
 - **Mobile**: ≤767px
 - **Small mobile**: ≤480px
 
-## ♿ Dostępność
+## Dostępność
 
 Strona spełnia standardy WCAG 2.1 Level AA:
 - Semantyczny HTML5
@@ -128,7 +75,7 @@ Strona spełnia standardy WCAG 2.1 Level AA:
 - Keyboard navigation
 - Screen reader friendly
 
-## 🔍 SEO
+## SEO
 
 Zaimplementowane praktyki SEO:
 - Meta description
@@ -140,7 +87,7 @@ Zaimplementowane praktyki SEO:
 - Sitemap.xml (do dodania)
 - robots.txt (do dodania)
 
-## 📊 Analytics (Opcjonalnie)
+## Analytics (opcjonalnie)
 
 Aby dodać Google Analytics, dodaj w `<head>`:
 ```html
@@ -154,14 +101,14 @@ Aby dodać Google Analytics, dodaj w `<head>`:
 </script>
 ```
 
-## 🐛 Zgłaszanie błędów
+## Zgłaszanie błędów
 
 Jeśli znajdziesz błąd:
 1. Sprawdź [Issues](https://github.com/AI-robot-lab/ai-robot-lab.github.io/issues)
 2. Utwórz nowy Issue z opisem problemu
 3. Dodaj screenshoty jeśli możliwe
 
-## 🤝 Współpraca
+## Współpraca
 
 1. Fork repozytorium
 2. Utwórz branch (`git checkout -b feature/AmazingFeature`)
@@ -169,11 +116,11 @@ Jeśli znajdziesz błąd:
 4. Push do brancha (`git push origin feature/AmazingFeature`)
 5. Otwórz Pull Request
 
-## 📄 Licencja
+## Licencja
 
 Copyright © 2026 Politechnika Rzeszowska im. Ignacego Łukasiewicza
 
-## 📞 Kontakt
+## Kontakt
 
 **Laboratorium Robotów Humanoidalnych**
 - **Adres**: Al. Powstańców Warszawy 12, 35-959 Rzeszów
