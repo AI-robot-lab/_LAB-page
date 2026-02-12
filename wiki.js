@@ -1,7 +1,7 @@
 /**
  * WIKI System - Markdown Article Loader and Renderer
  * Laboratorium Robotów Humanoidalnych
- * Version: 2.0
+ * Version: 3.0
  */
 
 'use strict';
@@ -371,6 +371,7 @@ async function loadArticle(articleId) {
         }
         
         // Render markdown
+        // bla bla masa textu, którego i tak nikt nie czyta...
         const html = marked.parse(markdown);
         
         // Fade in animation
