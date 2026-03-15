@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Materiały PDF | Laboratorium Robotów Humanoidalnych</title>
+    <meta name="description" content="Pobieranie materiałów PDF Laboratorium Robotów Humanoidalnych.">
+
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Roboto:wght@300;400;700&family=Montserrat:wght@600;700&display=swap" rel="stylesheet">
+    <link href="styles.css" rel="stylesheet">
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Przejdź do głównej treści</a>
+
+    <header role="banner">
+        <div class="container header-flex">
+            <div class="logos-left">
+                <img src="https://pkb.net.pl/wp-content/uploads/2019/06/politechnika_logo_JPG.jpg"
+                     alt="Logo Politechniki Rzeszowskiej"
+                     class="logo-main"
+                     loading="eager">
+                <div class="inst-title">
+                    <p>POLITECHNIKA RZESZOWSKA</p>
+                    <p>KATEDRA INFORMATYKI I AUTOMATYKI</p>
+                </div>
+            </div>
+            <div class="logos-right">
+                <img src="https://sprawozdania.kia.prz.edu.pl/app_images/kia1.png"
+                     alt="Logo KIA"
+                     class="logo-small"
+                     loading="eager">
+                <img src="https://sprawozdania.kia.prz.edu.pl/app_images/kia2.png"
+                     alt="Logo KIA dodatkowe"
+                     class="logo-small"
+                     loading="eager">
+            </div>
+        </div>
+    </header>
+
+    <nav role="navigation" aria-label="Główna nawigacja">
+        <div class="container">
+            <button class="mobile-menu-toggle" aria-label="Menu" aria-expanded="false">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <div class="nav-flex">
+                <a href="index.html">Strona Główna</a>
+                <a href="index.html#pca">Framework PCA</a>
+                <a href="index.html#teams">Zespoły</a>
+                <a href="wiki.html">WIKI</a>
+                <a href="pdf.html" class="active">Materiały PDF</a>
+                <a href="contact.html">Rekrutacja</a>
+            </div>
+        </div>
+    </nav>
+
+    <main id="main-content">
+        <section class="hero wiki-hero">
+            <div class="container">
+                <div class="hero-content">
+                    <div class="wiki-hero-icon">
+                        <i class="fa-solid fa-file-pdf"></i>
+                    </div>
+                    <h1>Materiały PDF</h1>
+                </div>
+            </div>
+        </section>
+
+        <section class="wiki-section">
+            <div class="container">
+                <div class="pdf-downloads">
+                    <h2><i class="fa-solid fa-download"></i> Pobieranie dokumentów</h2>
+                    <p>
+                        W tej zakładce znajdują się pliki PDF udostępnione przez Laboratorium Robotów Humanoidalnych.
+                        Kliknij przycisk, aby pobrać wybrany dokument bezpośrednio z katalogu <code>assets</code>.
+                    </p>
+
+                    <ul class="pdf-list">
+                        <li class="pdf-item">
+                            <div class="pdf-meta">
+                                <h3>Instrukcja Unitree G1 v1.8</h3>
+                                <p>Plik: <code>assets/Instrukcja_Unitree_G1_v1_8.pdf</code></p>
+                            </div>
+                            <a class="pdf-download-btn" href="assets/Instrukcja_Unitree_G1_v1_8.pdf" download>
+                                <i class="fa-solid fa-file-arrow-down"></i>
+                                Pobierz PDF
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Laboratorium Robotów Humanoidalnych. Wszelkie prawa zastrzeżone.</p>
+        </div>
+    </footer>
+
+    <script src="script.js" defer></script>
+</body>
+</html>
