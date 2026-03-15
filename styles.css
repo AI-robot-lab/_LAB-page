@@ -2585,6 +2585,10 @@ footer a:hover {
     --bg-light: #2d2d2d;
     --text-dark: #e0e0e0;
     --text-light: #b0b0b0;
+
+    /* Override brand colors so text/border uses are readable on dark backgrounds */
+    --prz-blue: #4a90e2;
+    --prz-gold: #d4a853;
 }
 
 /* Dark Mode Styles */
@@ -2738,6 +2742,18 @@ footer a:hover {
     border-bottom-color: rgba(74, 144, 226, 0.3);
 }
 
+[data-theme="dark"] .inst-title {
+    border-left-color: rgba(255, 255, 255, 0.15);
+}
+
+[data-theme="dark"] nav {
+    background: #1a3a5c;
+}
+
+[data-theme="dark"] .robot-dark {
+    background: linear-gradient(135deg, #0f2540 0%, #1a3a5c 100%);
+}
+
 [data-theme="dark"] .hero {
     background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
 }
@@ -2782,6 +2798,20 @@ footer a:hover {
     background: var(--bg-tertiary);
     border-color: var(--border-dark);
     color: var(--text-primary);
+}
+
+[data-theme="dark"] .form-group input:focus,
+[data-theme="dark"] .form-group select:focus,
+[data-theme="dark"] .form-group textarea:focus {
+    box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.2);
+}
+
+[data-theme="dark"] .team-option input[type="radio"]:checked + .team-label {
+    background: rgba(74, 144, 226, 0.08);
+}
+
+[data-theme="dark"] .team-label:hover {
+    background: rgba(74, 144, 226, 0.04);
 }
 
 [data-theme="dark"] .team-label {
