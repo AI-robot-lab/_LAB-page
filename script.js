@@ -46,16 +46,19 @@ document.addEventListener('DOMContentLoaded', function() {
 // Dark Mode
 // ====================================
 
+const DEFAULT_THEME = 'light';
+const THEME_TRANSITION_MS = 200;
+
 // Apply saved theme immediately to prevent flash of wrong theme
 (function() {
-    const savedTheme = localStorage.getItem('theme') || 'light';
+    const savedTheme = localStorage.getItem('theme') || DEFAULT_THEME;
     document.documentElement.setAttribute('data-theme', savedTheme);
 })();
 
 function initDarkMode() {
     const darkModeToggle = document.getElementById('darkModeToggle');
 
-    const savedTheme = localStorage.getItem('theme') || 'light';
+    const savedTheme = localStorage.getItem('theme') || DEFAULT_THEME;
     updateDarkModeIcon(savedTheme);
 
     if (darkModeToggle && !darkModeToggle.dataset.darkModeInit) {
@@ -72,7 +75,7 @@ function initDarkMode() {
 
             setTimeout(function() {
                 document.documentElement.style.transition = '';
-            }, 300);
+            }, THEME_TRANSITION_MS);
         });
     }
 }
