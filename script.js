@@ -38,7 +38,57 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
     }
+
+    initDarkMode();
 });
+
+// ====================================
+// Dark Mode
+// ====================================
+
+const DEFAULT_THEME = 'light';
+const THEME_TRANSITION_MS = 200;
+
+// Apply saved theme immediately to prevent flash of wrong theme
+(function() {
+    const savedTheme = localStorage.getItem('theme') || DEFAULT_THEME;
+    document.documentElement.setAttribute('data-theme', savedTheme);
+})();
+
+function initDarkMode() {
+    const darkModeToggle = document.getElementById('darkModeToggle');
+
+    const savedTheme = localStorage.getItem('theme') || DEFAULT_THEME;
+    updateDarkModeIcon(savedTheme);
+
+    if (darkModeToggle && !darkModeToggle.dataset.darkModeInit) {
+        darkModeToggle.dataset.darkModeInit = '1';
+        darkModeToggle.addEventListener('click', function() {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+
+            document.documentElement.style.transition = 'background-color 0.2s ease, color 0.2s ease';
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+
+            updateDarkModeIcon(newTheme);
+
+            setTimeout(function() {
+                document.documentElement.style.transition = '';
+            }, THEME_TRANSITION_MS);
+        });
+    }
+}
+
+function updateDarkModeIcon(theme) {
+    const darkModeToggle = document.getElementById('darkModeToggle');
+    if (!darkModeToggle) return;
+
+    const icon = darkModeToggle.querySelector('i');
+    if (icon) {
+        icon.className = theme === 'dark' ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
+    }
+}
 
 // ====================================
 // Smooth Scrolling Enhancement
