@@ -1525,7 +1525,7 @@ footer a:hover {
 
 .wiki-article {
     max-width: 100%;
-    line-height: 1.8;
+    line-height: 1.65;
 }
 
 /* Article Headers */
@@ -1552,8 +1552,8 @@ footer a:hover {
 .wiki-article h2 {
     color: var(--prz-blue);
     font-size: 2rem;
-    margin-top: 50px;
-    margin-bottom: 25px;
+    margin-top: 38px;
+    margin-bottom: 18px;
     font-weight: 600;
     padding-left: 15px;
     border-left: 4px solid var(--prz-gold);
@@ -1562,23 +1562,23 @@ footer a:hover {
 .wiki-article h3 {
     color: #1a1a1a;
     font-size: 1.5rem;
-    margin-top: 35px;
-    margin-bottom: 20px;
+    margin-top: 26px;
+    margin-bottom: 14px;
     font-weight: 600;
 }
 
 .wiki-article h4 {
     color: #2c3e50;
     font-size: 1.2rem;
-    margin-top: 30px;
-    margin-bottom: 15px;
+    margin-top: 22px;
+    margin-bottom: 10px;
     font-weight: 600;
 }
 
 /* Paragraphs */
 .wiki-article p {
-    line-height: 1.9;
-    margin-bottom: 20px;
+    line-height: 1.6;
+    margin-bottom: 12px;
     color: #2c3e50;
     font-size: 1.05rem;
 }
@@ -1591,13 +1591,13 @@ footer a:hover {
 /* Lists */
 .wiki-article ul,
 .wiki-article ol {
-    margin-left: 30px;
-    margin-bottom: 25px;
-    line-height: 1.9;
+    margin-left: 26px;
+    margin-bottom: 14px;
+    line-height: 1.6;
 }
 
 .wiki-article li {
-    margin-bottom: 12px;
+    margin-bottom: 6px;
     color: #2c3e50;
     font-size: 1.05rem;
 }
@@ -1636,8 +1636,8 @@ footer a:hover {
 
 .wiki-article pre code {
     font-family: 'Fira Code', 'Consolas', monospace;
-    font-size: 0.95rem;
-    line-height: 1.7;
+    font-size: 0.82rem;
+    line-height: 1.5;
     color: #d4d4d4;
     overflow-x: auto;
     background: transparent;
@@ -1648,7 +1648,7 @@ footer a:hover {
 
 .wiki-article code {
     font-family: 'Fira Code', 'Consolas', monospace;
-    font-size: 0.9rem;
+    font-size: 0.82rem;
     background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
     padding: 3px 8px;
     border-radius: 5px;
@@ -3279,4 +3279,75 @@ footer a:hover {
     height: auto;
     display: block;
     border-radius: 16px;
+}
+
+/* PDF downloads page */
+.pdf-downloads {
+    background: var(--white);
+    border-radius: 12px;
+    padding: 36px;
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.08);
+}
+
+.pdf-downloads h2 {
+    color: var(--prz-blue);
+    margin-bottom: 12px;
+}
+
+.pdf-downloads > p {
+    margin-bottom: 24px;
+    line-height: 1.6;
+}
+
+.pdf-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.pdf-item {
+    border: 1px solid #e3e7eb;
+    border-radius: 10px;
+    padding: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+.pdf-meta h3 {
+    color: var(--text-dark);
+    margin-bottom: 6px;
+}
+
+.pdf-meta p {
+    margin: 0;
+    color: #5a6674;
+}
+
+.pdf-download-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--prz-blue);
+    color: #fff;
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.pdf-download-btn:hover {
+    background: #002244;
+}
+
+@media (max-width: 768px) {
+    .pdf-downloads {
+        padding: 24px;
+    }
+
+    .pdf-item {
+        flex-direction: column;
+        align-items: flex-start;
+    }
 }
