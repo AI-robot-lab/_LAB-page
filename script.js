@@ -97,9 +97,11 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
         const href = this.getAttribute('href');
         
-        // Skip empty anchors
+        // Skip empty anchors and wiki article links
         if (href === '#') {
-            e.preventDefault();
+            if (!this.dataset.article) {
+                e.preventDefault();
+            }
             return;
         }
         

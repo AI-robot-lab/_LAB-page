@@ -111,25 +111,10 @@ const METADATA = {
 
 // Initialize on page load
 document.addEventListener('DOMContentLoaded', function() {
-    // Wait for marked.js to load
-    if (typeof marked === 'undefined') {
-        console.error('Marked library not loaded! Waiting...');
-        setTimeout(() => {
-            if (typeof marked !== 'undefined') {
-                console.log('Marked loaded successfully');
-                initWiki();
-                initDarkMode();
-                initScrollProgress();
-            } else {
-                console.error('Marked library failed to load');
-            }
-        }, 500);
-    } else {
-        console.log('Starting WIKI initialization...');
-        initWiki();
-        initDarkMode();
-        initScrollProgress();
-    }
+    console.log('Starting WIKI initialization...');
+    initWiki();
+    initDarkMode();
+    initScrollProgress();
 });
 
 function initDarkMode() {
@@ -359,13 +344,24 @@ async function loadArticle(articleId) {
         const markdown = await response.text();
         console.log('Markdown loaded, length:', markdown.length);
         
-        // Check if marked is available
+        // Wait for marked if not yet available
         if (typeof marked === 'undefined') {
-            throw new Error('Marked library not loaded');
+            await new Promise((resolve, reject) => {
+                let attempts = 0;
+                const interval = setInterval(() => {
+                    attempts++;
+                    if (typeof marked !== 'undefined') {
+                        clearInterval(interval);
+                        resolve();
+                    } else if (attempts >= 20) {
+                        clearInterval(interval);
+                        reject(new Error('Marked library not loaded'));
+                    }
+                }, 250);
+            });
         }
         
         // Render markdown
-        // bla bla masa textu, którego i tak nikt nie czyta...
         const html = marked.parse(markdown);
         
         // Fade in animation
@@ -612,22 +608,3 @@ function generateTableOfContents(container) {
         h1.parentNode.insertBefore(toc, h1.nextSibling);
     }
 }
-
-// Handle back/forward navigation
-window.addEventListener('hashchange', function() {
-    const hash = window.location.hash.substring(1);
-    if (hash) {
-        loadArticle(hash);
-        
-        // Update active link
-        const articleLinks = document.querySelectorAll('[data-article]');
-        articleLinks.forEach(link => {
-            const linkId = link.dataset.article.replace('wiki/', '');
-            if (linkId === hash) {
-                link.classList.add('active');
-            } else {
-                link.classList.remove('active');
-            }
-        });
-    }
-});
