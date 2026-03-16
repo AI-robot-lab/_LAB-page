@@ -1193,7 +1193,7 @@ footer a:hover {
    ==================================== */
 .wiki-hero {
     background: linear-gradient(135deg, #003366 0%, #004d99 100%);
-    padding: 80px 0 60px;
+    padding: 25px 0 15px;
     position: relative;
     overflow: hidden;
 }
@@ -1220,9 +1220,9 @@ footer a:hover {
 }
 
 .wiki-hero-icon {
-    font-size: 4rem;
+    font-size: 2rem;
     color: var(--gold);
-    margin-bottom: 20px;
+    margin-bottom: 8px;
     animation: floatIcon 3s ease-in-out infinite;
 }
 
@@ -1232,9 +1232,9 @@ footer a:hover {
 }
 
 .wiki-hero h1 {
-    font-size: 3rem;
+    font-size: 1.8rem;
     color: white;
-    margin-bottom: 20px;
+    margin-bottom: 5px;
     font-weight: 700;
 }
 
@@ -2279,11 +2279,11 @@ footer a:hover {
     }
     
     .wiki-hero h1 {
-        font-size: 2.5rem;
+        font-size: 1.6rem;
     }
     
     .wiki-hero-icon {
-        font-size: 3rem;
+        font-size: 1.8rem;
     }
 }
 
@@ -2319,11 +2319,11 @@ footer a:hover {
     }
     
     .wiki-hero {
-        padding: 60px 0 40px;
+        padding: 20px 0 10px;
     }
     
     .wiki-hero h1 {
-        font-size: 2rem;
+        font-size: 1.4rem;
     }
     
     .wiki-hero .hero-subtitle {
@@ -2331,7 +2331,7 @@ footer a:hover {
     }
     
     .wiki-hero-icon {
-        font-size: 2.5rem;
+        font-size: 1.5rem;
     }
     
     .wiki-hero-stats {
