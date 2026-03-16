@@ -344,25 +344,24 @@ async function loadArticle(articleId) {
         const markdown = await response.text();
         console.log('Markdown loaded, length:', markdown.length);
         
-        // Wait for marked if not yet available
+        // Wait for marked if not yet available (up to 3 s), then fall back to built-in parser
         if (typeof marked === 'undefined') {
-            await new Promise((resolve, reject) => {
+            await new Promise((resolve) => {
                 let attempts = 0;
                 const interval = setInterval(() => {
                     attempts++;
-                    if (typeof marked !== 'undefined') {
+                    if (typeof marked !== 'undefined' || attempts >= 12) {
                         clearInterval(interval);
                         resolve();
-                    } else if (attempts >= 20) {
-                        clearInterval(interval);
-                        reject(new Error('Marked library not loaded'));
                     }
                 }, 250);
             });
         }
         
-        // Render markdown
-        const html = marked.parse(markdown);
+        // Render markdown using marked.js when available, otherwise use built-in parser
+        const html = typeof marked !== 'undefined'
+            ? marked.parse(markdown)
+            : parseMarkdownFallback(markdown);
         
         // Fade in animation
         articleContainer.style.opacity = '0';
@@ -607,4 +606,155 @@ function generateTableOfContents(container) {
     } else if (h1) {
         h1.parentNode.insertBefore(toc, h1.nextSibling);
     }
+}
+
+/**
+ * Built-in fallback markdown parser.
+ * Used when the marked.js CDN library is not available.
+ * Supports: headings, bold, italic, inline code, fenced code blocks,
+ *           unordered/ordered lists, blockquotes, horizontal rules,
+ *           links, images, and paragraphs.
+ */
+function parseMarkdownFallback(markdown) {
+    function escapeHtml(text) {
+        return text
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#39;');
+    }
+
+    function sanitizeUrl(url) {
+        const trimmed = url.trim();
+        // Allow only http, https, mailto, and relative URLs
+        if (/^(https?:|mailto:|\/|\.\/|\.\.\/|#)/.test(trimmed)) {
+            return trimmed;
+        }
+        return '#';
+    }
+
+    function inlineFormat(escapedText) {
+        // Input is already HTML-escaped; only process markdown markers
+        // Bold + italic
+        escapedText = escapedText.replace(/\*\*\*(.+?)\*\*\*/g, '<strong><em>$1</em></strong>');
+        // Bold
+        escapedText = escapedText.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+        escapedText = escapedText.replace(/__(.+?)__/g, '<strong>$1</strong>');
+        // Italic
+        escapedText = escapedText.replace(/\*(.+?)\*/g, '<em>$1</em>');
+        escapedText = escapedText.replace(/_(.+?)_/g, '<em>$1</em>');
+        // Inline code — content is already HTML-escaped; no extra escaping needed
+        escapedText = escapedText.replace(/`([^`]+)`/g, '<code>$1</code>');
+        // Images — validate src URL; alt text is already escaped via escapeHtml
+        escapedText = escapedText.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, (_, alt, src) => {
+            const safeSrc = sanitizeUrl(src);
+            return `<img src="${safeSrc}" alt="${alt}" style="max-width:100%">`;
+        });
+        // Links — validate href URL; link text is already escaped via escapeHtml
+        escapedText = escapedText.replace(/\[([^\]]+)\]\(([^)]+)\)/g, (_, text, href) => {
+            const safeHref = sanitizeUrl(href);
+            return `<a href="${safeHref}" target="_blank" rel="noopener noreferrer">${text}</a>`;
+        });
+        return escapedText;
+    }
+
+    const lines = markdown.split('\n');
+    const html = [];
+    let i = 0;
+
+    while (i < lines.length) {
+        const line = lines[i];
+
+        // Fenced code block
+        const fenceMatch = line.match(/^```(\w*)/);
+        if (fenceMatch) {
+            const lang = fenceMatch[1] || '';
+            const codeLines = [];
+            i++;
+            while (i < lines.length && !lines[i].startsWith('```')) {
+                codeLines.push(escapeHtml(lines[i]));
+                i++;
+            }
+            i++; // skip closing ```
+            html.push(`<pre><code class="language-${lang}">${codeLines.join('\n')}</code></pre>`);
+            continue;
+        }
+
+        // Headings
+        const headingMatch = line.match(/^(#{1,6})\s+(.*)/);
+        if (headingMatch) {
+            const level = headingMatch[1].length;
+            html.push(`<h${level}>${inlineFormat(escapeHtml(headingMatch[2]))}</h${level}>`);
+            i++;
+            continue;
+        }
+
+        // Horizontal rule
+        if (/^[-*_]{3,}\s*$/.test(line)) {
+            html.push('<hr>');
+            i++;
+            continue;
+        }
+
+        // Blockquote
+        if (line.startsWith('> ')) {
+            const quoteLines = [];
+            while (i < lines.length && lines[i].startsWith('> ')) {
+                quoteLines.push(inlineFormat(escapeHtml(lines[i].slice(2))));
+                i++;
+            }
+            html.push('<blockquote>' + quoteLines.join('<br>') + '</blockquote>');
+            continue;
+        }
+
+        // Unordered list
+        if (/^[\*\-]\s+/.test(line)) {
+            const items = [];
+            while (i < lines.length && /^[\*\-]\s+/.test(lines[i])) {
+                items.push('<li>' + inlineFormat(escapeHtml(lines[i].replace(/^[\*\-]\s+/, ''))) + '</li>');
+                i++;
+            }
+            html.push('<ul>' + items.join('') + '</ul>');
+            continue;
+        }
+
+        // Ordered list
+        if (/^\d+\.\s+/.test(line)) {
+            const items = [];
+            while (i < lines.length && /^\d+\.\s+/.test(lines[i])) {
+                items.push('<li>' + inlineFormat(escapeHtml(lines[i].replace(/^\d+\.\s+/, ''))) + '</li>');
+                i++;
+            }
+            html.push('<ol>' + items.join('') + '</ol>');
+            continue;
+        }
+
+        // Empty line — paragraph break
+        if (line.trim() === '') {
+            i++;
+            continue;
+        }
+
+        // Paragraph: collect consecutive non-empty, non-special lines
+        const paraLines = [];
+        while (
+            i < lines.length &&
+            lines[i].trim() !== '' &&
+            !/^#{1,6}\s/.test(lines[i]) &&
+            !/^[\*\-]\s/.test(lines[i]) &&
+            !/^\d+\.\s/.test(lines[i]) &&
+            !/^```/.test(lines[i]) &&
+            !/^> /.test(lines[i]) &&
+            !/^[-*_]{3,}\s*$/.test(lines[i])
+        ) {
+            paraLines.push(inlineFormat(escapeHtml(lines[i])));
+            i++;
+        }
+        if (paraLines.length > 0) {
+            html.push('<p>' + paraLines.join(' ') + '</p>');
+        }
+    }
+
+    return html.join('\n');
 }
