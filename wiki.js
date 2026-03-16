@@ -194,12 +194,6 @@ function initWiki() {
     // Initialize marked.js for markdown rendering
     if (typeof marked !== 'undefined') {
         marked.setOptions({
-            highlight: function(code, lang) {
-                if (typeof hljs !== 'undefined' && lang && hljs.getLanguage(lang)) {
-                    return hljs.highlight(code, { language: lang }).value;
-                }
-                return code;
-            },
             breaks: true,
             gfm: true
         });
