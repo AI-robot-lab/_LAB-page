@@ -1261,7 +1261,7 @@ class ObjectTracker3D:
                             info = [
                                 f"X: {X:.2f}m",
                                 f"Y: {Y:.2f}m",
-                                f"Z: {Z:.2f}m (odleglosc)"
+                                f"Z: {Z:.2f}m (odległość)"
                             ]
                             for i, text in enumerate(info):
                                 cv2.putText(
