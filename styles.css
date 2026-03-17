@@ -3387,11 +3387,17 @@ footer a:hover {
 @media (max-width: 1024px) {
     .wiki-layout {
         flex-direction: column;
+        align-items: stretch;
     }
     
     .wiki-sidebar {
         width: 100%;
         position: static;
+    }
+    
+    .wiki-content {
+        width: 100%;
+        min-width: 0;
     }
     
     .sidebar-sticky {
