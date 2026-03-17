@@ -15,12 +15,15 @@ const ARTICLES = {
     'unitree-g1': 'wiki/unitree-g1.md',
     'pca-framework': 'wiki/pca-framework.md',
     'slam': 'wiki/slam.md',
+    'slam_marker_map': 'wiki/slam_marker_map.md',
     'imu': 'wiki/imu.md',
     'sensor-fusion': 'wiki/sensor-fusion.md',
     
     // Percepcja
     'computer-vision': 'wiki/computer-vision.md',
     'camera-spatial-orientation': 'wiki/camera-spatial-orientation.md',
+    'kalibracja_kamery': 'wiki/kalibracja_kamery.md',
+    'markery_wizyjne_nawigacja': 'wiki/markery_wizyjne_nawigacja.md',
     'affective-computing': 'wiki/affective-computing.md',
     'emotion-recognition': 'wiki/emotion-recognition.md',
     'face-detection': 'wiki/face-detection.md',
@@ -52,6 +55,7 @@ const ARTICLES = {
     'deepface': 'wiki/deepface.md',
     'moveit2': 'wiki/moveit2.md',
     'docker': 'wiki/docker.md',
+    'github_releases_packages': 'wiki/github_releases_packages.md',
     
     // Inne
     'hri': 'wiki/hri.md',
@@ -67,12 +71,15 @@ const METADATA = {
     'unitree-g1': { category: 'Robotyka', title: 'Unitree G1 - Specyfikacja' },
     'pca-framework': { category: 'Robotyka', title: 'Framework PCA' },
     'slam': { category: 'Robotyka', title: 'SLAM - Lokalizacja i Mapowanie' },
+    'slam_marker_map': { category: 'Robotyka', title: 'SLAM - Mapa Markerów' },
     'imu': { category: 'Robotyka', title: 'IMU - Inertial Measurement Unit' },
     'sensor-fusion': { category: 'Robotyka', title: 'Fuzja Sensoryczna' },
     
     // Percepcja
     'computer-vision': { category: 'Percepcja', title: 'Computer Vision' },
     'camera-spatial-orientation': { category: 'Percepcja', title: 'Kamera w Orientacji Przestrzennej' },
+    'kalibracja_kamery': { category: 'Percepcja', title: 'Kalibracja Kamery Robota' },
+    'markery_wizyjne_nawigacja': { category: 'Percepcja', title: 'Markery Wizyjne w Nawigacji' },
     'affective-computing': { category: 'Percepcja', title: 'Informatyka Afektywna' },
     'emotion-recognition': { category: 'Percepcja', title: 'Rozpoznawanie Emocji' },
     'face-detection': { category: 'Percepcja', title: 'Detekcja Twarzy' },
@@ -104,6 +111,7 @@ const METADATA = {
     'deepface': { category: 'Technologie', title: 'DeepFace' },
     'moveit2': { category: 'Technologie', title: 'MoveIt2' },
     'docker': { category: 'Technologie', title: 'Docker dla Robotyki' },
+    'github_releases_packages': { category: 'Technologie', title: 'GitHub Releases i Packages' },
     
     // Inne
     'hri': { category: 'Inne', title: 'Interakcja Człowiek-Robot' },
