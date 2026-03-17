@@ -20,6 +20,7 @@ const ARTICLES = {
     
     // Percepcja
     'computer-vision': 'wiki/computer-vision.md',
+    'camera-spatial-orientation': 'wiki/camera-spatial-orientation.md',
     'affective-computing': 'wiki/affective-computing.md',
     'emotion-recognition': 'wiki/emotion-recognition.md',
     'face-detection': 'wiki/face-detection.md',
@@ -71,6 +72,7 @@ const METADATA = {
     
     // Percepcja
     'computer-vision': { category: 'Percepcja', title: 'Computer Vision' },
+    'camera-spatial-orientation': { category: 'Percepcja', title: 'Kamera w Orientacji Przestrzennej' },
     'affective-computing': { category: 'Percepcja', title: 'Informatyka Afektywna' },
     'emotion-recognition': { category: 'Percepcja', title: 'Rozpoznawanie Emocji' },
     'face-detection': { category: 'Percepcja', title: 'Detekcja Twarzy' },
