@@ -56,6 +56,7 @@ const ARTICLES = {
     'moveit2': 'wiki/moveit2.md',
     'docker': 'wiki/docker.md',
     'github_releases_packages': 'wiki/github_releases_packages.md',
+    'git-github': 'wiki/git-github.md',
     
     // Inne
     'hri': 'wiki/hri.md',
@@ -112,6 +113,7 @@ const METADATA = {
     'moveit2': { category: 'Technologie', title: 'MoveIt2' },
     'docker': { category: 'Technologie', title: 'Docker dla Robotyki' },
     'github_releases_packages': { category: 'Technologie', title: 'GitHub Releases i Packages' },
+    'git-github': { category: 'Technologie', title: 'Git i GitHub — kompleksowy poradnik' },
     
     // Inne
     'hri': { category: 'Inne', title: 'Interakcja Człowiek-Robot' },
