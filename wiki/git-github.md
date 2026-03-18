@@ -66,6 +66,14 @@ Git jest **rozproszonym** systemem kontroli wersji (DVCS). Każdy programista
 posiada lokalne, pełne repozytorium z całą historią projektu. Pozwala to
 pracować offline i znacznie przyspiesza większość operacji.
 
+Poniższy diagram ilustruje kluczową różnicę architektoniczną między scentralizowanymi
+systemami (SVN, CVS) a rozproszonym modelem Gita. W modelu SVN każdy klient posiada
+jedynie roboczy checkout — cała historia projektu żyje wyłącznie na serwerze, co
+oznacza, że bez połączenia z siecią nie można commitować, przeglądać historii ani
+tworzyć gałęzi. Git odwraca ten paradygmat: każdy klon jest *pełnym* repozytorium
+z całą historią. To właśnie dzięki temu możliwa jest praca offline, błyskawiczne
+tworzenie gałęzi i odporność na awarię serwera.
+
 ```
 Centralny SVN/CVS            Rozproszony Git
 ─────────────────            ───────────────────────────
@@ -83,6 +91,13 @@ Klient A Klient B
 ### 2.1. Trzy obszary robocze
 
 Git zarządza plikami w trzech przestrzeniach:
+
+Zrozumienie trzech obszarów roboczych to fundament świadomego korzystania z Gita.
+Model nie jest szczegółem technicznym, który można zignorować — to mentalna mapa
+decydująca o tym, jak kształtujesz historię projektu. Dwuetapowość przepływu
+(najpierw `git add` do staging area, potem `git commit` do repozytorium) jest
+celowa: daje Ci pełną kontrolę nad tym, co dokładnie trafi do następnego commita,
+nawet jeśli w katalogu roboczym masz wiele niezwiązanych ze sobą zmian.
 
 ```
 Working Directory    Staging Area (Index)    Repository (.git)
@@ -108,6 +123,14 @@ Git przechowuje dane jako cztery typy obiektów identyfikowanych przez SHA-1/SHA
 | **commit** | Snapshot projektu; wskazuje na tree, autora, datę i rodzica |
 | **tag** | Oznaczona etykieta wskazująca konkretny commit |
 
+Git nie przechowuje różnic (*diff*-ów) między wersjami pliku — zamiast tego zapisuje
+pełne snapshoty całego drzewa katalogów w każdym commicie. Brzmi nieefektywnie, ale
+Git jest na tyle sprytny, że identyczne blob-y są współdzielone między commitami —
+nowy obiekt powstaje tylko wtedy, gdy zawartość pliku faktycznie się zmienia.
+Poniższy przykład pokazuje strukturę pojedynczego commita: wskazuje on na drzewo
+(`tree`) opisujące stan wszystkich plików, na autora i datę oraz na swojego rodzica
+(`parent`), co tworzy niezmienialny łańcuch historii.
+
 ```
 commit 3f9a1b2
 ├── author: Anna Kowalski
@@ -127,6 +150,11 @@ commit 3f9a1b2
 
 ### Instalacja
 
+Instalację Gita przeprowadza się jednorazowo na nowym systemie. Polecenie różni się
+w zależności od platformy, ale efekt jest identyczny — dostępne narzędzie `git`
+w wierszu poleceń. Po instalacji warto od razu sprawdzić wersję (`git --version`),
+żeby potwierdzić poprawne zainstalowanie.
+
 ```bash
 # Ubuntu/Debian
 sudo apt update && sudo apt install git
@@ -139,6 +167,15 @@ brew install git
 ```
 
 ### Konfiguracja globalna (jednorazowa)
+
+Konfiguracja globalna (`--global`) jest pierwszą czynnością po instalacji Gita i
+absolutnie obowiązkową przed pierwszym commitem. Imię i adres e-mail stają się
+częścią *każdego* commita na zawsze — są niezmienialną częścią historii projektu.
+Ustawienie domyślnej gałęzi na `main` (zamiast historycznego `master`) jest zgodne
+ze współczesnym standardem przyjętym przez GitHub, GitLab i Bitbucket.
+Zapis `--global` sprawia, że konfiguracja trafia do `~/.gitconfig` i obowiązuje we
+wszystkich repozytoriach na komputerze; dla konkretnego projektu możesz użyć
+`--local`, żeby nadpisać ustawienia globalne.
 
 ```bash
 # Tożsamość — pojawi się w każdym commicie
@@ -158,6 +195,14 @@ git config --global --list
 
 ### Klucze SSH do GitHuba (zalecane)
 
+Do komunikacji z GitHubem można używać HTTPS (z hasłem lub tokenem osobistym) lub
+SSH. SSH jest rozwiązaniem *zalecanym* dla codziennej pracy, ponieważ po
+jednokrotnej konfiguracji nie trzeba już podawać hasła przy każdym `push`/`pull`.
+Algorytm `ed25519` jest preferowany nad starszym `rsa` ze względu na wyższe
+bezpieczeństwo i znacznie krótszy klucz publiczny. Wygenerowany klucz publiczny
+(`.pub`) należy wkleić na stronie GitHuba — klucz prywatny *nigdy* nie opuszcza
+komputera.
+
 ```bash
 # Wygeneruj parę kluczy
 ssh-keygen -t ed25519 -C "anna@example.com"
@@ -172,6 +217,13 @@ cat ~/.ssh/id_ed25519.pub
 ## 4. Podstawowe komendy
 
 ### 4.1. Inicjalizacja i klonowanie
+
+Każda praca z Gitem zaczyna się od jednej z dwóch operacji: `git init` dla nowego
+projektu tworzonego od zera, lub `git clone` gdy dołączasz do istniejącego projektu.
+Klonowanie przez SSH (`git@github.com:...`) jest zalecane zamiast HTTPS, ponieważ
+eliminuje potrzebę uwierzytelniania przy każdej operacji sieciowej. Opcjonalny
+argument końcowy (`moj-folder`) pozwala określić docelową nazwę katalogu, co jest
+przydatne gdy nazwa repozytorium nie pasuje do lokalnej konwencji.
 
 ```bash
 # Nowe repozytorium w bieżącym folderze
@@ -188,6 +240,15 @@ git clone https://github.com/user/repo.git moj-folder
 ```
 
 ### 4.2. Rejestrowanie zmian
+
+Sekwencja `git status` → `git add` → `git commit` to rdzeń codziennej pracy z Gitem.
+Dwuetapowość jest celowa: `git add` pozwala wybrać *które* zmiany trafią do
+następnego commita, nawet gdy w katalogu roboczym są niezwiązane ze sobą modyfikacje.
+Opcja `-p` (*patch*) przy `git add` idzie o krok dalej — pozwala zatwierdzić
+poszczególne *hunk*i (fragmenty) pliku, co jest nieocenione gdy przypadkowo
+wymieszałeś dwie różne zmiany w jednym pliku. Komenda `--amend` służy do poprawiania
+*ostatniego* commita, zanim zostanie wypchnięty na serwer — nigdy nie używaj jej na
+commitach już opublikowanych, bo zmienia ich SHA i niszczy historię innych osób.
 
 ```bash
 # Sprawdź status — co jest zmienione, co w staging area
@@ -214,6 +275,17 @@ git commit --amend --no-edit
 ```
 
 ### 4.3. Historia i inspekcja
+
+Inspekcja historii jest operacją *tylko do odczytu* — żadna z poniższych komend
+nie modyfikuje danych, więc możesz ich używać bez obaw w dowolnym momencie.
+`git log --oneline --graph --all` to jeden z najpotężniejszych widoków: kompaktowa
+reprezentacja całego drzewa gałęzi, która pozwala natychmiast ocenić stan projektu.
+`git diff` bez argumentów pokazuje zmiany jeszcze *niestage'owane*, `git diff --staged`
+— te już przygotowane do commita; ta różnica jest często źródłem zamieszania dla
+początkujących. `git bisect` to szczególnie wartościowe narzędzie do debugowania:
+zamiast ręcznie sprawdzać dziesiątki commitów, Git automatycznie dzieli historię na
+pół i wskazuje winny commit w logarytmicznym czasie — na 1000 commitów wystarczy
+zaledwie 10 kroków.
 
 ```bash
 # Pełna historia commitów
@@ -254,6 +326,16 @@ git bisect reset                # koniec
 
 ### 4.4. Gałęzie
 
+Gałąź w Gicie to jedynie *lekki wskaźnik* (pointer) na konkretny commit — tworzenie
+i przełączanie gałęzi trwa ułamek sekundy i nie wymaga kopiowania plików. To
+fundamentalna różnica w stosunku do starszych systemów (jak SVN), gdzie gałąź była
+kosztowną kopią całego katalogu. Lektwość gałęzi oznacza, że powinieneś tworzyć
+osobną gałąź dla każdej zmiany, nawet małej. Nowoczesna komenda `git switch` jest
+czytelniejszą alternatywą dla `git checkout` w kontekście pracy z gałęziami —
+`checkout` ma zbyt wiele różnych zastosowań, co prowadziło do pomyłek. Opcja `-D`
+(duże D) wymusza usunięcie gałęzi bez sprawdzenia, czy jest scalona — używaj jej
+ostrożnie, bo możesz utracić niepubliczne commity.
+
 ```bash
 # Lista gałęzi lokalnych
 git branch
@@ -286,6 +368,16 @@ git branch -m nowa-nazwa
 
 ### 4.5. Scalanie i rebase
 
+Scalanie i rebase to dwa sposoby integracji zmian z jednej gałęzi do drugiej, ale
+różnią się podejściem i wpływem na historię projektu. **Merge** tworzy nowy commit
+scalający (tzw. *merge commit*), który zachowuje pełne informacje o tym, że gałęzie
+istniały osobno — dobry wybór gdy chcesz zachować kontekst historii (np. w `main`).
+**Rebase** przenosi commity z bieżącej gałęzi na czubek gałęzi bazowej, tworząc
+*liniową* historię bez merge commitów — idealny do porządkowania historii przed
+wysłaniem Pull Requesta. Reguła złota: rebase używaj tylko na *prywatnych* commitach,
+które nie zostały jeszcze wypchnięte na serwer. Rebase na opublikowanych commitach
+przepisuje historię i powoduje chaos dla innych współpracowników.
+
 ```bash
 # Scal gałąź feature do bieżącej (np. main)
 git checkout main
@@ -309,6 +401,18 @@ git rebase --continue
 ```
 
 ### 4.6. Praca ze zdalnym repozytorium
+
+Zdalne repozytorium (*remote*) to kopia projektu hostowana na serwerze (GitHub,
+GitLab, Bitbucket). Kluczowe jest zrozumienie różnicy między `fetch` a `pull`:
+`git fetch` *tylko* pobiera informacje o zmianach na serwerze (bez modyfikowania
+lokalnych plików), co pozwala bezpiecznie sprawdzić co się zmieniło, zanim
+zdecydujesz co z tym zrobić. `git pull` to skrót do `fetch + merge` — wygodny,
+ale mniej kontrolowany. Opcja `-u` (`--set-upstream`) przy pierwszym `push` ustawia
+trwałe połączenie między lokalną a zdalną gałęzią, dzięki czemu potem można pisać
+po prostu `git push` bez podawania nazwy zdalnego i gałęzi. `--force-with-lease`
+jest znacznie bezpieczniejszą alternatywą dla `--force` — wymusza push tylko wtedy,
+gdy nikt inny nie pushował od czasu Twojego ostatniego fetch, co chroni przed
+przypadkowym nadpisaniem cudzej pracy.
 
 ```bash
 # Lista zdalnych repozytoriów
@@ -338,6 +442,17 @@ git push --force-with-lease   # bezpieczniejszy wariant
 
 ### 4.7. Cofanie zmian
 
+Wiedza o cofaniu zmian jest równie ważna jak znajomość standardowego workflow.
+Git oferuje kilka mechanizmów różniących się zakresem i stopniem bezpieczeństwa.
+`git restore` jest najbezpieczniejszy — działa tylko na lokalnych, niezacommitowanych
+zmianach i nie modyfikuje historii. `git revert` tworzy *nowy* commit cofający
+efekty wskazanego commita — jest to jedyny bezpieczny sposób cofania zmian, które
+zostały już wypchnięte na współdzielone repozytorium, bo nie niszczy historii.
+`git reset --hard` jest najniebezpieczniejszy: bezpowrotnie niszczy zmiany w
+katalogu roboczym i staging area — używaj go wyłącznie gdy jesteś absolutnie pewien
+co robisz. `git reflog` to ostatnia linia obrony: rejestruje każdą operację na HEAD
+przez ostatnie 90 dni, co pozwala odzyskać "zgubione" commity nawet po `reset --hard`.
+
 ```bash
 # Cofnij niestage'owane zmiany w pliku
 git restore plik.py
@@ -363,6 +478,14 @@ git checkout -b odzyskana-galaz abc1234
 ## 5. Praktyczne przykłady
 
 ### 5.1. Nowy projekt od zera
+
+Poniższy przykład pokazuje kompletny workflow założenia nowego projektu. Każdy krok
+ma swoje uzasadnienie: tworzenie `.gitignore` *przed* pierwszym commitem jest
+kluczowe, bo pliki wymienione w `.gitignore` są ignorowane tylko wtedy, gdy nigdy
+wcześniej nie trafiły do repozytorium — jeśli raz je zacommiujesz (np. katalog
+`__pycache__/`), `.gitignore` przestaje na nie działać. Opcja `-u` w pierwszym
+`push` ustawia upstream, dzięki czemu kolejne `push`/`pull` można wykonywać bez
+podawania nazwy zdalnego i gałęzi.
 
 ```bash
 mkdir robot-arm-controller && cd robot-arm-controller
@@ -390,6 +513,15 @@ git push -u origin main
 ```
 
 ### 5.2. Nowa funkcja w osobnej gałęzi
+
+Ten workflow ilustruje wzorcową pracę nad nową funkcją. Synchronizacja z `main`
+przed odgałęzieniem (`git pull`) jest obowiązkowa — dzięki temu nowa gałąź
+startuje od aktualnego stanu projektu, a nie od wczorajszego stanu, co minimalizuje
+przyszłe konflikty. Małe, regularne commity (zamiast jednego ogromnego na koniec)
+mają wiele zalet: ułatwiają code review (recenzent widzi logiczne kroki), pozwalają
+cofnąć tylko konkretną zmianę, a historia staje się czytelną narracją o ewolucji
+kodu. Usunięcie gałęzi po scaleniu jest ważne — nieprzycinane, "wiszące" gałęzie
+szybko zaśmiecają repozytorium i utrudniają orientację w projekcie.
 
 ```bash
 # Zaktualizuj main przed odgałęzieniem
@@ -424,6 +556,15 @@ git push origin --delete feature/gripper-control
 
 ### 5.3. Hotfix na produkcji
 
+Hotfix to procedura naprawy krytycznego błędu w środowisku produkcyjnym, gdy nie
+można czekać na następny regularny release. Kluczowe jest odgałęzienie od *tagu
+produkcyjnego* (np. `v2.1.0`), a nie od gałęzi `develop` — dzięki temu hotfix
+nie wciąga przypadkowo niedokończonych funkcji oczekujących na kolejną wersję.
+Po naprawieniu błędu scalamy hotfix do *obydwu* gałęzi: do `main` (żeby produkcja
+dostała poprawkę) i do `develop` (żeby poprawka nie zniknęła w kolejnym release).
+Tagowanie nowej wersji (`v2.1.1`) jest niezbędne do śledzenia, która dokładnie
+wersja jest wdrożona na serwerze produkcyjnym.
+
 ```bash
 # Odgałęź od tagu produkcyjnego
 git switch -c hotfix/fix-gripper-crash v2.1.0
@@ -451,11 +592,24 @@ git branch -d hotfix/fix-gripper-crash
 
 Przed wysłaniem Pull Requesta warto oczyścić historię commitów:
 
+Interaktywny rebase (`-i`) uruchamia edytor tekstowy z listą commitów do
+zmodyfikowania. Jest to operacja *przepisująca historię* — wolno jej używać wyłącznie
+na commitach, które nie zostały jeszcze wypchnięte na serwer (czyli na Twoich
+prywatnych commitach). Celem jest doprowadzenie historii do postaci, w której każdy
+commit to jedna logiczna, skończona zmiana — jak dobrze napisany rozdział książki,
+a nie surowy zapis chaotycznej sesji kodowania.
+
 ```bash
 git rebase -i HEAD~4
 ```
 
 Otworzy się edytor z listą ostatnich 4 commitów:
+
+Edytor pokazuje listę commitów od najstarszego (góra) do najnowszego (dół). Dla
+każdego commita wybierasz akcję. Najczęstsze: `pick` — zachowaj bez zmian; `reword`
+— zachowaj, ale popraw wiadomość; `squash`/`fixup` — połącz z poprzednim commitem
+(fixup pomija wiadomość); `drop` — usuń commit. W tym przykładzie trzy robocze
+commity zostaną sprowadzone do dwóch czystych:
 
 ```
 pick abc1234 Add Gripper class skeleton
@@ -484,6 +638,15 @@ Wynik: dwa czyste commity zamiast czterech roboczych.
 
 ### 5.5. Stash — odkładanie zmian na później
 
+Stash rozwiązuje konkretny problem: jesteś w połowie pracy nad funkcją, gdy nagle
+musisz pilnie naprawić błąd na innej gałęzi. Nie chcesz commitować niedokończonej
+pracy (WIP commit zaśmieca historię), ale też nie możesz zostawić niezapisanych
+zmian przy przełączaniu gałęzi — Git na to nie pozwoli. `git stash push` odkłada
+wszystkie zmiany na specjalny stos i przywraca czysty katalog roboczy. `git stash pop`
+zdejmuje ostatni wpis ze stosu i przywraca zmiany. Stash warto traktować jako
+*tymczasowy schowek*, nie jako długoterminowe przechowywanie — zmiany tam zostawione
+są łatwe do przeoczenia.
+
 ```bash
 # Odłóż bieżące zmiany (łącznie z nienazwanymi)
 git stash push -m "WIP: gripper calibration"
@@ -504,6 +667,14 @@ git stash apply stash@{2}
 ```
 
 ### 5.6. Cherry-pick — przenoszenie wybranych commitów
+
+Cherry-pick pozwala przenieść jeden lub kilka wybranych commitów z dowolnej gałęzi
+do bieżącej, bez konieczności scalania całej gałęzi. Typowe zastosowania to:
+przeniesienie hotfixa do starszej wersji produktu (gałąź `v1.x`), zastosowanie
+tej samej poprawki na kilku gałęziach jednocześnie, albo wydzielenie konkretnej
+zmiany z gałęzi feature, która nie jest jeszcze gotowa w całości. Należy używać
+cherry-pick ostrożnie na długo żyjących gałęziach — duplikuje commity (nowe SHA),
+co może prowadzić do problemów przy późniejszym scaleniu.
 
 ```bash
 # Przenieś konkretny commit z innej gałęzi
@@ -537,6 +708,12 @@ praw zapisu do głównego repozytorium.
 
 Synchronizacja forka z oryginałem:
 
+Po pewnym czasie Twój fork rozjedzie się z oryginałem — inni contributors będą
+dodawali zmiany do `upstream`. Żeby zachować aktualność, musisz regularnie
+synchronizować swój fork. W tym celu dodajesz drugi *remote* o nazwie `upstream`
+(oryginalne repozytorium) i pobierasz z niego zmiany, scalając je z lokalnym `main`,
+a potem wypychając na swój fork na GitHubie:
+
 ```bash
 git fetch upstream
 git switch main
@@ -562,6 +739,13 @@ Zasady:
 - PR wymaga co najmniej jednej recenzji przed scaleniem.
 
 ### 6.3. Tworzenie Pull Requesta krok po kroku
+
+Poniższy workflow pokazuje kompletny cykl przygotowania Pull Requesta. Krok 4
+(rebase o zmiany z `origin/main`) jest krytyczny: zanim wyślesz PR, upewnij się,
+że Twoje commity siedzą na czubku aktualnej gałęzi bazowej. Dzięki temu recenzenci
+widzą tylko Twoje commity — bez zaśmiecających *merge commitów* wciąganych z main.
+Rebase zamiast merge jest tu preferowany właśnie dlatego, by zachować liniową,
+czytelną historię PR.
 
 ```bash
 # 1. Zaktualizuj gałąź bazową
@@ -606,6 +790,12 @@ Na GitHubie:
 
 Konflikt pojawia się, gdy dwie osoby zmodyfikowały te same linie pliku.
 
+Konflikt scalania pojawia się, gdy dwie osoby zmodyfikowały te same linie pliku na
+różnych gałęziach. Nie jest to błąd ani awaria — to naturalna konsekwencja
+równoległej pracy, którą Git sygnalizuje, zamiast zgadywać, która wersja jest
+"właściwa". Wiedza o rozwiązywaniu konfliktów jest obowiązkowa dla każdego
+programisty pracującego w zespole.
+
 ```bash
 # Podczas merge/rebase Git zatrzymuje się przy konflikcie
 git merge feature/slam-improvements
@@ -625,6 +815,13 @@ float loop_threshold = 0.90f;
 >>>>>>> feature/slam-improvements (przychodzące zmiany)
 ```
 
+Markery `<<<<<<<`, `=======` i `>>>>>>>` wyraźnie oznaczają obie wersje. Twoim
+zadaniem jest ręczna edycja pliku: zostawiasz właściwą treść (lub kombinację obu),
+usuwasz wszystkie trzy markery, a następnie informujesz Gita o rozwiązaniu konfliktu
+przez `git add`. Narzędzia graficzne (VS Code, IntelliJ, meld) wyświetlają konflikty
+w wygodnym widoku trzech paneli (ich wersja / wspólna baza / Twoja wersja), co
+znacznie ułatwia porównywanie.
+
 ```bash
 # Edytuj plik ręcznie lub użyj narzędzia
 git mergetool        # np. meld, vimdiff, VS Code
@@ -641,6 +838,13 @@ git merge --continue   # lub: git commit
 ### 7.1. Git Flow
 
 Klasyczny model dla projektów z regularnymi wydaniami.
+
+Poniższy diagram przedstawia przepływ pracy w modelu Git Flow. Gałęzie `feature`
+odgałęziają się od `develop`, a nie od `main` — dzięki temu nieskończone funkcje
+nie trafiają na produkcję. Gałąź `release` to bufor między `develop` a `main`:
+pozwala wykonać ostatnie bugfixy i bump wersji, nie blokując dalszego developmentu.
+Gałąź `hotfix` to jedyny wyjątek, który odgałęzia się bezpośrednio od `main`
+i musi być scalony *zarówno* do `main` jak i `develop`.
 
 ```
 main      ●────────────────────────────●───── (produkcja)
@@ -665,6 +869,12 @@ feature    ●──●    ●──●──●──●
 ### 7.2. GitHub Flow
 
 Prostszy model dla ciągłego wdrażania (CI/CD).
+
+GitHub Flow to radykalne uproszczenie w stosunku do Git Flow: istnieje tylko jedna
+długotrwała gałąź (`main`) i jest ona zawsze w stanie gotowym do wdrożenia.
+Każda zmiana przechodzi przez krótkotrwałą gałąź feature i Pull Request. Model
+sprawdza się doskonale w środowiskach z dojrzałym CI/CD, gdzie każdy merge do `main`
+automatycznie wdraża aplikację na serwer.
 
 ```
 main ────●──────●──────●──────●──────
@@ -700,7 +910,12 @@ dojrzałym CI/CD i małych, częstych commitach. Funkcje ukrywane przez
 
    Typy: `feat`, `fix`, `docs`, `style`, `refactor`, `test`, `chore`, `ci`.
 
-   Przykłady:
+   Typy te nie są przypadkowe — pozwalają narzędziom (np. `semantic-release`)
+   automatycznie generować changelog i wersjonować projekt zgodnie z semver:
+   `feat` powoduje przyrost MINOR, `fix` — PATCH, `BREAKING CHANGE` — MAJOR.
+   Zakres w nawiasach (np. `slam`, `gripper`) precyzuje, której części kodu
+   dotyczy zmiana. Przykłady dobrze sformułowanych wiadomości commitów:
+
    ```
    feat(slam): add loop closure detection
    fix(gripper): prevent crash on timeout — fixes #42
@@ -747,6 +962,13 @@ dojrzałym CI/CD i małych, częstych commitach. Funkcje ukrywane przez
 
 ### Aliasy Git — przyspiesz pracę
 
+Aliasy pozwalają skrócić najczęściej używane komendy do kilku znaków. Po
+jednorazowej konfiguracji `git lg` zastępuje długie
+`git log --oneline --graph --all --decorate`, a `git st` — `git status`. Aliasy
+są zapisywane w `~/.gitconfig` i działają globalnie we wszystkich repozytoriach.
+Warto inwestować kilka minut w konfigurację aliasów — zwracają się wielokrotnie
+w codziennej pracy.
+
 ```bash
 git config --global alias.st "status"
 git config --global alias.co "checkout"
@@ -761,6 +983,12 @@ Teraz `git lg` wyświetla czytelne drzewo historii, a `git st` zastępuje
 
 ### Automatyczne poprawne zakończenia linii
 
+Zakończenia linii (CRLF na Windows vs LF na Linux/macOS) są niewidoczną, ale
+powszechną przyczyną "fałszywych" diff-ów i konfliktów scalania — plik wyglądający
+identycznie w edytorze może mieć setki zmian w oczach Gita przez sam znak końca
+linii. Ustawienie `core.autocrlf` mówi Gitowi, jak konwertować zakończenia linii
+podczas zapisu i odczytu. Konfiguracja jest jednorazowa, per-system.
+
 ```bash
 # macOS / Linux
 git config --global core.autocrlf input
@@ -770,6 +998,12 @@ git config --global core.autocrlf true
 ```
 
 ### .gitignore — globalne wzorce
+
+Poza lokalnym `.gitignore` (per-projekt), warto skonfigurować globalny `.gitignore`
+dla plików charakterystycznych dla Twojego środowiska pracy, nie dla projektu
+(pliki IDE, systemu operacyjnego, edytora). Dzięki temu nie musisz dodawać
+`.DS_Store` ani plików `.idea/` do każdego projektu z osobna — ani prosić
+współpracowników, żeby ignorowali Twoje pliki narzędziowe w ich `.gitignore`.
 
 ```bash
 # Utwórz globalny .gitignore (IDE, systemy operacyjne)
@@ -786,6 +1020,11 @@ git config --global core.excludesFile ~/.gitignore_global
 
 ### Sprawdzanie co się zmieniło przed commitem
 
+Przed każdym commitem warto poświęcić chwilę na sprawdzenie, co dokładnie
+zatwierdzasz. `git diff --stat` daje szybki przegląd zmodyfikowanych plików i
+liczby zmienionych linii — pozwala wychwycić przypadkowe zmiany (debug printy,
+zapomniane pliki testowe) zanim na zawsze trafią do historii projektu.
+
 ```bash
 # Podsumowanie zmian
 git diff --stat
@@ -795,6 +1034,14 @@ git difftool --tool=vscode
 ```
 
 ### Szybkie cofanie błędnych operacji
+
+Każdy popełnia błędy — znajomość sposobów ich cofania jest równie ważna jak
+znajomość standardowego workflow. Poniższe komendy obsługują najczęstsze sytuacje
+awaryjne. `git merge --abort` jest bezpiecznym wyjściem "awaryjnym" — przywraca
+stan sprzed scalania jeśli napotkałeś konflikt, którego nie chcesz teraz
+rozwiązywać. `git reflog` działa jak wehikuł czasu: Git rejestruje każdą operację
+na HEAD przez ostatnie 90 dni, co umożliwia odzyskanie "zgubionych" commitów nawet
+po destruktywnym `reset --hard`.
 
 ```bash
 # Właśnie zrobiłem błędny commit — cofnij, zachowaj zmiany
