@@ -3276,7 +3276,7 @@ footer a:hover {
     list-style: none;
     padding: 0;
     margin: 0;
-    max-height: 500px;
+    max-height: 1000px;
     overflow: hidden;
     transition: max-height 0.3s ease, opacity 0.25s ease, padding 0.3s ease;
     opacity: 1;

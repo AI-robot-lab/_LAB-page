@@ -275,7 +275,7 @@ function setupCollapsibleCategories() {
 }
 
 function expandCategoryForArticle(articleId) {
-    const link = document.querySelector('[data-article="' + articleId + '"]');
+    const link = document.querySelector('[data-article="' + CSS.escape(articleId) + '"]');
     if (link) {
         const category = link.closest('.wiki-category');
         if (category) {
