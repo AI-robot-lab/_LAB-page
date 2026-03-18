@@ -221,6 +221,9 @@ function initWiki() {
         }, 100);
     }
     
+    // Setup collapsible categories
+    setupCollapsibleCategories();
+    
     // Add stagger animation to category links
     const categories = document.querySelectorAll('.wiki-category');
     categories.forEach((category, index) => {
@@ -232,6 +235,53 @@ function initWiki() {
             category.style.transform = 'translateY(0)';
         }, 150 + (index * 50));
     });
+}
+
+function setupCollapsibleCategories() {
+    const categories = document.querySelectorAll('.wiki-category');
+    
+    categories.forEach(category => {
+        const header = category.querySelector('h4');
+        const list = category.querySelector('ul');
+        if (!header || !list) return;
+        
+        // Add article count badge
+        const articleCount = list.querySelectorAll('li').length;
+        const badge = document.createElement('span');
+        badge.className = 'category-count';
+        badge.textContent = articleCount;
+        header.appendChild(badge);
+        
+        // Add chevron icon
+        const chevron = document.createElement('i');
+        chevron.className = 'fa-solid fa-chevron-down category-chevron';
+        header.appendChild(chevron);
+        
+        // Start collapsed
+        category.classList.add('collapsed');
+        
+        // Toggle on click
+        header.addEventListener('click', function(e) {
+            e.preventDefault();
+            category.classList.toggle('collapsed');
+        });
+    });
+    
+    // If there's a hash, expand the category containing that article
+    const hash = window.location.hash.substring(1);
+    if (hash) {
+        expandCategoryForArticle(hash);
+    }
+}
+
+function expandCategoryForArticle(articleId) {
+    const link = document.querySelector('[data-article="' + articleId + '"]');
+    if (link) {
+        const category = link.closest('.wiki-category');
+        if (category) {
+            category.classList.remove('collapsed');
+        }
+    }
 }
 
 function setupArticleLinks() {
@@ -254,6 +304,9 @@ function setupArticleLinks() {
             
             // Update URL hash
             window.location.hash = articleId;
+            
+            // Expand parent category if collapsed
+            expandCategoryForArticle(articleId);
             
             // Load article
             loadArticle(articleId);
@@ -284,12 +337,19 @@ function filterArticles(query) {
     const categories = document.querySelectorAll('.wiki-category');
     
     if (!query) {
-        // Show all
+        // Show all, restore collapsed state
         categories.forEach(cat => {
-            cat.style.display = 'block';
+            cat.style.display = '';
+            cat.classList.add('collapsed');
             const links = cat.querySelectorAll('li');
-            links.forEach(li => li.style.display = 'block');
+            links.forEach(li => li.style.display = '');
         });
+        // Re-expand category of active article if any
+        const activeLink = document.querySelector('.wiki-category a.active');
+        if (activeLink) {
+            const activeCat = activeLink.closest('.wiki-category');
+            if (activeCat) activeCat.classList.remove('collapsed');
+        }
         return;
     }
     
@@ -303,15 +363,20 @@ function filterArticles(query) {
             const articleId = link.dataset.article.replace('wiki/', '');
             
             if (text.includes(query) || articleId.includes(query)) {
-                li.style.display = 'block';
+                li.style.display = '';
                 hasVisibleLinks = true;
             } else {
                 li.style.display = 'none';
             }
         });
         
-        // Hide category if no visible links
-        cat.style.display = hasVisibleLinks ? 'block' : 'none';
+        // Hide category if no visible links, expand matching ones
+        if (hasVisibleLinks) {
+            cat.style.display = '';
+            cat.classList.remove('collapsed');
+        } else {
+            cat.style.display = 'none';
+        }
     });
 }
 
