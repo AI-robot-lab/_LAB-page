@@ -3633,3 +3633,276 @@ footer a:hover {
         align-items: flex-start;
     }
 }
+
+/* ====================================
+   PWA: Bottom Navigation Bar
+   ==================================== */
+.pwa-bottom-nav {
+    display: none;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 9999;
+    background: var(--white, #ffffff);
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+    padding-bottom: env(safe-area-inset-bottom, 0);
+}
+
+@media (max-width: 768px) {
+    .pwa-bottom-nav {
+        display: flex;
+        justify-content: space-around;
+        align-items: stretch;
+    }
+
+    body {
+        padding-bottom: calc(64px + env(safe-area-inset-bottom, 0));
+    }
+}
+
+.pwa-bottom-nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+    padding: 8px 4px 10px;
+    color: var(--text-light, #5e6d77);
+    text-decoration: none;
+    font-size: 0.65rem;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500;
+    transition: color 0.2s ease, background-color 0.2s ease;
+    -webkit-tap-highlight-color: transparent;
+    min-height: 56px;
+    gap: 4px;
+    position: relative;
+}
+
+.pwa-bottom-nav-item i {
+    font-size: 1.25rem;
+    transition: transform 0.2s ease;
+}
+
+.pwa-bottom-nav-item span {
+    letter-spacing: 0.02em;
+}
+
+.pwa-bottom-nav-item.active {
+    color: var(--prz-blue, #003366);
+    font-weight: 700;
+}
+
+.pwa-bottom-nav-item.active::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 25%;
+    right: 25%;
+    height: 3px;
+    background: var(--prz-blue, #003366);
+    border-radius: 0 0 3px 3px;
+}
+
+.pwa-bottom-nav-item:active {
+    background: rgba(0, 51, 102, 0.08);
+}
+
+.pwa-bottom-nav-item:active i {
+    transform: scale(0.9);
+}
+
+/* ====================================
+   PWA: Install Banner
+   ==================================== */
+.pwa-install-banner {
+    position: fixed;
+    bottom: 72px;
+    left: 12px;
+    right: 12px;
+    z-index: 10000;
+    background: var(--white, #ffffff);
+    border-radius: 16px;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.15);
+    padding: 14px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    animation: pwa-slide-up 0.3s ease;
+}
+
+@keyframes pwa-slide-up {
+    from { transform: translateY(100%); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+.pwa-install-content {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex: 1;
+    min-width: 0;
+}
+
+.pwa-install-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    flex-shrink: 0;
+}
+
+.pwa-install-text {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+}
+
+.pwa-install-text strong {
+    font-size: 0.9rem;
+    color: var(--text-dark, #1a1a1a);
+}
+
+.pwa-install-text span {
+    font-size: 0.75rem;
+    color: var(--text-light, #5e6d77);
+}
+
+.pwa-install-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+}
+
+.pwa-install-btn {
+    background: var(--prz-blue, #003366);
+    color: #fff;
+    border: none;
+    border-radius: 20px;
+    padding: 8px 18px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.pwa-install-btn:active {
+    opacity: 0.85;
+}
+
+.pwa-install-close {
+    background: none;
+    border: none;
+    font-size: 1.4rem;
+    color: var(--text-light, #5e6d77);
+    cursor: pointer;
+    padding: 4px;
+    line-height: 1;
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* ====================================
+   PWA: Standalone Mode Styles
+   ==================================== */
+@media (display-mode: standalone) {
+    header[role="banner"] {
+        display: none;
+    }
+
+    nav[role="navigation"] {
+        position: sticky;
+        top: 0;
+    }
+}
+
+.pwa-standalone header[role="banner"] {
+    display: none;
+}
+
+.pwa-standalone nav[role="navigation"] {
+    position: sticky;
+    top: 0;
+}
+
+/* ====================================
+   PWA: Mobile App-Like Touch Styles
+   ==================================== */
+@media (max-width: 768px) {
+    .btn-primary,
+    .btn-secondary {
+        min-height: 48px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .team-card,
+    .soft-item,
+    .rehab-box {
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    .team-card:active,
+    .soft-item:active,
+    .rehab-box:active {
+        transform: scale(0.98);
+        transition: transform 0.1s ease;
+    }
+
+    nav a {
+        min-height: 44px;
+        display: flex;
+        align-items: center;
+    }
+}
+
+/* ====================================
+   PWA: Dark Mode Overrides
+   ==================================== */
+[data-theme="dark"] .pwa-bottom-nav {
+    background: var(--bg-secondary, #2d2d2d);
+    border-top-color: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="dark"] .pwa-bottom-nav-item {
+    color: var(--text-secondary, #b0b0b0);
+}
+
+[data-theme="dark"] .pwa-bottom-nav-item.active {
+    color: var(--prz-blue-dark, #4a90e2);
+}
+
+[data-theme="dark"] .pwa-bottom-nav-item.active::before {
+    background: var(--prz-blue-dark, #4a90e2);
+}
+
+[data-theme="dark"] .pwa-bottom-nav-item:active {
+    background: rgba(74, 144, 226, 0.1);
+}
+
+[data-theme="dark"] .pwa-install-banner {
+    background: var(--bg-secondary, #2d2d2d);
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
+}
+
+[data-theme="dark"] .pwa-install-text strong {
+    color: var(--text-primary, #e0e0e0);
+}
+
+[data-theme="dark"] .pwa-install-text span {
+    color: var(--text-secondary, #b0b0b0);
+}
+
+[data-theme="dark"] .pwa-install-btn {
+    background: var(--prz-blue-dark, #4a90e2);
+}
+
+[data-theme="dark"] .pwa-install-close {
+    color: var(--text-secondary, #b0b0b0);
+}
