@@ -286,11 +286,10 @@ document.querySelectorAll('img').forEach(img => {
 // ====================================
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', function() {
-        // Uncomment when you create a service worker
-        // navigator.serviceWorker.register('/sw.js').then(function(registration) {
-        //     console.log('ServiceWorker registered:', registration);
-        // }).catch(function(error) {
-        //     console.log('ServiceWorker registration failed:', error);
-        // });
+        navigator.serviceWorker.register('/sw.js').then(function(registration) {
+            console.log('ServiceWorker registered:', registration);
+        }).catch(function(error) {
+            console.log('ServiceWorker registration failed:', error);
+        });
     });
 }
