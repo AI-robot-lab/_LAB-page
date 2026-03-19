@@ -11,7 +11,6 @@ const ASSETS_TO_CACHE = [
     './contact-form.js',
     './manifest.json',
     './favicon.svg',
-    './assets/icons/favicon.svg',
     './assets/icons/favicon.ico',
     './assets/icons/icon-192x192.png',
     './assets/icons/icon-512x512.png'

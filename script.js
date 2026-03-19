@@ -305,7 +305,11 @@ if ('serviceWorker' in navigator) {
         nav.className = 'pwa-bottom-nav';
         nav.setAttribute('aria-label', 'Nawigacja mobilna');
 
-        var currentPage = window.location.pathname.split('/').pop() || 'index.html';
+        var pathname = window.location.pathname;
+        var currentPage = pathname.split('/').pop() || 'index.html';
+        if (currentPage === '' || currentPage === '/' || !currentPage.includes('.')) {
+            currentPage = 'index.html';
+        }
 
         var items = [
             { href: 'index.html', icon: 'fa-solid fa-house', label: 'Strona główna', id: 'index.html' },
@@ -318,7 +322,7 @@ if ('serviceWorker' in navigator) {
             var a = document.createElement('a');
             a.href = item.href;
             a.className = 'pwa-bottom-nav-item';
-            if (currentPage === item.id || (currentPage === '' && item.id === 'index.html')) {
+            if (currentPage === item.id) {
                 a.classList.add('active');
             }
             a.setAttribute('aria-label', item.label);
@@ -375,6 +379,7 @@ if ('serviceWorker' in navigator) {
                 deferredPrompt.prompt();
                 deferredPrompt.userChoice.then(function() {
                     deferredPrompt = null;
+                }).finally(function() {
                     banner.remove();
                 });
             }
