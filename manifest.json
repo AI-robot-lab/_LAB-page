@@ -2,7 +2,8 @@
     "name": "Laboratorium Robotów Humanoidalnych PRz",
     "short_name": "RobotLab PRz",
     "description": "Jednostka badawcza Katedry Informatyki i Automatyki PRz, specjalizująca się w integracji Sztucznej Inteligencji z robotyką humanoidalną.",
-    "start_url": "/",
+    "start_url": ".",
+    "scope": ".",
     "display": "standalone",
     "background_color": "#003366",
     "theme_color": "#003366",
@@ -13,12 +14,31 @@
             "src": "assets/icons/favicon.svg",
             "sizes": "any",
             "type": "image/svg+xml",
-            "purpose": "any maskable"
+            "purpose": "any"
         },
         {
-            "src": "assets/icons/favicon.ico",
-            "sizes": "48x48",
-            "type": "image/x-icon"
+            "src": "assets/icons/icon-192x192.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "any"
+        },
+        {
+            "src": "assets/icons/icon-512x512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any"
+        },
+        {
+            "src": "assets/icons/icon-192x192.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "maskable"
+        },
+        {
+            "src": "assets/icons/icon-512x512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "maskable"
         }
     ],
     "categories": ["education", "science"],
@@ -27,13 +47,22 @@
             "name": "WIKI",
             "short_name": "WIKI",
             "description": "Baza wiedzy laboratorium",
-            "url": "/wiki.html"
+            "url": "wiki.html",
+            "icons": [{ "src": "assets/icons/icon-192x192.png", "sizes": "192x192" }]
         },
         {
             "name": "Materiały PDF",
             "short_name": "PDF",
             "description": "Materiały edukacyjne w formacie PDF",
-            "url": "/pdf.html"
+            "url": "pdf.html",
+            "icons": [{ "src": "assets/icons/icon-192x192.png", "sizes": "192x192" }]
+        },
+        {
+            "name": "Kontakt",
+            "short_name": "Kontakt",
+            "description": "Formularz rekrutacyjny",
+            "url": "contact.html",
+            "icons": [{ "src": "assets/icons/icon-192x192.png", "sizes": "192x192" }]
         }
     ]
 }

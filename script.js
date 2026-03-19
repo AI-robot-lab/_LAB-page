@@ -282,14 +282,121 @@ document.querySelectorAll('img').forEach(img => {
 });
 
 // ====================================
-// Service Worker Registration (Optional)
+// Service Worker Registration
 // ====================================
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', function() {
-        navigator.serviceWorker.register('/sw.js').then(function(registration) {
+        navigator.serviceWorker.register('./sw.js').then(function(registration) {
             console.log('ServiceWorker registered:', registration);
         }).catch(function(error) {
             console.log('ServiceWorker registration failed:', error);
         });
     });
 }
+
+// ====================================
+// PWA: Bottom Navigation Bar
+// ====================================
+(function() {
+    function createBottomNav() {
+        if (document.querySelector('.pwa-bottom-nav')) return;
+
+        var nav = document.createElement('nav');
+        nav.className = 'pwa-bottom-nav';
+        nav.setAttribute('aria-label', 'Nawigacja mobilna');
+
+        var currentPage = window.location.pathname.split('/').pop() || 'index.html';
+
+        var items = [
+            { href: 'index.html', icon: 'fa-solid fa-house', label: 'Strona główna', id: 'index.html' },
+            { href: 'wiki.html', icon: 'fa-solid fa-book', label: 'Wiki', id: 'wiki.html' },
+            { href: 'pdf.html', icon: 'fa-solid fa-file-pdf', label: 'PDF', id: 'pdf.html' },
+            { href: 'contact.html', icon: 'fa-solid fa-envelope', label: 'Kontakt', id: 'contact.html' }
+        ];
+
+        items.forEach(function(item) {
+            var a = document.createElement('a');
+            a.href = item.href;
+            a.className = 'pwa-bottom-nav-item';
+            if (currentPage === item.id || (currentPage === '' && item.id === 'index.html')) {
+                a.classList.add('active');
+            }
+            a.setAttribute('aria-label', item.label);
+            a.innerHTML = '<i class="' + item.icon + '" aria-hidden="true"></i><span>' + item.label + '</span>';
+            nav.appendChild(a);
+        });
+
+        document.body.appendChild(nav);
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', createBottomNav);
+    } else {
+        createBottomNav();
+    }
+})();
+
+// ====================================
+// PWA: Install Prompt
+// ====================================
+(function() {
+    var deferredPrompt = null;
+
+    window.addEventListener('beforeinstallprompt', function(e) {
+        e.preventDefault();
+        deferredPrompt = e;
+        showInstallBanner();
+    });
+
+    function showInstallBanner() {
+        if (document.querySelector('.pwa-install-banner')) return;
+        if (window.matchMedia('(display-mode: standalone)').matches) return;
+        if (window.navigator.standalone === true) return;
+
+        var banner = document.createElement('div');
+        banner.className = 'pwa-install-banner';
+        banner.innerHTML =
+            '<div class="pwa-install-content">' +
+                '<img src="assets/icons/icon-192x192.png" alt="RobotLab" class="pwa-install-icon">' +
+                '<div class="pwa-install-text">' +
+                    '<strong>RobotLab PRz</strong>' +
+                    '<span>Zainstaluj aplikację na urządzeniu</span>' +
+                '</div>' +
+            '</div>' +
+            '<div class="pwa-install-actions">' +
+                '<button class="pwa-install-btn" aria-label="Zainstaluj aplikację">Instaluj</button>' +
+                '<button class="pwa-install-close" aria-label="Zamknij">&times;</button>' +
+            '</div>';
+
+        document.body.appendChild(banner);
+
+        banner.querySelector('.pwa-install-btn').addEventListener('click', function() {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                deferredPrompt.userChoice.then(function() {
+                    deferredPrompt = null;
+                    banner.remove();
+                });
+            }
+        });
+
+        banner.querySelector('.pwa-install-close').addEventListener('click', function() {
+            banner.remove();
+        });
+    }
+})();
+
+// ====================================
+// PWA: Standalone Mode Detection
+// ====================================
+(function() {
+    function checkStandaloneMode() {
+        var isStandalone = window.matchMedia('(display-mode: standalone)').matches ||
+                           window.navigator.standalone === true;
+        if (isStandalone) {
+            document.documentElement.classList.add('pwa-standalone');
+        }
+    }
+    checkStandaloneMode();
+    window.matchMedia('(display-mode: standalone)').addEventListener('change', checkStandaloneMode);
+})();

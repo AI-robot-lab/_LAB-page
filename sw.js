@@ -1,16 +1,20 @@
-const CACHE_NAME = 'robotlab-prz-v1';
+const CACHE_NAME = 'robotlab-prz-v2';
 const ASSETS_TO_CACHE = [
-    '/',
-    '/index.html',
-    '/wiki.html',
-    '/pdf.html',
-    '/styles.css',
-    '/script.js',
-    '/wiki.js',
-    '/manifest.json',
-    '/favicon.svg',
-    '/assets/icons/favicon.svg',
-    '/assets/icons/favicon.ico'
+    './',
+    './index.html',
+    './contact.html',
+    './wiki.html',
+    './pdf.html',
+    './styles.css',
+    './script.js',
+    './wiki.js',
+    './contact-form.js',
+    './manifest.json',
+    './favicon.svg',
+    './assets/icons/favicon.svg',
+    './assets/icons/favicon.ico',
+    './assets/icons/icon-192x192.png',
+    './assets/icons/icon-512x512.png'
 ];
 
 self.addEventListener('install', (event) => {
