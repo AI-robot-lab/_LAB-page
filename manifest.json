@@ -1,0 +1,39 @@
+{
+    "name": "Laboratorium Robotów Humanoidalnych PRz",
+    "short_name": "RobotLab PRz",
+    "description": "Jednostka badawcza Katedry Informatyki i Automatyki PRz, specjalizująca się w integracji Sztucznej Inteligencji z robotyką humanoidalną.",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#003366",
+    "theme_color": "#003366",
+    "lang": "pl",
+    "orientation": "any",
+    "icons": [
+        {
+            "src": "assets/icons/favicon.svg",
+            "sizes": "any",
+            "type": "image/svg+xml",
+            "purpose": "any maskable"
+        },
+        {
+            "src": "assets/icons/favicon.ico",
+            "sizes": "48x48",
+            "type": "image/x-icon"
+        }
+    ],
+    "categories": ["education", "science"],
+    "shortcuts": [
+        {
+            "name": "WIKI",
+            "short_name": "WIKI",
+            "description": "Baza wiedzy laboratorium",
+            "url": "/wiki.html"
+        },
+        {
+            "name": "Materiały PDF",
+            "short_name": "PDF",
+            "description": "Materiały edukacyjne w formacie PDF",
+            "url": "/pdf.html"
+        }
+    ]
+}
