@@ -1,0 +1,94 @@
+{
+    "teams": {
+        "Percepcji": "Zespół Percepcji",
+        "Kognicji": "Zespół Kognicji",
+        "Interakcji": "Zespół Interakcji"
+    },
+    "weeks": {
+        "2026-W12": {
+            "Percepcji": [
+                "Kalibracja systemu LiDAR 3D z kamerą głębokości",
+                "Testy modułu analizy afektywnej DeepFace v2.1",
+                "Optymalizacja algorytmu mapowania proxemics"
+            ],
+            "Kognicji": [
+                "Wdrożenie modelu VLM na platformie Unitree G1",
+                "Benchmarking LLM w scenariuszach real-time (cel: <200ms)",
+                "Integracja modułu predykcji stanów emocjonalnych"
+            ],
+            "Interakcji": [
+                "Testy transferu polityk Sim-to-Real w Isaac Lab",
+                "Kalibracja dłoni robotycznej Dex3-1 – precyzja chwytu",
+                "Sesja rehabilitacyjna z protokołem Assist-as-needed"
+            ]
+        },
+        "2026-W13": {
+            "Percepcji": [
+                "Fuzja danych z 8 mikrofonu – lokalizacja źródła dźwięku",
+                "Implementacja algorytmu detekcji gestów dłoni",
+                "Przegląd literatury: metody segmentacji 3D w czasie rzeczywistym"
+            ],
+            "Kognicji": [
+                "Fine-tuning modelu UnifoLM-WMA-0 na danych laboratoryjnych",
+                "Przygotowanie zbioru danych treningowych – 500 scenariuszy",
+                "Wnioskowanie wielomodalne: wizja + mowa + kontekst"
+            ],
+            "Interakcji": [
+                "Trening sterownika równowagi dynamicznej (ROS2 Humble)",
+                "Pomiary momentów siły w stawach – dokumentacja danych",
+                "Testy interakcji człowiek-robot w scenariuszu rehabilitacyjnym"
+            ]
+        },
+        "2026-W14": {
+            "Percepcji": [
+                "Integracja modułu wizji głębokości z systemem nawigacji",
+                "Ocena dokładności rozpoznawania emocji – raport wyników",
+                "Aktualizacja mapy semantycznej środowiska laboratoryjnego"
+            ],
+            "Kognicji": [
+                "Ewaluacja modelu VLA na zestawie testowym",
+                "Optymalizacja pipeline'u inferencji – redukcja latencji",
+                "Dokumentacja API modułu wnioskowania LLM"
+            ],
+            "Interakcji": [
+                "Demonstracja zadania manipulacyjnego z obiektami codziennego użytku",
+                "Analiza video sesji Sim-to-Real – identyfikacja rozbieżności",
+                "Przygotowanie prezentacji wyników dla kierownika laboratorium"
+            ]
+        },
+        "2026-W15": {
+            "Percepcji": [
+                "Testy odporności systemu percepcji w warunkach ograniczonego oświetlenia",
+                "Synchronizacja czasowa strumieni sensorycznych (LiDAR + kamera + mikrofon)",
+                "Przegląd kodu i code review modułu percepcji"
+            ],
+            "Kognicji": [
+                "Implementacja mechanizmu pamięci epizodycznej dla LLM",
+                "Testy bezpieczeństwa wnioskowania – scenariusze brzegowe",
+                "Aktualizacja dokumentacji modelu UnifoLM-WMA-0"
+            ],
+            "Interakcji": [
+                "Trening polityki ruchu dla zadania podawania przedmiotów",
+                "Weryfikacja parametrów bezpieczeństwa – limity momentów i prędkości",
+                "Spotkanie z terapeutami – zbieranie wymagań dla modułu rehabilitacji"
+            ]
+        },
+        "2026-W16": {
+            "Percepcji": [
+                "Integracja modułu detekcji upadku użytkownika",
+                "Optymalizacja zużycia energii algorytmów percepcji (cel: -20%)",
+                "Przygotowanie demo na pokaz laboratorium"
+            ],
+            "Kognicji": [
+                "Wdrożenie modelu w środowisku produkcyjnym (staging)",
+                "Testy A/B dwóch strategii wnioskowania LLM",
+                "Raport miesięczny z postępów prac nad modułem kognicji"
+            ],
+            "Interakcji": [
+                "Pełna demonstracja cyklu PCA z robotem Unitree G1",
+                "Analiza wyników sesji rehabilitacyjnych – metryki skuteczności",
+                "Raport miesięczny i plan prac na kolejny miesiąc"
+            ]
+        }
+    }
+}

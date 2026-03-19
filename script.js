@@ -288,6 +288,10 @@ if ('serviceWorker' in navigator) {
     window.addEventListener('load', function() {
         navigator.serviceWorker.register('./sw.js').then(function(registration) {
             console.log('ServiceWorker registered:', registration);
+            // After registration, check if we should auto-notify for the current week.
+            if (Notification.permission === 'granted') {
+                notifyCurrentWeekIfNeeded(registration);
+            }
         }).catch(function(error) {
             console.log('ServiceWorker registration failed:', error);
         });
@@ -329,6 +333,20 @@ if ('serviceWorker' in navigator) {
             a.innerHTML = '<i class="' + item.icon + '" aria-hidden="true"></i><span>' + item.label + '</span>';
             nav.appendChild(a);
         });
+
+        // Notification bell button
+        var bellBtn = document.createElement('button');
+        bellBtn.type = 'button';
+        bellBtn.className = 'pwa-bottom-nav-item pwa-notif-btn';
+        bellBtn.setAttribute('aria-label', 'Powiadomienia o zadaniach');
+        bellBtn.innerHTML = '<i class="fa-solid fa-bell" aria-hidden="true"></i><span>Zadania</span>';
+        if (Notification.permission === 'granted') {
+            bellBtn.classList.add('notif-active');
+        }
+        bellBtn.addEventListener('click', function() {
+            openNotificationPanel();
+        });
+        nav.appendChild(bellBtn);
 
         document.body.appendChild(nav);
     }
@@ -404,4 +422,265 @@ if ('serviceWorker' in navigator) {
     }
     checkStandaloneMode();
     window.matchMedia('(display-mode: standalone)').addEventListener('change', checkStandaloneMode);
+})();
+
+// ====================================
+// PWA: Push Notifications – Weekly Tasks
+// ====================================
+(function() {
+    var TASKS_URL = './tasks.json';
+    var PERIODIC_SYNC_TAG = 'weekly-tasks-sync';
+    var LS_NOTIF_WEEK = 'robotlab-notified-week';
+
+    /**
+     * Returns the ISO week key for a given date, e.g. "2026-W12".
+     */
+    function getISOWeekKey(date) {
+        var d = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
+        var day = d.getUTCDay() || 7;
+        d.setUTCDate(d.getUTCDate() + 4 - day);
+        var yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
+        var weekNo = Math.ceil(((d - yearStart) / 86400000 + 1) / 7);
+        return d.getUTCFullYear() + '-W' + String(weekNo).padStart(2, '0');
+    }
+
+    /**
+     * Fetch tasks.json and return the entry for the current week, or null.
+     */
+    function fetchCurrentWeekTasks() {
+        return fetch(TASKS_URL)
+            .then(function(res) {
+                if (!res.ok) return null;
+                return res.json();
+            })
+            .then(function(data) {
+                if (!data) return null;
+                var weekKey = getISOWeekKey(new Date());
+                if (data.weeks && data.weeks[weekKey]) {
+                    return { weekKey: weekKey, teams: data.teams, tasks: data.weeks[weekKey] };
+                }
+                return null;
+            })
+            .catch(function() { return null; });
+    }
+
+    /**
+     * Register Periodic Background Sync so the SW can notify once a week
+     * even when the app is closed (Chrome/Android).
+     */
+    function registerPeriodicSync(registration) {
+        if (!('periodicSync' in registration)) return;
+        registration.periodicSync.register(PERIODIC_SYNC_TAG, {
+            minInterval: 7 * 24 * 60 * 60 * 1000 // one week in ms
+        }).catch(function() { /* permission may be denied – silently ignore */ });
+    }
+
+    /**
+     * Ask the SW to show notifications for the current week's tasks via postMessage.
+     * Saves the notified week to localStorage to avoid repeating on every page load.
+     */
+    function notifyViaServiceWorker(registration, weekKey, teams, tasks) {
+        if (!registration.active) return;
+        registration.active.postMessage({
+            type: 'SHOW_WEEKLY_TASKS',
+            weekKey: weekKey,
+            teams: teams,
+            tasks: tasks
+        });
+        localStorage.setItem(LS_NOTIF_WEEK, weekKey);
+    }
+
+    /**
+     * Called after SW registration (and when user manually enables notifications).
+     * Shows notifications if the current week hasn't been notified yet.
+     */
+    window.notifyCurrentWeekIfNeeded = function(registration) {
+        var currentWeek = getISOWeekKey(new Date());
+        var lastNotifiedWeek = localStorage.getItem(LS_NOTIF_WEEK);
+        if (lastNotifiedWeek === currentWeek) return; // already notified this week
+
+        fetchCurrentWeekTasks().then(function(result) {
+            if (!result) return;
+            notifyViaServiceWorker(registration, result.weekKey, result.teams, result.tasks);
+            registerPeriodicSync(registration);
+        });
+    };
+
+    /**
+     * Open the notification management panel (permission request + current week tasks preview).
+     */
+    window.openNotificationPanel = function() {
+        if (document.querySelector('.notif-panel')) return;
+
+        fetchCurrentWeekTasks().then(function(result) {
+            var panel = document.createElement('div');
+            panel.className = 'notif-panel';
+            panel.setAttribute('role', 'dialog');
+            panel.setAttribute('aria-modal', 'true');
+            panel.setAttribute('aria-labelledby', 'notif-panel-title');
+
+            var weekLabel = result ? result.weekKey.replace('-W', ', tydzień ') : '';
+
+            var tasksHtml = '';
+            if (result) {
+                for (var teamKey in result.teams) {
+                    if (!Object.prototype.hasOwnProperty.call(result.teams, teamKey)) continue;
+                    var teamTasks = result.tasks[teamKey];
+                    if (!teamTasks || teamTasks.length === 0) continue;
+                    tasksHtml += '<div class="notif-team">' +
+                        '<h4>' + result.teams[teamKey] + '</h4><ol>';
+                    teamTasks.forEach(function(t) {
+                        tasksHtml += '<li>' + t + '</li>';
+                    });
+                    tasksHtml += '</ol></div>';
+                }
+            } else {
+                tasksHtml = '<p class="notif-no-tasks">Brak zadań dla bieżącego tygodnia.</p>';
+            }
+
+            var notifGranted = Notification.permission === 'granted';
+            var notifDenied  = Notification.permission === 'denied';
+
+            panel.innerHTML =
+                '<div class="notif-panel-header">' +
+                    '<h3 id="notif-panel-title"><i class="fa-solid fa-bell" aria-hidden="true"></i> Zadania tygodnia' +
+                        (weekLabel ? ' <small>(' + weekLabel + ')</small>' : '') +
+                    '</h3>' +
+                    '<button class="notif-panel-close" aria-label="Zamknij">&times;</button>' +
+                '</div>' +
+                '<div class="notif-panel-body">' +
+                    tasksHtml +
+                '</div>' +
+                '<div class="notif-panel-footer">' +
+                    (!notifDenied
+                        ? '<button class="notif-enable-btn" ' + (notifGranted ? 'disabled' : '') + '>' +
+                            (notifGranted
+                                ? '<i class="fa-solid fa-check" aria-hidden="true"></i> Powiadomienia włączone'
+                                : '<i class="fa-solid fa-bell" aria-hidden="true"></i> Włącz powiadomienia push') +
+                          '</button>'
+                        : '<p class="notif-denied-msg">Powiadomienia zablokowane w ustawieniach przeglądarki.</p>'
+                    ) +
+                    (notifGranted && result
+                        ? '<button class="notif-test-btn"><i class="fa-solid fa-paper-plane" aria-hidden="true"></i> Wyślij powiadomienie teraz</button>'
+                        : '') +
+                '</div>';
+
+            document.body.appendChild(panel);
+
+            // Close button
+            panel.querySelector('.notif-panel-close').addEventListener('click', function() {
+                panel.remove();
+            });
+
+            // Enable notifications button
+            var enableBtn = panel.querySelector('.notif-enable-btn');
+            if (enableBtn && !notifGranted) {
+                enableBtn.addEventListener('click', function() {
+                    requestNotificationPermission();
+                    panel.remove();
+                });
+            }
+
+            // Test notification button
+            var testBtn = panel.querySelector('.notif-test-btn');
+            if (testBtn) {
+                testBtn.addEventListener('click', function() {
+                    if ('serviceWorker' in navigator) {
+                        navigator.serviceWorker.ready.then(function(reg) {
+                            if (result) {
+                                // Clear the stored week so the notification fires immediately
+                                // even if this week was already notified (test/preview mode).
+                                localStorage.removeItem(LS_NOTIF_WEEK);
+                                notifyViaServiceWorker(reg, result.weekKey, result.teams, result.tasks);
+                            }
+                        });
+                    }
+                    panel.remove();
+                });
+            }
+
+            // Close on backdrop click
+            panel.addEventListener('click', function(e) {
+                if (e.target === panel) panel.remove();
+            });
+        });
+    };
+
+    /**
+     * Request notification permission and, if granted, register sync and notify.
+     */
+    function requestNotificationPermission() {
+        if (!('Notification' in window)) return;
+
+        Notification.requestPermission().then(function(permission) {
+            // Update bell button state
+            var bellBtn = document.querySelector('.pwa-notif-btn');
+            if (bellBtn) {
+                if (permission === 'granted') {
+                    bellBtn.classList.add('notif-active');
+                } else {
+                    bellBtn.classList.remove('notif-active');
+                }
+            }
+
+            if (permission === 'granted' && 'serviceWorker' in navigator) {
+                navigator.serviceWorker.ready.then(function(registration) {
+                    localStorage.removeItem(LS_NOTIF_WEEK); // force notify immediately
+                    notifyCurrentWeekIfNeeded(registration);
+                    registerPeriodicSync(registration);
+                });
+            }
+        });
+    }
+
+    /**
+     * Show a first-time notification prompt banner (only once, only on mobile).
+     */
+    function maybeShowNotifPrompt() {
+        if (!('Notification' in window)) return;
+        if (Notification.permission !== 'default') return;
+        if (localStorage.getItem('robotlab-notif-prompt-dismissed')) return;
+        if (window.innerWidth > 768) return; // mobile only
+
+        var banner = document.createElement('div');
+        banner.className = 'notif-prompt-banner';
+        banner.setAttribute('role', 'alertdialog');
+        banner.setAttribute('aria-live', 'polite');
+        banner.innerHTML =
+            '<div class="notif-prompt-content">' +
+                '<i class="fa-solid fa-bell notif-prompt-icon" aria-hidden="true"></i>' +
+                '<div class="notif-prompt-text">' +
+                    '<strong>Zadania tygodnia</strong>' +
+                    '<span>Włącz powiadomienia push, aby otrzymywać zadania dla swojego zespołu każdego tygodnia.</span>' +
+                '</div>' +
+            '</div>' +
+            '<div class="notif-prompt-actions">' +
+                '<button class="notif-prompt-enable" aria-label="Włącz powiadomienia">Włącz</button>' +
+                '<button class="notif-prompt-close" aria-label="Nie teraz">Nie teraz</button>' +
+            '</div>';
+
+        document.body.appendChild(banner);
+
+        banner.querySelector('.notif-prompt-enable').addEventListener('click', function() {
+            banner.remove();
+            requestNotificationPermission();
+        });
+
+        banner.querySelector('.notif-prompt-close').addEventListener('click', function() {
+            banner.remove();
+            localStorage.setItem('robotlab-notif-prompt-dismissed', '1');
+        });
+    }
+
+    // Initialise on DOMContentLoaded.
+    function init() {
+        // Show the first-visit prompt after a short delay so it doesn't clash with install banner.
+        setTimeout(maybeShowNotifPrompt, 3000);
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+    } else {
+        init();
+    }
 })();
