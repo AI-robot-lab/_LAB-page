@@ -56,8 +56,9 @@ Wszystkie artykuły są w formacie Markdown (.md) i zorganizowane w następując
 - `github-tests.md` - Testy w GitHub
 - `github_releases_packages.md` - GitHub Releases i Packages
 
-### 🤝 Inne (3 artykuły)
+### 🤝 Inne (4 artykuły)
 - `hri.md` - Human-Robot Interaction
+- `hitl.md` - Hardware-in-the-Loop i Human-in-the-Loop
 - `safety.md` - Bezpieczeństwo robotów
 - `ethics.md` - Etyka w robotyce
 
