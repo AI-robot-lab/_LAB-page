@@ -322,6 +322,9 @@ if ('serviceWorker' in navigator) {
             { href: 'contact.html', icon: 'fa-solid fa-envelope', label: 'Kontakt', id: 'contact.html' }
         ];
 
+        var navInner = document.createElement('div');
+        navInner.className = 'pwa-bottom-nav-shell';
+
         items.forEach(function(item) {
             var a = document.createElement('a');
             a.href = item.href;
@@ -330,23 +333,35 @@ if ('serviceWorker' in navigator) {
                 a.classList.add('active');
             }
             a.setAttribute('aria-label', item.label);
-            a.innerHTML = '<i class="' + item.icon + '" aria-hidden="true"></i><span>' + item.label + '</span>';
-            nav.appendChild(a);
+            a.innerHTML =
+                '<span class="pwa-bottom-nav-icon"><i class="' + item.icon + '" aria-hidden="true"></i></span>' +
+                '<span class="pwa-bottom-nav-meta">' +
+                    '<span class="pwa-bottom-nav-label">' + item.label + '</span>' +
+                    '<span class="pwa-bottom-nav-caption">' + (currentPage === item.id ? 'Aktywna sekcja' : 'Przejdź dalej') + '</span>' +
+                '</span>';
+            navInner.appendChild(a);
         });
 
         // Notification bell button
         var bellBtn = document.createElement('button');
         bellBtn.type = 'button';
-        bellBtn.className = 'pwa-bottom-nav-item pwa-notif-btn';
+        bellBtn.className = 'pwa-bottom-nav-item pwa-bottom-nav-item-accent pwa-notif-btn';
         bellBtn.setAttribute('aria-label', 'Powiadomienia o zadaniach');
-        bellBtn.innerHTML = '<i class="fa-solid fa-bell" aria-hidden="true"></i><span>Zadania</span>';
+        bellBtn.innerHTML =
+            '<span class="pwa-bottom-nav-icon"><i class="fa-solid fa-bell" aria-hidden="true"></i></span>' +
+            '<span class="pwa-bottom-nav-meta">' +
+                '<span class="pwa-bottom-nav-label">Zadania</span>' +
+                '<span class="pwa-bottom-nav-caption">Alerty i plan tygodnia</span>' +
+            '</span>';
         if (Notification.permission === 'granted') {
             bellBtn.classList.add('notif-active');
         }
         bellBtn.addEventListener('click', function() {
             openNotificationPanel();
         });
-        nav.appendChild(bellBtn);
+        navInner.appendChild(bellBtn);
+
+        nav.appendChild(navInner);
 
         document.body.appendChild(nav);
     }
@@ -378,21 +393,29 @@ if ('serviceWorker' in navigator) {
         var banner = document.createElement('div');
         banner.className = 'pwa-install-banner';
         banner.innerHTML =
+            '<div class="pwa-install-glow" aria-hidden="true"></div>' +
             '<div class="pwa-install-content">' +
-                '<img src="assets/icons/icon-192x192.png" alt="RobotLab" class="pwa-install-icon">' +
-                '<div class="pwa-install-text">' +
-                    '<strong>RobotLab PRz</strong>' +
-                    '<span>Zainstaluj aplikację na urządzeniu</span>' +
+                '<span class="pwa-install-badge">Nowa wersja PWA</span>' +
+                '<div class="pwa-install-headline">' +
+                    '<img src="assets/icons/icon-192x192.png" alt="RobotLab" class="pwa-install-icon">' +
+                    '<div class="pwa-install-text">' +
+                        '<strong>RobotLab PRz jako aplikacja</strong>' +
+                        '<span>Szybszy start, pełny ekran i dostęp do skrótów mobilnych.</span>' +
+                    '</div>' +
+                '</div>' +
+                '<div class="pwa-install-highlights">' +
+                    '<span><i class="fa-solid fa-bolt" aria-hidden="true"></i> szybki dostęp</span>' +
+                    '<span><i class="fa-solid fa-mobile-screen-button" aria-hidden="true"></i> ekran jak natywna apka</span>' +
                 '</div>' +
             '</div>' +
             '<div class="pwa-install-actions">' +
-                '<button class="pwa-install-btn" aria-label="Zainstaluj aplikację">Instaluj</button>' +
-                '<button class="pwa-install-close" aria-label="Zamknij">&times;</button>' +
+                '<button class="pwa-install-btn pwa-install-btn-secondary" aria-label="Pomiń instalację">Później</button>' +
+                '<button class="pwa-install-btn pwa-install-btn-primary" aria-label="Zainstaluj aplikację">Zainstaluj teraz</button>' +
             '</div>';
 
         document.body.appendChild(banner);
 
-        banner.querySelector('.pwa-install-btn').addEventListener('click', function() {
+        banner.querySelector('.pwa-install-btn-primary').addEventListener('click', function() {
             if (deferredPrompt) {
                 deferredPrompt.prompt();
                 deferredPrompt.userChoice.then(function() {
@@ -403,7 +426,7 @@ if ('serviceWorker' in navigator) {
             }
         });
 
-        banner.querySelector('.pwa-install-close').addEventListener('click', function() {
+        banner.querySelector('.pwa-install-btn-secondary').addEventListener('click', function() {
             banner.remove();
         });
     }

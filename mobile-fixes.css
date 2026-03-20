@@ -849,22 +849,36 @@
 @media (max-width: 768px) {
     /* Zabezpiecz treść przed schowaniem przez bottom nav */
     body {
-        padding-bottom: calc(64px + env(safe-area-inset-bottom, 0px));
+        padding-bottom: calc(110px + env(safe-area-inset-bottom, 0px));
     }
 
-    /* Skróć etykiety jeśli nie ma miejsca */
-    .pwa-bottom-nav-item span {
-        font-size: 0.68rem;
+    .pwa-bottom-nav {
+        padding-left: 10px;
+        padding-right: 10px;
+        padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 10px);
     }
 
-    /* Aktywny stan — wyraźniejszy */
-    .pwa-bottom-nav-item.active {
-        font-weight: 700;
-        color: var(--prz-blue, #003366);
+    .pwa-bottom-nav-shell {
+        gap: 8px;
+        padding: 10px;
     }
 
-    [data-theme="dark"] .pwa-bottom-nav-item.active {
-        color: #4a90e2;
+    .pwa-bottom-nav-item {
+        min-height: 64px;
+        padding: 10px 12px;
+    }
+
+    .pwa-bottom-nav-label {
+        font-size: 0.72rem;
+    }
+
+    .pwa-bottom-nav-caption {
+        font-size: 0.6rem;
+    }
+
+    [data-theme="dark"] .pwa-bottom-nav-item.active .pwa-bottom-nav-label,
+    [data-theme="dark"] .pwa-bottom-nav-item.active .pwa-bottom-nav-caption {
+        color: #f5fbff;
     }
 }
 
@@ -874,30 +888,31 @@
 
 @media (max-width: 768px) {
     .pwa-install-banner {
-        /* Wyżej od bottom nav + margines */
-        bottom: calc(64px + env(safe-area-inset-bottom, 0px) + 12px);
+        bottom: calc(110px + env(safe-area-inset-bottom, 0px) + 10px);
         left: 10px;
         right: 10px;
-        border-radius: 12px;
-        padding: 12px 14px;
-        flex-wrap: wrap;
+        border-radius: 22px;
+        padding: 18px;
     }
 
-    .pwa-install-content {
-        flex: 1;
-        min-width: 0;
+    .pwa-install-headline {
+        align-items: flex-start;
     }
 
     .pwa-install-text strong {
-        font-size: 0.85rem;
+        font-size: 0.92rem;
     }
 
     .pwa-install-text span {
-        font-size: 0.72rem;
+        font-size: 0.76rem;
+    }
+
+    .pwa-install-actions {
+        grid-template-columns: 1fr;
     }
 
     .pwa-install-btn {
-        padding: 8px 16px;
+        padding: 10px 14px;
         font-size: 0.82rem;
     }
 
