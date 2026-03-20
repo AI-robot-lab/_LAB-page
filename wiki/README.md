@@ -47,12 +47,13 @@ Wszystkie artykuły są w formacie Markdown (.md) i zorganizowane w następując
 - `moveit2.md` - MoveIt2 motion planning
 - `docker.md` - Docker dla robotyki
 
-### 👥 Praca w zespole (6 artykułów)
+### 👥 Praca w zespole (7 artykułów)
 - `praca-w-zespole.md` - Narzędzia, komunikacja i współpraca
 - `bash-ssh-jetson.md` - Bash i dostęp do robota po SSH
 - `zakladanie-repozytorium-zadaniowego.md` - Tworzenie nowego repozytorium
 - `github-releases.md` - GitHub Releases — czym są i jak je tworzyć
 - `git-github.md` - Git i GitHub
+- `github-tests.md` - Testy w GitHub
 - `github_releases_packages.md` - GitHub Releases i Packages
 
 ### 🤝 Inne (3 artykuły)
