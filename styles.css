@@ -268,6 +268,29 @@ nav a:focus {
     line-height: 1.7;
 }
 
+.hero-callout {
+    background: rgba(0, 51, 102, 0.08);
+    border-left: 4px solid var(--prz-gold);
+    color: var(--text-dark);
+    padding: 16px 18px;
+    margin-bottom: 24px;
+    border-radius: 6px;
+    box-shadow: var(--shadow-sm);
+}
+
+.hero-callout a,
+.hero-contact-note a {
+    color: var(--prz-blue);
+    text-decoration: underline;
+    font-weight: 700;
+}
+
+.hero-contact-note {
+    margin-top: 20px;
+    color: var(--text-light);
+    max-width: 640px;
+}
+
 .hero-cta {
     display: flex;
     gap: 15px;
@@ -1151,7 +1174,7 @@ footer a:hover {
 
 .contact-info-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
     gap: 30px;
     margin-top: 30px;
 }
@@ -5519,4 +5542,9 @@ html, body {
         font-size: 0.8rem;
         padding: 12px 16px;
     }
+}
+
+.preferred-contact-card {
+    border-color: rgba(0, 51, 102, 0.18);
+    box-shadow: var(--shadow-sm);
 }
