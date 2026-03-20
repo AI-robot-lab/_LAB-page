@@ -527,23 +527,28 @@ nav.scrolled {
    ================================================================ */
 
 @media (max-width: 768px) {
-    .pwa-bottom-nav-item span {
-        font-size: clamp(0.62rem, 1.8vw, 0.72rem);
-        font-weight: 500;
+    .pwa-bottom-nav-label {
+        font-size: clamp(0.68rem, 1.8vw, 0.74rem);
+        font-weight: 700;
         letter-spacing: 0.2px;
     }
 
+    .pwa-bottom-nav-caption {
+        font-size: clamp(0.56rem, 1.6vw, 0.62rem);
+    }
+
     .pwa-bottom-nav-item i {
-        font-size: clamp(1.1rem, 3vw, 1.3rem);
+        font-size: clamp(1rem, 2.8vw, 1.12rem);
     }
 
-    /* Wyraźniejszy active state */
-    .pwa-bottom-nav-item.active span {
-        color: var(--prz-blue, #003366);
+    .pwa-bottom-nav-item.active .pwa-bottom-nav-label,
+    .pwa-bottom-nav-item.active .pwa-bottom-nav-caption {
+        color: #ffffff;
     }
 
-    [data-theme="dark"] .pwa-bottom-nav-item.active span {
-        color: #4a90e2;
+    [data-theme="dark"] .pwa-bottom-nav-item.active .pwa-bottom-nav-label,
+    [data-theme="dark"] .pwa-bottom-nav-item.active .pwa-bottom-nav-caption {
+        color: #ffffff;
     }
 }
 
