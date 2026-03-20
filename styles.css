@@ -4745,7 +4745,7 @@ html, body {
     .form-group select,
     .form-group textarea {
         padding: 12px;
-        font-size: 16px; /* prevents iOS zoom on focus */
+        font-size: 16px; /* prevents iOS automatic zoom on input focus */
         border-radius: 8px;
     }
 
@@ -4858,7 +4858,7 @@ html, body {
 
     .wiki-search input {
         padding: 10px 12px 10px 36px;
-        font-size: 16px; /* prevents iOS zoom */
+        font-size: 16px; /* prevents iOS automatic zoom on input focus */
         border-radius: 8px;
     }
 
@@ -5262,9 +5262,8 @@ html, body {
         font-size: 0.85rem;
     }
 
-    /* Software grid - 2 columns on small devices */
+    /* Software grid - smaller gap on small devices */
     .software-grid {
-        grid-template-columns: repeat(2, 1fr);
         gap: 8px;
     }
 
