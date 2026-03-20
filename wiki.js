@@ -67,6 +67,7 @@ const ARTICLES = {
 
     // Inne
     'hri': 'wiki/hri.md',
+    'hitl': 'wiki/hitl.md',
     'safety': 'wiki/safety.md',
     'ethics': 'wiki/ethics.md'
 };
@@ -131,6 +132,7 @@ const METADATA = {
 
     // Inne
     'hri': { category: 'Inne', title: 'Interakcja Człowiek-Robot' },
+    'hitl': { category: 'Inne', title: 'Hardware-in-the-Loop i Human-in-the-Loop' },
     'safety': { category: 'Inne', title: 'Bezpieczeństwo Robotów' },
     'ethics': { category: 'Inne', title: 'Etyka w Robotyce' }
 };
