@@ -1693,23 +1693,6 @@ footer a:hover {
 .wiki-article .hljs-class {
     color: #4EC9B0;
 }
-    overflow-x: auto;
-    margin: 20px 0;
-}
-
-.wiki-article code {
-    background: #f4f4f4;
-    padding: 2px 6px;
-    border-radius: 3px;
-    font-family: 'Courier New', monospace;
-    font-size: 0.9em;
-}
-
-.wiki-article pre code {
-    background: none;
-    padding: 0;
-    color: #e0e0e0;
-}
 
 /* Tables - Premium Design */
 .wiki-article table {
@@ -4284,4 +4267,1146 @@ footer a:hover {
 
 [data-theme="dark"] .pwa-notif-btn.notif-active::before {
     background: var(--prz-blue-dark, #4a90e2);
+}
+
+/* ====================================
+   MOBILE OVERHAUL – Comprehensive Fix
+   ==================================== */
+
+/* --- Prevent horizontal scroll globally --- */
+html, body {
+    overflow-x: hidden;
+    -webkit-text-size-adjust: 100%;
+}
+
+/* ---- TABLET (≤1024px) ---- */
+@media (max-width: 1024px) {
+    /* Fix logos row on tablets */
+    .logos-right {
+        gap: 8px;
+    }
+
+    /* Gallery images shorter on tablet */
+    .gallery-item img {
+        height: 320px;
+    }
+}
+
+/* ---- MOBILE (≤768px) ---- */
+@media (max-width: 768px) {
+    /* ── Global ── */
+    * {
+        -webkit-tap-highlight-color: rgba(0, 0, 0, 0.05);
+    }
+
+    body {
+        font-size: 15px;
+        line-height: 1.6;
+        overflow-x: hidden;
+    }
+
+    .container {
+        width: 92%;
+        padding: 0 4px;
+    }
+
+    section {
+        padding: 32px 0;
+    }
+
+    img {
+        max-width: 100%;
+        height: auto;
+    }
+
+    /* ── Header ── */
+    header {
+        padding: 8px 0;
+    }
+
+    .header-flex {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 8px;
+        padding: 4px 0;
+    }
+
+    .logos-left {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .logo-main {
+        height: 36px;
+    }
+
+    .logo-small {
+        height: 28px;
+    }
+
+    .inst-title {
+        border-left: none;
+        border-top: none;
+        padding-left: 0;
+        padding-top: 0;
+        text-align: center;
+    }
+
+    .inst-title p {
+        font-size: 0.65rem;
+        line-height: 1.2;
+    }
+
+    .logos-right {
+        gap: 8px;
+        justify-content: center;
+    }
+
+    /* ── Navigation ── */
+    nav {
+        padding: 0;
+    }
+
+    .mobile-menu-toggle {
+        display: flex;
+        margin: 6px auto;
+        padding: 12px;
+        gap: 5px;
+        min-width: 48px;
+        min-height: 48px;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .mobile-menu-toggle span {
+        width: 24px;
+        height: 3px;
+    }
+
+    .nav-flex {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        padding: 0;
+    }
+
+    .nav-flex.active {
+        display: flex;
+    }
+
+    nav a {
+        padding: 14px 20px;
+        font-size: 0.85rem;
+        min-height: 48px;
+        display: flex;
+        align-items: center;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    nav a::after {
+        display: none;
+    }
+
+    /* ── Hero Section ── */
+    .hero {
+        padding: 32px 0;
+    }
+
+    .hero-flex {
+        flex-direction: column;
+        text-align: center;
+        gap: 24px;
+    }
+
+    .hero-content {
+        flex: none;
+        width: 100%;
+    }
+
+    .hero-content h1 {
+        font-size: 1.6rem;
+        line-height: 1.2;
+        margin-bottom: 12px;
+    }
+
+    .hero-subtitle {
+        font-size: 0.95rem;
+        margin-bottom: 12px;
+    }
+
+    .hero-description {
+        font-size: 0.9rem;
+        margin-bottom: 20px;
+        line-height: 1.6;
+    }
+
+    .hero-cta {
+        flex-direction: column;
+        gap: 10px;
+        align-items: stretch;
+    }
+
+    .btn-primary,
+    .btn-secondary {
+        width: 100%;
+        text-align: center;
+        padding: 14px 20px;
+        font-size: 0.9rem;
+        min-height: 48px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-sizing: border-box;
+    }
+
+    .hero-visual {
+        flex: none;
+        width: 100%;
+        text-align: center;
+    }
+
+    .hero-visual img,
+    .robot-gallery img {
+        max-width: 100%;
+        box-shadow: 6px 6px 0 var(--prz-blue);
+        border-radius: 8px;
+    }
+
+    /* ── Section Headers ── */
+    .section-header {
+        margin-bottom: 24px;
+    }
+
+    .section-header h2 {
+        font-size: 1.3rem;
+        padding-bottom: 10px;
+    }
+
+    .section-header p {
+        font-size: 0.85rem;
+    }
+
+    /* ── PCA Framework ── */
+    .pca-box {
+        padding: 16px;
+    }
+
+    .pca-img {
+        max-height: 300px;
+    }
+
+    /* ── Gallery ── */
+    .gallery-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .gallery-item img {
+        height: 220px;
+    }
+
+    .gallery-item figcaption {
+        padding: 12px;
+        font-size: 0.85rem;
+    }
+
+    /* ── Teams Grid ── */
+    .teams-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .team-card {
+        padding: 20px;
+    }
+
+    .team-card h3 {
+        font-size: 1rem;
+        margin-bottom: 12px;
+        padding-bottom: 8px;
+    }
+
+    .team-card li {
+        font-size: 0.85rem;
+        margin-bottom: 8px;
+    }
+
+    /* ── Software Grid ── */
+    .software-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+    }
+
+    .soft-item {
+        padding: 16px 12px;
+    }
+
+    .soft-item i {
+        font-size: 1.6rem;
+        margin-bottom: 8px;
+    }
+
+    .soft-item span {
+        font-size: 0.82rem;
+    }
+
+    .soft-item small {
+        font-size: 0.7rem;
+    }
+
+    /* ── Rehabilitation ── */
+    .rehab-box {
+        padding: 20px;
+        border-left-width: 5px;
+    }
+
+    .rehab-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .rehab-grid h3 {
+        font-size: 1rem;
+    }
+
+    .rehab-grid p {
+        font-size: 0.88rem;
+    }
+
+    .rehab-tags {
+        margin-top: 20px;
+        padding-top: 16px;
+        gap: 8px;
+    }
+
+    .tag {
+        font-size: 0.75rem;
+        padding: 6px 12px;
+    }
+
+    /* ── Robot Specifications ── */
+    .robot-dark {
+        padding: 40px 0;
+    }
+
+    .robot-grid {
+        grid-template-columns: 1fr;
+        gap: 24px;
+    }
+
+    .robot-specs h2 {
+        font-size: 1.4rem;
+        text-align: center;
+    }
+
+    .robot-intro {
+        font-size: 0.9rem;
+        text-align: center;
+        margin-bottom: 24px;
+    }
+
+    .spec-table {
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+    }
+
+    .spec-item strong {
+        font-size: 0.7rem;
+    }
+
+    .spec-item p {
+        font-size: 0.88rem;
+    }
+
+    .vr-infrastructure {
+        padding: 20px;
+    }
+
+    .vr-infrastructure h3 {
+        font-size: 1.05rem;
+    }
+
+    .vr-infrastructure p {
+        font-size: 0.85rem;
+    }
+
+    /* ── Footer ── */
+    footer {
+        padding: 32px 0 16px;
+    }
+
+    .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        margin-bottom: 24px;
+    }
+
+    footer h3 {
+        font-size: 0.9rem;
+        margin-bottom: 12px;
+    }
+
+    footer p {
+        font-size: 0.82rem;
+    }
+
+    .footer-about {
+        grid-column: auto;
+    }
+
+    .footer-bottom {
+        padding-top: 16px;
+    }
+
+    .footer-bottom p {
+        font-size: 0.75rem;
+    }
+
+    .version-tag {
+        font-size: 0.65rem;
+    }
+
+    /* ── Dark Mode Toggle (mobile position) ── */
+    .dark-mode-toggle {
+        position: fixed;
+        top: auto;
+        bottom: 80px;
+        right: 12px;
+        width: 44px;
+        height: 44px;
+        font-size: 1.1rem;
+        z-index: 9998;
+        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    /* ── Contact Page ── */
+    .contact-hero {
+        padding: 32px 0;
+    }
+
+    .benefits-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    .benefit-card {
+        padding: 20px;
+        display: flex;
+        align-items: center;
+        text-align: left;
+        gap: 16px;
+    }
+
+    .benefit-card i {
+        font-size: 1.8rem;
+        margin-bottom: 0;
+        flex-shrink: 0;
+    }
+
+    .benefit-card h3 {
+        font-size: 0.9rem;
+        margin-bottom: 4px;
+    }
+
+    .benefit-card p {
+        font-size: 0.82rem;
+    }
+
+    .form-container {
+        padding: 16px;
+        margin: 0 -4px;
+        border-radius: 0;
+    }
+
+    .form-section {
+        padding: 16px;
+        margin-bottom: 16px;
+    }
+
+    .form-section legend {
+        font-size: 0.95rem;
+    }
+
+    .form-row {
+        grid-template-columns: 1fr;
+        gap: 12px;
+        margin-bottom: 12px;
+    }
+
+    .form-group label {
+        font-size: 0.88rem;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        padding: 12px;
+        font-size: 16px; /* prevents iOS zoom on focus */
+        border-radius: 8px;
+    }
+
+    .team-option {
+        gap: 10px;
+    }
+
+    .team-label {
+        padding: 12px;
+    }
+
+    .team-label strong {
+        font-size: 0.9rem;
+    }
+
+    .team-label p {
+        font-size: 0.82rem;
+    }
+
+    .form-actions {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .btn-submit {
+        width: 100%;
+        min-height: 48px;
+        font-size: 0.95rem;
+    }
+
+    .contact-info-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    .contact-info-card {
+        padding: 20px;
+    }
+
+    .contact-info-card i {
+        font-size: 1.5rem;
+    }
+
+    .contact-info-card h3 {
+        font-size: 0.9rem;
+    }
+
+    /* ── Wiki Page ── */
+    .wiki-hero {
+        padding: 16px 0 10px;
+    }
+
+    .wiki-hero h1 {
+        font-size: 1.3rem;
+    }
+
+    .wiki-hero .hero-subtitle {
+        font-size: 0.88rem;
+        margin-bottom: 16px;
+    }
+
+    .wiki-hero-icon {
+        font-size: 1.3rem;
+    }
+
+    .wiki-hero-stats {
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 8px;
+        justify-content: center;
+    }
+
+    .hero-stat {
+        width: auto;
+        flex: 1 1 calc(50% - 8px);
+        min-width: 0;
+        padding: 12px 8px;
+    }
+
+    .hero-stat strong {
+        font-size: 1.6rem;
+    }
+
+    .hero-stat span {
+        font-size: 0.7rem;
+        letter-spacing: 0.5px;
+    }
+
+    /* Wiki layout */
+    .wiki-layout {
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    .wiki-sidebar {
+        width: 100%;
+        position: static;
+        border-radius: 8px;
+    }
+
+    .sidebar-sticky {
+        position: static;
+        max-height: none;
+        padding: 16px;
+    }
+
+    .wiki-search {
+        margin-bottom: 12px;
+    }
+
+    .wiki-search input {
+        padding: 10px 12px 10px 36px;
+        font-size: 16px; /* prevents iOS zoom */
+        border-radius: 8px;
+    }
+
+    .wiki-nav h3 {
+        font-size: 0.8rem;
+        margin-bottom: 10px;
+        padding-bottom: 8px;
+    }
+
+    .wiki-category {
+        margin-bottom: 2px;
+    }
+
+    .wiki-category h4 {
+        font-size: 0.82rem;
+        padding: 10px 12px;
+        min-height: 44px;
+        align-items: center;
+    }
+
+    .wiki-category a {
+        font-size: 0.82rem;
+        padding: 8px 12px;
+        min-height: 40px;
+        display: flex;
+        align-items: center;
+    }
+
+    /* Wiki content */
+    .wiki-content {
+        padding: 16px;
+        border-radius: 8px;
+        min-height: auto;
+    }
+
+    .breadcrumbs {
+        font-size: 0.78rem;
+        padding: 10px 12px;
+        gap: 6px;
+        flex-wrap: wrap;
+        margin-bottom: 16px;
+    }
+
+    .wiki-welcome h2 {
+        font-size: 1.2rem;
+    }
+
+    .welcome-text {
+        font-size: 0.88rem;
+    }
+
+    /* Wiki article */
+    .wiki-article h1 {
+        font-size: 1.5rem;
+        padding-bottom: 12px;
+    }
+
+    .wiki-article h2 {
+        font-size: 1.2rem;
+        margin-top: 28px;
+        margin-bottom: 12px;
+        padding-left: 12px;
+    }
+
+    .wiki-article h3 {
+        font-size: 1.1rem;
+        margin-top: 20px;
+        margin-bottom: 10px;
+    }
+
+    .wiki-article h4 {
+        font-size: 1rem;
+    }
+
+    .wiki-article p {
+        font-size: 0.92rem;
+        line-height: 1.6;
+    }
+
+    .wiki-article li {
+        font-size: 0.92rem;
+    }
+
+    .wiki-article ul,
+    .wiki-article ol {
+        margin-left: 16px;
+    }
+
+    /* Wiki tables - horizontal scroll wrapper */
+    .wiki-article table {
+        display: block;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        font-size: 0.82rem;
+        margin: 20px -16px;
+        width: calc(100% + 32px);
+    }
+
+    .wiki-article th,
+    .wiki-article td {
+        padding: 10px 12px;
+        white-space: nowrap;
+    }
+
+    .wiki-article th {
+        font-size: 0.8rem;
+    }
+
+    /* Wiki code blocks */
+    .wiki-article pre {
+        padding: 12px;
+        margin: 16px -16px;
+        border-radius: 0;
+        font-size: 0.82rem;
+        width: calc(100% + 32px);
+    }
+
+    .wiki-article pre code {
+        font-size: 0.72rem;
+        line-height: 1.4;
+    }
+
+    .wiki-article code {
+        font-size: 0.78rem;
+        padding: 2px 5px;
+        word-break: break-word;
+    }
+
+    /* Wiki blockquotes */
+    .wiki-article blockquote {
+        padding: 16px 16px 16px 20px;
+        margin: 20px 0;
+    }
+
+    .wiki-article blockquote::before {
+        font-size: 2.5rem;
+        top: -5px;
+        left: 8px;
+    }
+
+    .wiki-article blockquote p {
+        padding-left: 16px;
+        font-size: 0.88rem;
+    }
+
+    /* Wiki images */
+    .wiki-article img {
+        margin: 16px 0;
+        border-radius: 8px;
+    }
+
+    /* Quick Start section */
+    .quick-start {
+        padding: 16px;
+        margin: 16px 0;
+    }
+
+    .quick-start h3 {
+        font-size: 1.05rem;
+    }
+
+    .quick-start > p {
+        font-size: 0.85rem;
+    }
+
+    .quick-links-grid {
+        grid-template-columns: 1fr;
+        gap: 8px;
+    }
+
+    .quick-link-card {
+        padding: 12px;
+        min-height: 48px;
+    }
+
+    .quick-link-icon {
+        width: 40px;
+        height: 40px;
+        font-size: 1.1rem;
+    }
+
+    .quick-link-content strong {
+        font-size: 0.85rem;
+    }
+
+    .quick-link-content span {
+        font-size: 0.75rem;
+    }
+
+    /* Wiki stats */
+    .wiki-stats {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    .stat-card {
+        padding: 16px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        text-align: left;
+    }
+
+    .stat-card i {
+        font-size: 1.5rem;
+        margin-bottom: 0;
+    }
+
+    .stat-card strong {
+        font-size: 1.4rem;
+    }
+
+    .stat-card span {
+        font-size: 0.8rem;
+    }
+
+    /* Wiki info box */
+    .wiki-info-box {
+        flex-direction: column;
+        padding: 16px;
+        gap: 10px;
+    }
+
+    .wiki-info-box > i {
+        font-size: 1.5rem;
+    }
+
+    .wiki-info-box strong {
+        font-size: 0.95rem;
+    }
+
+    /* Wiki alert boxes */
+    .wiki-alert {
+        padding: 16px;
+        margin: 20px 0;
+        gap: 12px;
+    }
+
+    .wiki-alert i {
+        font-size: 1.4rem;
+    }
+
+    .wiki-note {
+        padding: 16px;
+        margin: 20px 0;
+        gap: 12px;
+    }
+
+    .wiki-note i {
+        font-size: 1.4rem;
+    }
+
+    /* Article TOC */
+    .article-toc {
+        padding: 16px;
+        margin: 16px 0;
+    }
+
+    .article-toc h3 {
+        font-size: 1rem;
+    }
+
+    .article-toc li {
+        padding: 6px 0;
+    }
+
+    .article-toc a {
+        font-size: 0.88rem;
+    }
+
+    /* Reading time badge */
+    .reading-time {
+        font-size: 0.8rem;
+        padding: 6px 12px;
+    }
+
+    /* Code copy button */
+    .copy-code-btn {
+        padding: 6px 10px;
+        font-size: 0.75rem;
+    }
+
+    /* Wiki edit link */
+    .wiki-edit-link {
+        margin-top: 32px;
+        padding-top: 16px;
+    }
+
+    .wiki-edit-link a {
+        font-size: 0.85rem;
+    }
+
+    /* ── PDF Page ── */
+    .pdf-downloads {
+        padding: 16px;
+    }
+
+    .pdf-downloads h2 {
+        font-size: 1.2rem;
+    }
+
+    .pdf-item {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 12px;
+        padding: 14px;
+    }
+
+    .pdf-meta h3 {
+        font-size: 0.95rem;
+    }
+
+    .pdf-meta p {
+        font-size: 0.82rem;
+    }
+
+    .pdf-download-btn {
+        align-self: flex-start;
+        padding: 10px 16px;
+        font-size: 0.85rem;
+        min-height: 44px;
+    }
+
+    /* ── PWA bottom nav adjustments ── */
+    .pwa-bottom-nav-item {
+        font-size: 0.68rem;
+        min-height: 52px;
+    }
+
+    .pwa-bottom-nav-item i {
+        font-size: 1.15rem;
+    }
+
+    /* ── Scroll progress ── */
+    .scroll-progress {
+        height: 3px;
+    }
+
+    /* ── Notification panel mobile improvements ── */
+    .notif-panel-body {
+        max-height: 50vh;
+    }
+
+    .notif-panel-header {
+        padding: 14px 16px 10px;
+    }
+
+    .notif-panel-body {
+        padding: 12px 16px;
+    }
+
+    .notif-panel-footer {
+        padding: 10px 16px calc(10px + env(safe-area-inset-bottom, 0));
+    }
+
+    /* ── Loading state ── */
+    .loading {
+        padding: 40px 16px;
+    }
+
+    .loading i {
+        font-size: 2rem;
+    }
+
+    /* ── Error state ── */
+    .wiki-error {
+        padding: 40px 16px;
+    }
+
+    .wiki-error i {
+        font-size: 2.5rem;
+    }
+
+    .wiki-error h3 {
+        font-size: 1.2rem;
+    }
+
+    /* ── Animations - reduce on mobile for performance ── */
+    .wiki-sidebar,
+    .wiki-content,
+    .wiki-category {
+        animation: none;
+    }
+}
+
+/* ---- SMALL MOBILE (≤480px) ---- */
+@media (max-width: 480px) {
+    .hero-content h1 {
+        font-size: 1.35rem;
+    }
+
+    .section-header h2 {
+        font-size: 1.15rem;
+    }
+
+    .hero-subtitle {
+        font-size: 0.88rem;
+    }
+
+    .hero-description {
+        font-size: 0.85rem;
+    }
+
+    /* Software grid - 2 columns on small devices */
+    .software-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+    }
+
+    .soft-item {
+        padding: 12px 8px;
+    }
+
+    .soft-item i {
+        font-size: 1.4rem;
+    }
+
+    .soft-item span {
+        font-size: 0.78rem;
+    }
+
+    .soft-item small {
+        font-size: 0.65rem;
+    }
+
+    /* Robot specs - single column on very small */
+    .spec-table {
+        grid-template-columns: 1fr;
+    }
+
+    /* Team cards */
+    .team-card {
+        padding: 16px;
+    }
+
+    .team-card li {
+        font-size: 0.82rem;
+    }
+
+    /* Wiki hero stats - stack vertically */
+    .hero-stat {
+        flex: 1 1 100%;
+    }
+
+    /* Wiki content */
+    .wiki-content {
+        padding: 12px;
+    }
+
+    .wiki-article h1 {
+        font-size: 1.3rem;
+    }
+
+    .wiki-article h2 {
+        font-size: 1.1rem;
+    }
+
+    /* Table cells allow wrapping on tiny screens */
+    .wiki-article th,
+    .wiki-article td {
+        white-space: normal;
+        padding: 8px 10px;
+    }
+
+    /* Benefits cards stack completely */
+    .benefit-card {
+        flex-direction: row;
+        padding: 16px;
+    }
+
+    /* Form container */
+    .form-container {
+        padding: 12px;
+    }
+
+    .form-section {
+        padding: 12px;
+    }
+
+    /* Footer */
+    .footer-bottom p {
+        font-size: 0.7rem;
+    }
+
+    /* Gallery */
+    .gallery-item img {
+        height: 180px;
+    }
+
+    /* Rehab box */
+    .rehab-box {
+        padding: 16px;
+        border-left-width: 4px;
+    }
+
+    /* VR infrastructure */
+    .vr-infrastructure {
+        padding: 16px;
+    }
+
+    .vr-infrastructure h3 {
+        font-size: 0.95rem;
+    }
+}
+
+/* ---- VERY SMALL MOBILE (≤360px) ---- */
+@media (max-width: 360px) {
+    .container {
+        width: 96%;
+    }
+
+    .hero-content h1 {
+        font-size: 1.2rem;
+    }
+
+    .section-header h2 {
+        font-size: 1.05rem;
+    }
+
+    .logo-main {
+        height: 30px;
+    }
+
+    .logo-small {
+        height: 24px;
+    }
+
+    .inst-title p {
+        font-size: 0.6rem;
+    }
+
+    /* Single column software grid on very small */
+    .software-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .wiki-article pre {
+        margin: 12px -12px;
+        width: calc(100% + 24px);
+    }
+
+    .wiki-article table {
+        margin: 16px -12px;
+        width: calc(100% + 24px);
+    }
+
+    nav a {
+        font-size: 0.8rem;
+        padding: 12px 16px;
+    }
 }
