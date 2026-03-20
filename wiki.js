@@ -143,6 +143,16 @@ document.addEventListener('DOMContentLoaded', function() {
     initScrollProgress();
 });
 
+function normalizeArticleId(rawArticleId) {
+    if (!rawArticleId) return '';
+
+    return decodeURIComponent(rawArticleId)
+        .replace(/^#/, '')
+        .replace(/^wiki\//, '')
+        .replace(/^wiki-/, '')
+        .trim();
+}
+
 function initDarkMode() {
     const darkModeToggle = document.getElementById('darkModeToggle');
 
@@ -218,7 +228,7 @@ function initWiki() {
     setupSearch();
 
     // Load article from URL hash if present
-    const hash = window.location.hash.substring(1);
+    const hash = normalizeArticleId(window.location.hash);
     if (hash) {
         loadArticle(hash);
     }
@@ -282,7 +292,7 @@ function setupCollapsibleCategories() {
     });
 
     // If there's a hash, expand the category containing that article
-    const hash = window.location.hash.substring(1);
+    const hash = normalizeArticleId(window.location.hash);
     if (hash) {
         expandCategoryForArticle(hash);
     }
@@ -313,8 +323,7 @@ function setupArticleLinks() {
             this.classList.add('active');
 
             // Get article ID (remove 'wiki/' prefix if present)
-            let articleId = this.dataset.article;
-            articleId = articleId.replace('wiki/', '');
+            const articleId = normalizeArticleId(this.dataset.article);
 
             // Update URL hash
             window.location.hash = articleId;
@@ -374,7 +383,7 @@ function filterArticles(query) {
         links.forEach(li => {
             const link = li.querySelector('a');
             const text = link.textContent.toLowerCase();
-            const articleId = link.dataset.article.replace('wiki/', '');
+            const articleId = normalizeArticleId(link.dataset.article);
 
             if (text.includes(query) || articleId.includes(query)) {
                 li.style.display = '';
@@ -525,7 +534,7 @@ function processInternalLinks(container) {
     links.forEach(link => {
         link.addEventListener('click', function(e) {
             e.preventDefault();
-            const articleId = this.getAttribute('href').replace('#wiki-', '');
+            const articleId = normalizeArticleId(this.getAttribute('href'));
             window.location.hash = articleId;
             loadArticle(articleId);
             window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -569,14 +578,15 @@ function showError(message) {
 
 // Handle back/forward navigation
 window.addEventListener('hashchange', function() {
-    const hash = window.location.hash.substring(1);
+    const hash = normalizeArticleId(window.location.hash);
     if (hash) {
         loadArticle(hash);
+        expandCategoryForArticle(hash);
 
         // Update active link
         const articleLinks = document.querySelectorAll('[data-article]');
         articleLinks.forEach(link => {
-            const linkId = link.dataset.article.replace('wiki/', '');
+            const linkId = normalizeArticleId(link.dataset.article);
             if (linkId === hash) {
                 link.classList.add('active');
             } else {
