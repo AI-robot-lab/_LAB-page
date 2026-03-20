@@ -316,7 +316,7 @@ if ('serviceWorker' in navigator) {
         }
 
         var items = [
-            { href: 'index.html', icon: 'fa-solid fa-house', label: 'Strona główna', id: 'index.html' },
+            { href: 'index.html', icon: 'fa-solid fa-house', label: 'Główna', id: 'index.html' },
             { href: 'wiki.html', icon: 'fa-solid fa-book', label: 'Wiki', id: 'wiki.html' },
             { href: 'pdf.html', icon: 'fa-solid fa-file-pdf', label: 'PDF', id: 'pdf.html' },
             { href: 'contact.html', icon: 'fa-solid fa-envelope', label: 'Kontakt', id: 'contact.html' }

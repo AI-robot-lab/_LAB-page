@@ -1221,7 +1221,7 @@ footer a:hover {
 
 .wiki-hero-icon {
     font-size: 2rem;
-    color: var(--gold);
+    color: var(--prz-gold);
     margin-bottom: 8px;
     animation: floatIcon 3s ease-in-out infinite;
 }
@@ -1272,7 +1272,7 @@ footer a:hover {
 .hero-stat strong {
     display: block;
     font-size: 2.5rem;
-    color: var(--gold);
+    color: var(--prz-gold);
     font-weight: 700;
     margin-bottom: 5px;
 }
@@ -3150,11 +3150,11 @@ footer a:hover {
 /* Enhanced Mobile Menu */
 @media (max-width: 768px) {
     .dark-mode-toggle {
-        top: 80px;
-        right: 20px;
-        width: 50px;
-        height: 50px;
-        font-size: 1.2rem;
+        top: 8px;
+        right: 10px;
+        width: 44px;
+        height: 44px;
+        font-size: 1.1rem;
     }
 }
 
@@ -3669,9 +3669,9 @@ footer a:hover {
     justify-content: center;
     flex: 1;
     padding: 8px 4px 10px;
-    color: var(--text-light, #5e6d77);
+    color: #555;
     text-decoration: none;
-    font-size: 0.65rem;
+    font-size: 0.72rem;
     font-family: 'Roboto', sans-serif;
     font-weight: 500;
     transition: color 0.2s ease, background-color 0.2s ease;
@@ -3688,6 +3688,10 @@ footer a:hover {
 
 .pwa-bottom-nav-item span {
     letter-spacing: 0.02em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
 }
 
 .pwa-bottom-nav-item.active {
