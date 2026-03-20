@@ -63,6 +63,7 @@ const ARTICLES = {
     'github-releases': 'wiki/github-releases.md',
     'github_releases_packages': 'wiki/github_releases_packages.md',
     'git-github': 'wiki/git-github.md',
+    'github-tests': 'wiki/github-tests.md',
 
     // Inne
     'hri': 'wiki/hri.md',
@@ -126,6 +127,7 @@ const METADATA = {
     'github-releases': { category: 'Praca w zespole', title: 'GitHub Releases — czym są i jak je tworzyć' },
     'github_releases_packages': { category: 'Praca w zespole', title: 'GitHub Releases i Packages' },
     'git-github': { category: 'Praca w zespole', title: 'Git i GitHub — kompleksowy poradnik' },
+    'github-tests': { category: 'Praca w zespole', title: 'Testy w GitHub — profesjonalny przewodnik dla studentów' },
 
     // Inne
     'hri': { category: 'Inne', title: 'Interakcja Człowiek-Robot' },
