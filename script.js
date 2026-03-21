@@ -13,17 +13,18 @@ document.addEventListener('DOMContentLoaded', function() {
     const navFlex = document.querySelector('.nav-flex');
     
     if (mobileMenuToggle && navFlex) {
+        const closeMobileMenu = function() {
+            navFlex.classList.remove('active');
+            mobileMenuToggle.setAttribute('aria-expanded', 'false');
+            mobileMenuToggle.classList.remove('active');
+        };
+
         mobileMenuToggle.addEventListener('click', function() {
             const isExpanded = this.getAttribute('aria-expanded') === 'true';
-            
-            // Toggle menu
-            navFlex.classList.toggle('active');
-            
-            // Update ARIA attribute
-            this.setAttribute('aria-expanded', !isExpanded);
-            
-            // Animate hamburger icon
-            this.classList.toggle('active');
+
+            navFlex.classList.toggle('active', !isExpanded);
+            this.setAttribute('aria-expanded', String(!isExpanded));
+            this.classList.toggle('active', !isExpanded);
         });
         
         // Close menu when clicking on a link
@@ -31,11 +32,29 @@ document.addEventListener('DOMContentLoaded', function() {
         navLinks.forEach(link => {
             link.addEventListener('click', function() {
                 if (window.innerWidth <= 768) {
-                    navFlex.classList.remove('active');
-                    mobileMenuToggle.setAttribute('aria-expanded', 'false');
-                    mobileMenuToggle.classList.remove('active');
+                    closeMobileMenu();
                 }
             });
+        });
+
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape' && navFlex.classList.contains('active')) {
+                closeMobileMenu();
+                mobileMenuToggle.focus();
+            }
+        });
+
+        document.addEventListener('click', function(event) {
+            if (window.innerWidth > 768 || !navFlex.classList.contains('active')) return;
+            if (!event.target.closest('nav')) {
+                closeMobileMenu();
+            }
+        });
+
+        window.addEventListener('resize', function() {
+            if (window.innerWidth > 768) {
+                closeMobileMenu();
+            }
         });
     }
 

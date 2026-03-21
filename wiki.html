@@ -19,96 +19,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Roboto:wght@300;400;700&family=Montserrat:wght@600;700&display=swap" rel="stylesheet">
     <link href="lib/atom-one-dark.min.css" rel="stylesheet" integrity="sha256-Qjf/ynzmqttDjEV+CmdbElxTS73aW4f0HzoUlWA7zJs=" crossorigin="anonymous">
     <link href="styles.css" rel="stylesheet">
-<style>
-/* ===== MOBILE FIX: WIKI / sidebar layout ===== */
-@media (max-width: 768px) {
-  html,
-  body {
-    width: 100%;
-    max-width: 100%;
-    overflow-x: hidden;
-  }
 
-  /* Główny układ strony */
-  .wiki-layout,
-  .layout,
-  .page-layout,
-  .content-layout,
-  main {
-    display: block !important;
-    grid-template-columns: 1fr !important;
-    flex-direction: column !important;
-    width: 100% !important;
-    max-width: 100% !important;
-    min-width: 0 !important;
-  }
-
-  /* Lewy panel / sidebar */
-  .wiki-sidebar,
-  aside,
-  .sidebar,
-  .left-sidebar,
-  .nav-sidebar {
-    position: static !important;
-    top: auto !important;
-    left: auto !important;
-    width: 100% !important;
-    min-width: 0 !important;
-    max-width: 100% !important;
-    height: auto !important;
-    margin: 0 0 16px 0 !important;
-    padding: 12px !important;
-    box-sizing: border-box !important;
-    overflow: visible !important;
-  }
-
-  /* Główna treść */
-  .wiki-content,
-  .content,
-  .main-content,
-  article,
-  section {
-    width: 100% !important;
-    max-width: 100% !important;
-    min-width: 0 !important;
-    margin: 0 !important;
-    padding: 12px !important;
-    box-sizing: border-box !important;
-  }
-
-  /* Elementy wewnątrz treści nie mogą wypychać layoutu */
-  img,
-  iframe,
-  video,
-  canvas,
-  table,
-  pre,
-  code {
-    max-width: 100% !important;
-  }
-
-  table {
-    display: block;
-    overflow-x: auto;
-  }
-
-  pre {
-    overflow-x: auto;
-    white-space: pre-wrap;
-    word-break: break-word;
-  }
-
-  /* Jeżeli w sidebarze są listy / przyciski kategorii */
-  .wiki-sidebar ul,
-  .sidebar ul,
-  .wiki-sidebar nav,
-  .sidebar nav {
-    display: flex !important;
-    flex-direction: column !important;
-    gap: 8px !important;
-  }
-}
-</style>
 </head>
 <body>
     <a href="#main-content" class="skip-link">Przejdź do głównej treści</a>
@@ -288,7 +199,7 @@
                     <!-- Main Content Area -->
                     <div class="wiki-content">
                         <!-- Breadcrumbs (hidden initially) -->
-                        <div id="breadcrumbs" class="breadcrumbs" style="display: none;">
+                        <div id="breadcrumbs" class="breadcrumbs is-hidden">
                             <a href="wiki.html"><i class="fa-solid fa-house"></i> WIKI</a>
                             <span class="separator">/</span>
                             <span id="currentCategory"></span>
