@@ -13,13 +13,15 @@ Wszystkie artykuły są w formacie Markdown (.md) i zorganizowane w następując
 - `imu.md` - Inertial Measurement Unit
 - `sensor-fusion.md` - Fuzja danych sensorycznych
 
-### 👁️ Percepcja (7 artykułów)
+### 👁️ Percepcja (9 artykułów)
 - `computer-vision.md` - Wizja komputerowa
 - `affective-computing.md` - Informatyka afektywna
 - `emotion-recognition.md` - Rozpoznawanie emocji
 - `face-detection.md` - Detekcja twarzy
 - `object-detection.md` - Detekcja obiektów
 - `pose-estimation.md` - Estymacja pozy
+- `pnp.md` - Perspective-n-Point
+- `p3p.md` - Perspective-3-Point
 - `lidar.md` - LiDAR 3D
 
 ### 🧠 Kognicja (7 artykułów)
