@@ -327,6 +327,36 @@ function expandCategoryForArticle(articleId) {
     }
 }
 
+function setActiveArticleLink(articleId) {
+    const articleLinks = document.querySelectorAll('[data-article]');
+
+    articleLinks.forEach(link => {
+        const linkId = normalizeArticleId(link.dataset.article);
+        link.classList.toggle('active', linkId === articleId);
+    });
+}
+
+function navigateToArticle(articleId, options = {}) {
+    const { scrollToTop = false } = options;
+    const normalizedArticleId = normalizeArticleId(articleId);
+
+    if (!normalizedArticleId) return;
+
+    setActiveArticleLink(normalizedArticleId);
+    expandCategoryForArticle(normalizedArticleId);
+
+    const targetHash = `#${normalizedArticleId}`;
+    if (window.location.hash !== targetHash) {
+        window.location.hash = normalizedArticleId;
+    } else {
+        loadArticle(normalizedArticleId);
+    }
+
+    if (scrollToTop) {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+}
+
 function setupArticleLinks() {
     // Get all article links
     const articleLinks = document.querySelectorAll('[data-article]');
@@ -334,27 +364,7 @@ function setupArticleLinks() {
     articleLinks.forEach(link => {
         link.addEventListener('click', function(e) {
             e.preventDefault();
-
-            // Remove active class from all links
-            articleLinks.forEach(l => l.classList.remove('active'));
-
-            // Add active class to clicked link
-            this.classList.add('active');
-
-            // Get article ID (remove 'wiki/' prefix if present)
-            const articleId = normalizeArticleId(this.dataset.article);
-
-            // Update URL hash
-            window.location.hash = articleId;
-
-            // Expand parent category if collapsed
-            expandCategoryForArticle(articleId);
-
-            // Load article
-            loadArticle(articleId);
-
-            // Scroll to top
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            navigateToArticle(this.dataset.article, { scrollToTop: true });
         });
     });
 }
@@ -553,10 +563,7 @@ function processInternalLinks(container) {
     links.forEach(link => {
         link.addEventListener('click', function(e) {
             e.preventDefault();
-            const articleId = normalizeArticleId(this.getAttribute('href'));
-            window.location.hash = articleId;
-            loadArticle(articleId);
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            navigateToArticle(this.getAttribute('href'), { scrollToTop: true });
         });
     });
 }
@@ -601,17 +608,7 @@ window.addEventListener('hashchange', function() {
     if (hash) {
         loadArticle(hash);
         expandCategoryForArticle(hash);
-
-        // Update active link
-        const articleLinks = document.querySelectorAll('[data-article]');
-        articleLinks.forEach(link => {
-            const linkId = normalizeArticleId(link.dataset.article);
-            if (linkId === hash) {
-                link.classList.add('active');
-            } else {
-                link.classList.remove('active');
-            }
-        });
+        setActiveArticleLink(hash);
     }
 });
 
