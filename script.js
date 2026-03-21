@@ -59,6 +59,18 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     initDarkMode();
+
+    // iOS viewport height fix (--vh variable for 100vh workaround)
+    (function fixViewportHeight() {
+        function setVH() {
+            document.documentElement.style.setProperty('--vh', (window.innerHeight * 0.01) + 'px');
+        }
+        setVH();
+        window.addEventListener('resize', setVH, { passive: true });
+        window.addEventListener('orientationchange', function() {
+            setTimeout(setVH, 150);
+        });
+    })();
 });
 
 // ====================================
@@ -183,6 +195,51 @@ window.addEventListener('scroll', function() {
         }
     });
 });
+
+// ====================================
+// Nav Scroll Shadow
+// ====================================
+(function initNavScroll() {
+    const nav = document.querySelector('nav');
+    if (!nav) return;
+    let ticking = false;
+    window.addEventListener('scroll', function() {
+        if (!ticking) {
+            requestAnimationFrame(function() {
+                nav.classList.toggle('scrolled', window.scrollY > 10);
+                ticking = false;
+            });
+            ticking = true;
+        }
+    }, { passive: true });
+})();
+
+// ====================================
+// Scroll Progress Bar
+// ====================================
+(function initScrollProgress() {
+    if (document.querySelector('.scroll-progress')) return;
+    const bar = document.createElement('div');
+    bar.className = 'scroll-progress';
+    bar.setAttribute('role', 'progressbar');
+    bar.setAttribute('aria-label', 'Postęp czytania');
+    bar.setAttribute('aria-valuemin', '0');
+    bar.setAttribute('aria-valuemax', '100');
+    document.body.prepend(bar);
+    let ticking = false;
+    window.addEventListener('scroll', function() {
+        if (!ticking) {
+            requestAnimationFrame(function() {
+                const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+                const progress = scrollable > 0 ? Math.round(window.scrollY / scrollable * 100) : 0;
+                bar.style.width = progress + '%';
+                bar.setAttribute('aria-valuenow', progress);
+                ticking = false;
+            });
+            ticking = true;
+        }
+    }, { passive: true });
+})();
 
 // ====================================
 // Image Lazy Loading Fallback
