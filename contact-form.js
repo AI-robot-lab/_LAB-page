@@ -10,19 +10,25 @@ document.addEventListener('DOMContentLoaded', function() {
     const studyFieldSelect = document.getElementById('studyField');
     const otherFieldGroup = document.getElementById('otherFieldGroup');
     const otherFieldInput = document.getElementById('otherField');
+
+    function toggleOtherField(shouldShow) {
+        if (!otherFieldGroup || !otherFieldInput) return;
+
+        otherFieldGroup.classList.toggle('is-hidden', !shouldShow);
+        otherFieldInput.required = shouldShow;
+
+        if (!shouldShow) {
+            otherFieldInput.value = '';
+        }
+    }
     
     // Show/hide "Other field" input
-    if (studyFieldSelect) {
+    if (studyFieldSelect && otherFieldGroup && otherFieldInput) {
         studyFieldSelect.addEventListener('change', function() {
-            if (this.value === 'inny') {
-                otherFieldGroup.style.display = 'block';
-                otherFieldInput.required = true;
-            } else {
-                otherFieldGroup.style.display = 'none';
-                otherFieldInput.required = false;
-                otherFieldInput.value = '';
-            }
+            toggleOtherField(this.value === 'inny');
         });
+
+        toggleOtherField(studyFieldSelect.value === 'inny');
     }
 
     // Form validation messages
@@ -305,25 +311,26 @@ Data wysłania: ${new Date().toLocaleString('pl-PL')}
     }
 
     // Handle reset button
-    form.addEventListener('reset', function() {
-        // Clear all error messages
-        const errorMessages = form.querySelectorAll('.error-message');
-        errorMessages.forEach(msg => msg.textContent = '');
-        
-        // Remove error classes
-        const errorFields = form.querySelectorAll('.error');
-        errorFields.forEach(field => field.classList.remove('error'));
-        
-        // Hide "other field" input
-        otherFieldGroup.style.display = 'none';
-        otherFieldInput.required = false;
-        
-        // Hide form message
-        const formMessage = document.getElementById('formMessage');
-        if (formMessage) {
-            formMessage.style.display = 'none';
-        }
-    });
+    if (form) {
+        form.addEventListener('reset', function() {
+            // Clear all error messages
+            const errorMessages = form.querySelectorAll('.error-message');
+            errorMessages.forEach(msg => msg.textContent = '');
+            
+            // Remove error classes
+            const errorFields = form.querySelectorAll('.error');
+            errorFields.forEach(field => field.classList.remove('error'));
+            
+            // Hide "other field" input
+            toggleOtherField(false);
+            
+            // Hide form message
+            const formMessage = document.getElementById('formMessage');
+            if (formMessage) {
+                formMessage.style.display = 'none';
+            }
+        });
+    }
 });
 
 // Email validation helper
