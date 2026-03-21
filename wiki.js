@@ -155,11 +155,28 @@ function normalizeArticleId(rawArticleId) {
         .trim();
 }
 
+function getStoredTheme() {
+    try {
+        return localStorage.getItem('theme') || 'light';
+    } catch (error) {
+        console.warn('Theme preference unavailable:', error);
+        return 'light';
+    }
+}
+
+function setStoredTheme(theme) {
+    try {
+        localStorage.setItem('theme', theme);
+    } catch (error) {
+        console.warn('Failed to persist theme preference:', error);
+    }
+}
+
 function initDarkMode() {
     const darkModeToggle = document.getElementById('darkModeToggle');
 
     // Check saved preference
-    const savedTheme = localStorage.getItem('theme') || 'light';
+    const savedTheme = getStoredTheme();
     document.documentElement.setAttribute('data-theme', savedTheme);
 
     // Update icon
@@ -175,7 +192,7 @@ function initDarkMode() {
             document.documentElement.style.transition = 'background-color 0.2s ease, color 0.2s ease';
 
             document.documentElement.setAttribute('data-theme', newTheme);
-            localStorage.setItem('theme', newTheme);
+            setStoredTheme(newTheme);
 
             updateDarkModeIcon(newTheme);
 
