@@ -48,20 +48,17 @@
             "Percepcji": [
                 "Testy odporności systemu percepcji w warunkach ograniczonego oświetlenia",
                 "Synchronizacja czasowa strumieni sensorycznych (LiDAR + kamera)",
-                "Przegląd kodu i code review modułu percepcji"
+                "Code review modułu percepcji"
             ],
             "Kognicji": [
                 "Implementacja mechanizmu pamięci epizodycznej dla LLM"
             ],
             "Interakcji": [
-                "Trening polityki ruchu dla zadania podawania przedmiotów",
-                "Weryfikacja parametrów bezpieczeństwa – limity momentów i prędkości"
-            ]
+                "Trening polityki ruchu dla zadania podawania przedmiotów", "Weryfikacja parametrów bezpieczeństwa, limity momentów i prędkości" ]
         },
         "2026-W16": {
             "Percepcji": [
-               "Raport miesięczny i plan prac na kolejny miesiąc",
-                "Przygotowanie demo na pokaz laboratorium"
+               "Raport miesięczny i plan prac na kolejny miesiąc", "Przygotowanie demo na pokaz laboratorium"
             ],
             "Kognicji": [
                 "Raport miesięczny z postępów prac nad modułem kognicji"
