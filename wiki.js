@@ -30,6 +30,8 @@ const ARTICLES = {
     'lidar': 'wiki/lidar.md',
     'object-detection': 'wiki/object-detection.md',
     'pose-estimation': 'wiki/pose-estimation.md',
+    'pnp': 'wiki/pnp.md',
+    'p3p': 'wiki/p3p.md',
 
     // Kognicja
     'llm': 'wiki/llm.md',
@@ -95,6 +97,8 @@ const METADATA = {
     'lidar': { category: 'Percepcja', title: 'LiDAR 3D' },
     'object-detection': { category: 'Percepcja', title: 'Detekcja Obiektów' },
     'pose-estimation': { category: 'Percepcja', title: 'Estymacja Pozy' },
+    'pnp': { category: 'Percepcja', title: 'PnP — Perspective-n-Point' },
+    'p3p': { category: 'Percepcja', title: 'P3P — Perspective-3-Point' },
 
     // Kognicja
     'llm': { category: 'Kognicja', title: 'Large Language Models (LLM)' },
