@@ -49,16 +49,33 @@ document.addEventListener('DOMContentLoaded', function() {
 const DEFAULT_THEME = 'light';
 const THEME_TRANSITION_MS = 200;
 
+function getStoredTheme() {
+    try {
+        return localStorage.getItem('theme') || DEFAULT_THEME;
+    } catch (error) {
+        console.warn('Theme preference unavailable:', error);
+        return DEFAULT_THEME;
+    }
+}
+
+function setStoredTheme(theme) {
+    try {
+        localStorage.setItem('theme', theme);
+    } catch (error) {
+        console.warn('Failed to persist theme preference:', error);
+    }
+}
+
 // Apply saved theme immediately to prevent flash of wrong theme
 (function() {
-    const savedTheme = localStorage.getItem('theme') || DEFAULT_THEME;
+    const savedTheme = getStoredTheme();
     document.documentElement.setAttribute('data-theme', savedTheme);
 })();
 
 function initDarkMode() {
     const darkModeToggle = document.getElementById('darkModeToggle');
 
-    const savedTheme = localStorage.getItem('theme') || DEFAULT_THEME;
+    const savedTheme = getStoredTheme();
     updateDarkModeIcon(savedTheme);
 
     if (darkModeToggle && !darkModeToggle.dataset.darkModeInit) {
@@ -69,7 +86,7 @@ function initDarkMode() {
 
             document.documentElement.style.transition = 'background-color 0.2s ease, color 0.2s ease';
             document.documentElement.setAttribute('data-theme', newTheme);
-            localStorage.setItem('theme', newTheme);
+            setStoredTheme(newTheme);
 
             updateDarkModeIcon(newTheme);
 
@@ -172,17 +189,25 @@ const observerOptions = {
     rootMargin: '0px 0px -50px 0px'
 };
 
-const observer = new IntersectionObserver(function(entries) {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.classList.add('fade-in');
-        }
-    });
-}, observerOptions);
+const observer = 'IntersectionObserver' in window
+    ? new IntersectionObserver(function(entries) {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('fade-in');
+            }
+        });
+    }, observerOptions)
+    : null;
 
 // Observe elements
 document.addEventListener('DOMContentLoaded', function() {
     const animateElements = document.querySelectorAll('.team-card, .soft-item, .rehab-box');
+
+    if (!observer) {
+        animateElements.forEach(el => el.classList.add('fade-in'));
+        return;
+    }
+
     animateElements.forEach(el => {
         observer.observe(el);
     });
@@ -276,7 +301,20 @@ window.addEventListener('afterprint', function() {
 // ====================================
 document.querySelectorAll('img').forEach(img => {
     img.addEventListener('error', function() {
+        const inlineHandler = this.getAttribute('onerror');
+        const currentSrc = this.currentSrc || this.src;
+
+        if (inlineHandler && !this.dataset.fallbackAttempted) {
+            this.dataset.fallbackAttempted = '1';
+            console.warn('Primary image failed, attempting fallback:', currentSrc);
+            return;
+        }
+
         this.style.display = 'none';
-        console.warn('Failed to load image:', this.src);
+        console.warn('Failed to load image:', currentSrc);
+    });
+
+    img.addEventListener('load', function() {
+        this.style.display = '';
     });
 });
