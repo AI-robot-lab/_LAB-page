@@ -129,23 +129,34 @@
             <div class="container">
                 <div class="hero-flex">
                     <div class="hero-content">
+                        <span class="hero-eyebrow"><i class="fa-solid fa-satellite-dish" aria-hidden="true"></i> Human-centered AI Robotics Lab</span>
                         <h1 id="hero-title">Laboratorium Robotów Humanoidalnych</h1>
                         <p class="hero-subtitle">
-                            Badania w dziedzinie autonomii poznawczej, sztucznej inteligencji 
-                            i zaawansowanych systemów robotycznych na Politechnice Rzeszowskiej.
+                            Projektujemy inteligentne systemy humanoidalne łączące percepcję, rozumowanie i działanie w jednym, responsywnym ekosystemie badań.
                         </p>
                         <p class="hero-description">
-                            Laboratorium skupia się na integracji percepcji sensorycznej, 
-                            wnioskowania AI oraz manipulacji w zamkniętej pętli poznawczej. 
-                            Rozwijamy framework <strong>Perception-Cognition-Action (PCA)</strong> 
-                            do zastosowań w rehabilitacji, opiece zdrowotnej oraz środowiskach przemysłowych.
+                            Rozwijamy rozwiązania inspirowane współczesnymi platformami produktowymi: z wyraźną narracją, modularnym stackiem badawczym i demonstracjami, które pokazują wartość technologii już na poziomie strony głównej.
                         </p>
                         <div class="hero-callout" role="note" aria-label="Informacja dla nowych członków zespołu">
-                            <strong>Nowy w zespole?</strong> Zacznij od naszego <a href="wiki.html">WIKI</a> — to najlepsze miejsce, aby szybko poznać narzędzia, procesy i obszary badawcze laboratorium.
+                            <strong>Nowy w zespole?</strong> Zacznij od naszego <a href="wiki.html">WIKI</a>, a potem odkryj aktywne obszary badawcze, scenariusze wdrożeń i aktualny pipeline eksperymentów poniżej.
                         </div>
                         <div class="hero-cta">
-                            <a href="wiki.html" class="btn-primary">Przejdź do WIKI</a>
-                            <a href="#teams" class="btn-secondary">Nasze Zespoły</a>
+                            <a href="#experience" class="btn-primary">Odkryj demo</a>
+                            <a href="wiki.html" class="btn-secondary">Przejdź do WIKI</a>
+                        </div>
+                        <div class="hero-metrics" aria-label="Najważniejsze metryki laboratorium">
+                            <article class="metric-pill">
+                                <strong data-counter="3">3</strong>
+                                <span>zespoły PCA</span>
+                            </article>
+                            <article class="metric-pill">
+                                <strong data-counter="8">8</strong>
+                                <span>warstw sensorycznych</span>
+                            </article>
+                            <article class="metric-pill">
+                                <strong data-counter="24">24</strong>
+                                <span>ścieżki eksperymentów</span>
+                            </article>
                         </div>
                         <p class="hero-contact-note">
                             Chcesz dołączyć do zespołu jako student lub studentka? Preferowany kontakt dla chętnych znajduje się w repozytorium studenckim 
@@ -153,13 +164,105 @@
                         </p>
                     </div>
                     <div class="hero-visual">
-                        <div class="robot-gallery">
-                            <img src="assets/images/robot/robot-1.jpg" 
-                                 alt="Robot humanoidalny Unitree G1 w Laboratorium Robotów Humanoidalnych PRz" 
-                                 loading="eager"
-                                 onerror="this.src='https://imgs.search.brave.com/4t8oG0xn_xS_CqObXR_Jq42BZaUlqYfnUGLd4sWgKh0/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9tLm1l/ZGlhLWFtYXpvbi5j/b20vaW1hZ2VzL0kv/NzF6czdKVS1VMEwu/anBn'">
+                        <div class="hero-visual-shell">
+                            <div class="hero-orb hero-orb-a"></div>
+                            <div class="hero-orb hero-orb-b"></div>
+                            <div class="command-panel" aria-label="Interaktywna demonstracja pipeline'u badawczego">
+                                <div class="command-header">
+                                    <span class="signal-dot"></span>
+                                    <span>LIVE LAB PIPELINE</span>
+                                    <small>Perception → Cognition → Action</small>
+                                </div>
+                                <div class="command-body">
+                                    <div class="command-feed" id="commandFeed">
+                                        <div class="feed-line"><span>init</span><p>Ładowanie modułów sensor fusion…</p></div>
+                                        <div class="feed-line"><span>sync</span><p>Aktywacja strumieni LiDAR + RGB-D.</p></div>
+                                        <div class="feed-line"><span>plan</span><p>Model planowania ruchu oczekuje na scenariusz.</p></div>
+                                    </div>
+                                    <div class="command-controls" role="tablist" aria-label="Scenariusze demonstracyjne">
+                                        <button class="scenario-chip active" data-scenario="rehab" role="tab" aria-selected="true">Rehabilitacja</button>
+                                        <button class="scenario-chip" data-scenario="inspection" role="tab" aria-selected="false">Inspekcja</button>
+                                        <button class="scenario-chip" data-scenario="hri" role="tab" aria-selected="false">HRI</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="floating-card glass-card">
+                                <span>Status eksperymentów</span>
+                                <strong>Aktywne prototypowanie</strong>
+                                <p>Wysoka gotowość do iteracji: AI, teleoperacja, analityka ruchu.</p>
+                            </div>
                         </div>
                     </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="experience" class="experience-section" aria-labelledby="experience-title">
+            <div class="container">
+                <div class="section-header section-header-left">
+                    <h2 id="experience-title">Doświadczenie zaprojektowane jak nowoczesny produkt</h2>
+                    <p>Połączyliśmy narrację badawczą z interaktywną prezentacją kompetencji laboratorium — tak, aby użytkownik od razu rozumiał wartość i zakres naszych prac.</p>
+                </div>
+                <div class="experience-grid">
+                    <article class="experience-card spotlight-card is-active" data-spotlight="perception">
+                        <div class="experience-icon"><i class="fa-solid fa-eye" aria-hidden="true"></i></div>
+                        <h3>Perception Stack</h3>
+                        <p>Fuzja LiDAR, RGB-D, IMU i analizy afektywnej w jednej architekturze obserwacji otoczenia.</p>
+                        <button class="text-link" type="button" data-spotlight-target="perception">Pokaż szczegóły</button>
+                    </article>
+                    <article class="experience-card spotlight-card" data-spotlight="cognition">
+                        <div class="experience-icon"><i class="fa-solid fa-brain" aria-hidden="true"></i></div>
+                        <h3>Cognition Engine</h3>
+                        <p>Łączenie world models, VLM i planowania zadań zorientowanego na człowieka.</p>
+                        <button class="text-link" type="button" data-spotlight-target="cognition">Pokaż szczegóły</button>
+                    </article>
+                    <article class="experience-card spotlight-card" data-spotlight="action">
+                        <div class="experience-icon"><i class="fa-solid fa-person-walking" aria-hidden="true"></i></div>
+                        <h3>Action & Embodiment</h3>
+                        <p>Manipulacja, teleoperacja i sterowanie ruchem w zamkniętej pętli decyzyjnej.</p>
+                        <button class="text-link" type="button" data-spotlight-target="action">Pokaż szczegóły</button>
+                    </article>
+                    <aside class="spotlight-panel glass-card" aria-live="polite">
+                        <span class="panel-label">Spotlight</span>
+                        <h3 id="spotlightTitle">Perception Stack</h3>
+                        <p id="spotlightText">Budujemy warstwę percepcji, która nie tylko widzi otoczenie, ale rozumie kontekst działania robota i człowieka.</p>
+                        <ul id="spotlightList">
+                            <li>LiDAR 3D + kamery RGB-D + mikrofony</li>
+                            <li>Mapowanie sceny i detekcja obiektów w czasie zbliżonym do rzeczywistego</li>
+                            <li>Wstępna interpretacja zachowania użytkownika</li>
+                        </ul>
+                    </aside>
+                </div>
+            </div>
+        </section>
+
+        <section id="roadmap" class="roadmap-section" aria-labelledby="roadmap-title">
+            <div class="container">
+                <div class="section-header">
+                    <h2 id="roadmap-title">Roadmapa badań i wdrożeń</h2>
+                    <p>Od eksperymentów laboratoryjnych po scenariusze użycia w rehabilitacji, HRI i środowiskach przemysłowych.</p>
+                </div>
+                <div class="roadmap-track">
+                    <article class="roadmap-step">
+                        <span>01</span>
+                        <h3>Digital Twin</h3>
+                        <p>Symulacja ruchu, trening polityk i testy bezpieczeństwa w środowisku wirtualnym.</p>
+                    </article>
+                    <article class="roadmap-step">
+                        <span>02</span>
+                        <h3>Adaptive AI</h3>
+                        <p>Wprowadzenie modeli VLM/LLM do planowania zachowań zależnych od kontekstu i emocji.</p>
+                    </article>
+                    <article class="roadmap-step">
+                        <span>03</span>
+                        <h3>Assistive Robotics</h3>
+                        <p>Scenariusze rehabilitacyjne i wspomaganie codziennych czynności człowieka.</p>
+                    </article>
+                    <article class="roadmap-step">
+                        <span>04</span>
+                        <h3>Field Validation</h3>
+                        <p>Walidacja prototypów w warunkach pół-rzeczywistych, z naciskiem na UX i bezpieczeństwo.</p>
+                    </article>
                 </div>
             </div>
         </section>

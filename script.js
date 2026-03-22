@@ -301,7 +301,7 @@ const observer = 'IntersectionObserver' in window
     : null;
 
 document.addEventListener('DOMContentLoaded', function() {
-    const animateElements = document.querySelectorAll('.team-card, .soft-item, .rehab-box');
+    const animateElements = document.querySelectorAll('.team-card, .soft-item, .rehab-box, .experience-card, .spotlight-panel, .roadmap-step, .metric-pill');
 
     if (!observer) {
         animateElements.forEach(el => el.classList.add('fade-in'));
@@ -317,7 +317,11 @@ const style = document.createElement('style');
 style.textContent = `
     .team-card,
     .soft-item,
-    .rehab-box {
+    .rehab-box,
+    .experience-card,
+    .spotlight-panel,
+    .roadmap-step,
+    .metric-pill {
         opacity: 0;
         transform: translateY(20px);
         transition: opacity 0.6s ease, transform 0.6s ease;
@@ -405,4 +409,137 @@ document.querySelectorAll('img').forEach(img => {
     img.addEventListener('load', function() {
         this.style.display = '';
     });
+});
+
+
+// ====================================
+// Interactive Showcase
+// ====================================
+document.addEventListener('DOMContentLoaded', function() {
+    const scenarios = {
+        rehab: [
+            ['sense', 'Analiza postawy pacjenta i zakresu ruchu kończyn.'],
+            ['infer', 'Silnik kognicji dopasowuje poziom assist-as-needed.'],
+            ['act', 'Robot prowadzi sesję z informacją zwrotną w czasie rzeczywistym.']
+        ],
+        inspection: [
+            ['scan', 'Moduł obserwacji mapuje stanowisko i wykrywa odchylenia.'],
+            ['reason', 'VLM porównuje scenę z checklistą jakości.'],
+            ['respond', 'Robot raportuje ryzyka i planuje sekwencję kontroli.']
+        ],
+        hri: [
+            ['listen', 'System analizuje mowę, gesty i sygnały afektywne użytkownika.'],
+            ['align', 'LLM buduje kontekst dialogu i intencję zadania.'],
+            ['engage', 'Awatar ruchowy dopasowuje gesty oraz odpowiedzi robota.']
+        ]
+    };
+
+    const commandFeed = document.getElementById('commandFeed');
+    const chips = document.querySelectorAll('.scenario-chip');
+
+    function renderScenario(name) {
+        if (!commandFeed || !scenarios[name]) return;
+        commandFeed.innerHTML = scenarios[name].map(([label, text]) => `
+            <div class="feed-line">
+                <span>${label}</span>
+                <p>${text}</p>
+            </div>
+        `).join('');
+
+        chips.forEach(chip => {
+            const active = chip.dataset.scenario === name;
+            chip.classList.toggle('active', active);
+            chip.setAttribute('aria-selected', String(active));
+        });
+    }
+
+    chips.forEach(chip => {
+        chip.addEventListener('click', function() {
+            renderScenario(this.dataset.scenario);
+        });
+    });
+
+    const spotlightContent = {
+        perception: {
+            title: 'Perception Stack',
+            text: 'Warstwa percepcji agreguje dane przestrzenne, wizualne i behawioralne w jedno źródło prawdy dla robota.',
+            items: [
+                'LiDAR 3D, kamery RGB-D, IMU i mikrofony kierunkowe',
+                'Rozumienie sceny i obiektów z uwzględnieniem proxemics',
+                'Wykrywanie sygnałów użytkownika ważnych dla bezpieczeństwa i HRI'
+            ]
+        },
+        cognition: {
+            title: 'Cognition Engine',
+            text: 'Kognicja łączy modele świata, semantykę i planowanie zadań, aby robot potrafił podjąć właściwą decyzję.',
+            items: [
+                'Integracja VLM/LLM z planowaniem i politykami sterowania',
+                'Predykcja intencji oraz adaptacja zachowania do użytkownika',
+                'Pipeline eksperymentalny gotowy do iteracji sim-to-real'
+            ]
+        },
+        action: {
+            title: 'Action & Embodiment',
+            text: 'Warstwa wykonawcza realizuje ruch, manipulację i teleoperację z naciskiem na płynność oraz precyzję.',
+            items: [
+                'Manipulacja dłońmi Dex3-1 i planowanie chwytu',
+                'Teleoperacja VR/WebRTC oraz nadzór operatora',
+                'Stabilizacja ruchu i walidacja trajektorii w pętli zamkniętej'
+            ]
+        }
+    };
+
+    const spotlightTitle = document.getElementById('spotlightTitle');
+    const spotlightText = document.getElementById('spotlightText');
+    const spotlightList = document.getElementById('spotlightList');
+    const spotlightCards = document.querySelectorAll('.spotlight-card');
+    const spotlightButtons = document.querySelectorAll('[data-spotlight-target]');
+
+    function renderSpotlight(key) {
+        const content = spotlightContent[key];
+        if (!content || !spotlightTitle || !spotlightText || !spotlightList) return;
+
+        spotlightTitle.textContent = content.title;
+        spotlightText.textContent = content.text;
+        spotlightList.innerHTML = content.items.map(item => `<li>${item}</li>`).join('');
+        spotlightCards.forEach(card => card.classList.toggle('is-active', card.dataset.spotlight === key));
+    }
+
+    spotlightButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            renderSpotlight(this.dataset.spotlightTarget);
+        });
+    });
+
+    const counters = document.querySelectorAll('[data-counter]');
+    const counterObserver = 'IntersectionObserver' in window ? new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (!entry.isIntersecting) return;
+            const el = entry.target;
+            const target = Number(el.dataset.counter || 0);
+            let current = 0;
+            const step = Math.max(1, Math.ceil(target / 24));
+            const timer = setInterval(() => {
+                current += step;
+                if (current >= target) {
+                    el.textContent = String(target);
+                    clearInterval(timer);
+                    return;
+                }
+                el.textContent = String(current);
+            }, 36);
+            counterObserver.unobserve(el);
+        });
+    }, { threshold: 0.4 }) : null;
+
+    counters.forEach(counter => {
+        if (counterObserver) {
+            counterObserver.observe(counter);
+        } else {
+            counter.textContent = counter.dataset.counter;
+        }
+    });
+
+    renderScenario('rehab');
+    renderSpotlight('perception');
 });
