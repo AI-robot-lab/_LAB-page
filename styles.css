@@ -5782,3 +5782,362 @@ html, body {
     border-color: rgba(0, 51, 102, 0.18);
     box-shadow: var(--shadow-sm);
 }
+
+/* ====================================
+   Enhanced Interactive Experience
+   ==================================== */
+:root {
+    --bg-dark: #07111f;
+    --glass: rgba(255, 255, 255, 0.72);
+    --glass-border: rgba(255, 255, 255, 0.28);
+    --accent-cyan: #53d8fb;
+}
+
+body {
+    background:
+        radial-gradient(circle at top right, rgba(83, 216, 251, 0.12), transparent 26%),
+        linear-gradient(180deg, #ffffff 0%, #f4f7f9 100%);
+}
+
+.hero {
+    position: relative;
+    overflow: hidden;
+    background:
+        radial-gradient(circle at 85% 10%, rgba(83, 216, 251, 0.18), transparent 20%),
+        radial-gradient(circle at 70% 30%, rgba(197, 160, 89, 0.18), transparent 22%),
+        linear-gradient(135deg, #fbfdff 0%, #ecf2f8 48%, #e7edf5 100%);
+}
+
+.hero-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 14px;
+    border-radius: 999px;
+    background: rgba(0, 51, 102, 0.08);
+    color: var(--prz-blue);
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    margin-bottom: 18px;
+    font-weight: 700;
+}
+
+.hero-visual-shell {
+    position: relative;
+    min-height: 520px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hero-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(6px);
+    animation: floatOrb 7s ease-in-out infinite;
+}
+
+.hero-orb-a {
+    width: 180px;
+    height: 180px;
+    background: rgba(83, 216, 251, 0.28);
+    top: 30px;
+    right: 25px;
+}
+
+.hero-orb-b {
+    width: 120px;
+    height: 120px;
+    background: rgba(197, 160, 89, 0.2);
+    bottom: 35px;
+    left: 10px;
+    animation-delay: -2s;
+}
+
+.command-panel,
+.glass-card {
+    position: relative;
+    backdrop-filter: blur(22px);
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    box-shadow: 0 24px 80px rgba(7, 17, 31, 0.16);
+}
+
+.command-panel {
+    width: min(100%, 470px);
+    border-radius: 24px;
+    overflow: hidden;
+    z-index: 2;
+}
+
+.command-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 18px 22px;
+    background: rgba(7, 17, 31, 0.92);
+    color: var(--white);
+    font-size: 0.85rem;
+    letter-spacing: 0.08em;
+}
+
+.command-header small {
+    margin-left: auto;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.signal-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #46e28b;
+    box-shadow: 0 0 0 6px rgba(70, 226, 139, 0.18);
+}
+
+.command-body {
+    padding: 22px;
+}
+
+.command-feed {
+    display: grid;
+    gap: 12px;
+}
+
+.feed-line {
+    display: grid;
+    grid-template-columns: 72px 1fr;
+    gap: 12px;
+    align-items: start;
+    padding: 14px 16px;
+    border-radius: 18px;
+    background: rgba(255, 255, 255, 0.74);
+}
+
+.feed-line span {
+    font-weight: 800;
+    color: var(--prz-blue);
+    text-transform: uppercase;
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+}
+
+.feed-line p {
+    margin: 0;
+    color: var(--text-dark);
+}
+
+.command-controls {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+}
+
+.scenario-chip {
+    border: none;
+    border-radius: 999px;
+    padding: 10px 16px;
+    background: rgba(0, 51, 102, 0.08);
+    color: var(--prz-blue);
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.scenario-chip.active,
+.scenario-chip:hover,
+.text-link:hover {
+    background: var(--prz-blue);
+    color: var(--white);
+}
+
+.floating-card {
+    position: absolute;
+    bottom: 20px;
+    right: -10px;
+    width: 240px;
+    padding: 20px;
+    border-radius: 20px;
+    z-index: 3;
+}
+
+.floating-card span,
+.panel-label {
+    display: block;
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-light);
+    margin-bottom: 8px;
+}
+
+.floating-card strong {
+    display: block;
+    color: var(--prz-blue);
+    margin-bottom: 8px;
+    font-size: 1.1rem;
+}
+
+.floating-card p {
+    margin-bottom: 0;
+    font-size: 0.92rem;
+}
+
+.hero-metrics {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+    margin-top: 28px;
+}
+
+.metric-pill {
+    min-width: 150px;
+    padding: 16px 18px;
+    border-radius: 18px;
+    background: rgba(255, 255, 255, 0.85);
+    box-shadow: var(--shadow-sm);
+}
+
+.metric-pill strong {
+    display: block;
+    font-size: 1.8rem;
+    color: var(--prz-blue);
+}
+
+.metric-pill span {
+    color: var(--text-light);
+    font-size: 0.9rem;
+}
+
+.section-header-left {
+    text-align: left;
+}
+
+.section-header-left h2::after {
+    left: 0;
+    transform: none;
+}
+
+.experience-section,
+.roadmap-section {
+    position: relative;
+}
+
+.experience-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr) 1.2fr;
+    gap: 22px;
+    align-items: stretch;
+}
+
+.experience-card,
+.spotlight-panel,
+.roadmap-step {
+    border-radius: 24px;
+    padding: 24px;
+    box-shadow: var(--shadow-md);
+}
+
+.experience-card {
+    background: linear-gradient(180deg, #fff 0%, #f7fafc 100%);
+    border: 1px solid rgba(0, 51, 102, 0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.experience-card:hover,
+.experience-card.is-active {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 40px rgba(0, 51, 102, 0.14);
+    border-color: rgba(83, 216, 251, 0.65);
+}
+
+.experience-icon {
+    width: 54px;
+    height: 54px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 16px;
+    margin-bottom: 18px;
+    background: linear-gradient(135deg, rgba(0, 51, 102, 0.12), rgba(83, 216, 251, 0.26));
+    color: var(--prz-blue);
+    font-size: 1.2rem;
+}
+
+.text-link {
+    margin-top: 14px;
+    background: transparent;
+    border: 1px solid rgba(0, 51, 102, 0.16);
+    color: var(--prz-blue);
+    font-weight: 700;
+    padding: 10px 14px;
+    border-radius: 999px;
+    cursor: pointer;
+}
+
+.spotlight-panel {
+    background: linear-gradient(160deg, rgba(7, 17, 31, 0.96), rgba(0, 51, 102, 0.88));
+    color: var(--white);
+}
+
+.spotlight-panel h3 { color: var(--white); margin-bottom: 12px; }
+.spotlight-panel p, .spotlight-panel li, .roadmap-step p { color: rgba(255,255,255,0.82); }
+.spotlight-panel ul { padding-left: 18px; display: grid; gap: 10px; }
+
+.roadmap-track {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+}
+
+.roadmap-step {
+    background: linear-gradient(180deg, #0b1d34 0%, #14355b 100%);
+    border: 1px solid rgba(83, 216, 251, 0.15);
+}
+
+.roadmap-step span {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    margin-bottom: 18px;
+    border-radius: 14px;
+    background: rgba(83, 216, 251, 0.12);
+    color: var(--accent-cyan);
+    font-weight: 800;
+}
+
+.roadmap-step h3 { color: var(--white); margin-bottom: 10px; }
+
+@keyframes floatOrb {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-18px); }
+}
+
+@media (max-width: 1100px) {
+    .hero-flex,
+    .robot-grid,
+    .experience-grid {
+        grid-template-columns: 1fr;
+        display: grid;
+    }
+
+    .hero-visual { text-align: left; }
+    .floating-card { position: relative; right: auto; bottom: auto; margin-top: 18px; width: 100%; }
+    .roadmap-track { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 768px) {
+    .hero { padding: 56px 0; }
+    .hero-content h1 { font-size: 2.35rem; }
+    .hero-visual-shell { min-height: auto; }
+    .command-panel { width: 100%; }
+    .roadmap-track,
+    .software-grid,
+    .teams-grid,
+    .rehab-grid { grid-template-columns: 1fr; }
+    .feed-line { grid-template-columns: 1fr; }
+    .experience-grid { grid-template-columns: 1fr; }
+    .metric-pill { width: 100%; }
+}
