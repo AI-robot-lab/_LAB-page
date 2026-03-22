@@ -6,6 +6,12 @@
 
 'use strict';
 
+const WIKI_THEME_TRANSITION_MS = 300;
+const DARK_MODE_LABELS = {
+    dark: 'Włącz jasny motyw',
+    light: 'Włącz ciemny motyw'
+};
+
 // Article database - maps article IDs to markdown files
 // Wszystkie pliki są w folderze wiki/
 const ARTICLES = {
@@ -176,62 +182,65 @@ function setStoredTheme(theme) {
     }
 }
 
-function initDarkMode() {
-    const darkModeToggle = document.getElementById('darkModeToggle');
-
-    // Check saved preference
-    const savedTheme = getStoredTheme();
-    document.documentElement.setAttribute('data-theme', savedTheme);
-
-    // Update icon
-    updateDarkModeIcon(savedTheme);
-
-    // Toggle functionality
-    if (darkModeToggle) {
-        darkModeToggle.addEventListener('click', function() {
-            const currentTheme = document.documentElement.getAttribute('data-theme');
-            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-
-            // Smooth transition
-            document.documentElement.style.transition = 'background-color 0.2s ease, color 0.2s ease';
-
-            document.documentElement.setAttribute('data-theme', newTheme);
-            setStoredTheme(newTheme);
-
-            updateDarkModeIcon(newTheme);
-
-            // Remove transition after animation
-            setTimeout(() => {
-                document.documentElement.style.transition = '';
-            }, 300);
-        });
-    }
-}
-
-function updateDarkModeIcon(theme) {
+function syncDarkModeControl(theme) {
     const darkModeToggle = document.getElementById('darkModeToggle');
     if (!darkModeToggle) return;
 
     const icon = darkModeToggle.querySelector('i');
-    if (theme === 'dark') {
-        icon.className = 'fa-solid fa-sun';
-    } else {
-        icon.className = 'fa-solid fa-moon';
+    if (icon) {
+        icon.className = theme === 'dark' ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
+    }
+
+    darkModeToggle.setAttribute('aria-pressed', String(theme === 'dark'));
+    darkModeToggle.setAttribute('aria-label', DARK_MODE_LABELS[theme] || DARK_MODE_LABELS.light);
+    darkModeToggle.title = DARK_MODE_LABELS[theme] || DARK_MODE_LABELS.light;
+}
+
+function initDarkMode() {
+    const darkModeToggle = document.getElementById('darkModeToggle');
+    const savedTheme = getStoredTheme();
+    document.documentElement.setAttribute('data-theme', savedTheme);
+    syncDarkModeControl(savedTheme);
+
+    if (darkModeToggle && !darkModeToggle.dataset.darkModeInit) {
+        darkModeToggle.dataset.darkModeInit = '1';
+        darkModeToggle.addEventListener('click', function() {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+
+            document.documentElement.style.transition = 'background-color 0.2s ease, color 0.2s ease';
+            document.documentElement.setAttribute('data-theme', newTheme);
+            setStoredTheme(newTheme);
+            syncDarkModeControl(newTheme);
+
+            setTimeout(() => {
+                document.documentElement.style.transition = '';
+            }, WIKI_THEME_TRANSITION_MS);
+        });
     }
 }
 
 function initScrollProgress() {
-    // Create scroll progress bar
+    if (document.querySelector('.scroll-progress')) return;
+
     const progressBar = document.createElement('div');
     progressBar.className = 'scroll-progress';
-    document.body.appendChild(progressBar);
+    progressBar.setAttribute('role', 'progressbar');
+    progressBar.setAttribute('aria-label', 'Postęp czytania');
+    progressBar.setAttribute('aria-valuemin', '0');
+    progressBar.setAttribute('aria-valuemax', '100');
+    document.body.prepend(progressBar);
 
-    // Update on scroll
-    window.addEventListener('scroll', function() {
+    const updateProgressBar = function() {
         const windowHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-        const scrolled = (window.scrollY / windowHeight) * 100;
+        const scrolled = windowHeight > 0 ? Math.round((window.scrollY / windowHeight) * 100) : 0;
         progressBar.style.width = scrolled + '%';
-    });
+        progressBar.setAttribute('aria-valuenow', String(scrolled));
+    };
+
+    window.addEventListener('scroll', updateProgressBar, { passive: true });
+    window.addEventListener('resize', updateProgressBar, { passive: true });
+    updateProgressBar();
 }
 
 function initWiki() {
@@ -630,14 +639,22 @@ function addCopyButtons(container) {
         wrapper.appendChild(pre);
 
         // Create copy button
+        const codeElement = pre.querySelector('code');
+        if (!codeElement) {
+            return;
+        }
+
         const button = document.createElement('button');
         button.className = 'copy-code-btn';
         button.innerHTML = '<i class="fa-solid fa-copy"></i> Copy';
 
         button.addEventListener('click', async function() {
-            const code = pre.querySelector('code').textContent;
+            const code = codeElement.textContent;
 
             try {
+                if (!navigator.clipboard || typeof navigator.clipboard.writeText !== 'function') {
+                    throw new Error('Clipboard API unavailable');
+                }
                 await navigator.clipboard.writeText(code);
 
                 // Visual feedback
@@ -677,8 +694,10 @@ function addReadingTime(container) {
 
     // Insert after h1
     const h1 = container.querySelector('h1');
-    if (h1 && h1.nextSibling) {
-        h1.parentNode.insertBefore(badge, h1.nextSibling);
+    if (h1) {
+        h1.insertAdjacentElement('afterend', badge);
+    } else {
+        container.prepend(badge);
     }
 }
 
@@ -697,8 +716,8 @@ function generateTableOfContents(container) {
     const ul = toc.querySelector('ul');
 
     headings.forEach((heading, index) => {
-        // Add ID for linking
-        const id = `heading-${index}`;
+        // Preserve existing IDs so manual anchor links keep working
+        const id = heading.id || `heading-${index}`;
         heading.id = id;
 
         // Create TOC item
