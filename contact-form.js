@@ -11,6 +11,10 @@ document.addEventListener('DOMContentLoaded', function() {
     const otherFieldGroup = document.getElementById('otherFieldGroup');
     const otherFieldInput = document.getElementById('otherField');
 
+    if (!form) {
+        return;
+    }
+
     function toggleOtherField(shouldShow) {
         if (!otherFieldGroup || !otherFieldInput) return;
 
@@ -109,12 +113,17 @@ document.addEventListener('DOMContentLoaded', function() {
      * Validate checkbox
      */
     function validateCheckbox(checkbox) {
-        const errorElement = checkbox.closest('.checkbox-group').querySelector('.error-message');
-        
-        if (!checkbox.checked) {
-            errorElement.textContent = 'Musisz zaakceptować warunki';
+        const checkboxGroup = checkbox ? checkbox.closest('.checkbox-group') : null;
+        const errorElement = checkboxGroup ? checkboxGroup.querySelector('.error-message') : null;
+
+        if (!checkbox || !checkbox.checked) {
+            if (errorElement) {
+                errorElement.textContent = 'Musisz zaakceptować warunki';
+            }
             return false;
-        } else {
+        }
+
+        if (errorElement) {
             errorElement.textContent = '';
         }
 
@@ -226,8 +235,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (response.ok) {
                     showMessage('Dziękujemy! Twoja aplikacja została wysłana. Skontaktujemy się wkrótce.', 'success');
                     form.reset();
+                    toggleOtherField(false);
                     // Scroll to success message
-                    formMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    if (formMessage) {
+                        formMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }
                 } else {
                     throw new Error('Błąd serwera');
                 }

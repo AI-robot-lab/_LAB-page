@@ -5,13 +5,70 @@
 
 'use strict';
 
+const MOBILE_BREAKPOINT = 768;
+const DEFAULT_THEME = 'light';
+const THEME_TRANSITION_MS = 200;
+const DARK_MODE_LABELS = {
+    dark: 'Włącz jasny motyw',
+    light: 'Włącz ciemny motyw'
+};
+
+function getStoredTheme() {
+    try {
+        return localStorage.getItem('theme') || DEFAULT_THEME;
+    } catch (error) {
+        console.warn('Theme preference unavailable:', error);
+        return DEFAULT_THEME;
+    }
+}
+
+function setStoredTheme(theme) {
+    try {
+        localStorage.setItem('theme', theme);
+    } catch (error) {
+        console.warn('Failed to persist theme preference:', error);
+    }
+}
+
+function getHashTarget(hash) {
+    if (!hash || hash === '#') return null;
+
+    const normalizedHash = hash.startsWith('#') ? hash.slice(1) : hash;
+    const decodedHash = decodeURIComponent(normalizedHash);
+
+    if (!decodedHash) return null;
+
+    return document.getElementById(decodedHash)
+        || document.querySelector(`[name="${CSS.escape(decodedHash)}"]`);
+}
+
+function syncDarkModeControl(theme) {
+    const darkModeToggle = document.getElementById('darkModeToggle');
+    if (!darkModeToggle) return;
+
+    const icon = darkModeToggle.querySelector('i');
+    if (icon) {
+        icon.className = theme === 'dark' ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
+    }
+
+    darkModeToggle.setAttribute('aria-pressed', String(theme === 'dark'));
+    darkModeToggle.setAttribute('aria-label', DARK_MODE_LABELS[theme] || DARK_MODE_LABELS.light);
+    darkModeToggle.title = DARK_MODE_LABELS[theme] || DARK_MODE_LABELS.light;
+}
+
+// Apply saved theme immediately to prevent flash of wrong theme
+(function() {
+    const savedTheme = getStoredTheme();
+    document.documentElement.setAttribute('data-theme', savedTheme);
+})();
+
 // ====================================
 // Mobile Menu Toggle
 // ====================================
 document.addEventListener('DOMContentLoaded', function() {
     const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
     const navFlex = document.querySelector('.nav-flex');
-    
+
     if (mobileMenuToggle && navFlex) {
         const closeMobileMenu = function() {
             navFlex.classList.remove('active');
@@ -26,12 +83,12 @@ document.addEventListener('DOMContentLoaded', function() {
             this.setAttribute('aria-expanded', String(!isExpanded));
             this.classList.toggle('active', !isExpanded);
         });
-        
+
         // Close menu when clicking on a link
         const navLinks = navFlex.querySelectorAll('a');
         navLinks.forEach(link => {
             link.addEventListener('click', function() {
-                if (window.innerWidth <= 768) {
+                if (window.innerWidth <= MOBILE_BREAKPOINT) {
                     closeMobileMenu();
                 }
             });
@@ -45,14 +102,14 @@ document.addEventListener('DOMContentLoaded', function() {
         });
 
         document.addEventListener('click', function(event) {
-            if (window.innerWidth > 768 || !navFlex.classList.contains('active')) return;
+            if (window.innerWidth > MOBILE_BREAKPOINT || !navFlex.classList.contains('active')) return;
             if (!event.target.closest('nav')) {
                 closeMobileMenu();
             }
         });
 
         window.addEventListener('resize', function() {
-            if (window.innerWidth > 768) {
+            if (window.innerWidth > MOBILE_BREAKPOINT) {
                 closeMobileMenu();
             }
         });
@@ -76,38 +133,11 @@ document.addEventListener('DOMContentLoaded', function() {
 // ====================================
 // Dark Mode
 // ====================================
-
-const DEFAULT_THEME = 'light';
-const THEME_TRANSITION_MS = 200;
-
-function getStoredTheme() {
-    try {
-        return localStorage.getItem('theme') || DEFAULT_THEME;
-    } catch (error) {
-        console.warn('Theme preference unavailable:', error);
-        return DEFAULT_THEME;
-    }
-}
-
-function setStoredTheme(theme) {
-    try {
-        localStorage.setItem('theme', theme);
-    } catch (error) {
-        console.warn('Failed to persist theme preference:', error);
-    }
-}
-
-// Apply saved theme immediately to prevent flash of wrong theme
-(function() {
-    const savedTheme = getStoredTheme();
-    document.documentElement.setAttribute('data-theme', savedTheme);
-})();
-
 function initDarkMode() {
     const darkModeToggle = document.getElementById('darkModeToggle');
-
     const savedTheme = getStoredTheme();
-    updateDarkModeIcon(savedTheme);
+
+    syncDarkModeControl(savedTheme);
 
     if (darkModeToggle && !darkModeToggle.dataset.darkModeInit) {
         darkModeToggle.dataset.darkModeInit = '1';
@@ -118,23 +148,12 @@ function initDarkMode() {
             document.documentElement.style.transition = 'background-color 0.2s ease, color 0.2s ease';
             document.documentElement.setAttribute('data-theme', newTheme);
             setStoredTheme(newTheme);
-
-            updateDarkModeIcon(newTheme);
+            syncDarkModeControl(newTheme);
 
             setTimeout(function() {
                 document.documentElement.style.transition = '';
             }, THEME_TRANSITION_MS);
         });
-    }
-}
-
-function updateDarkModeIcon(theme) {
-    const darkModeToggle = document.getElementById('darkModeToggle');
-    if (!darkModeToggle) return;
-
-    const icon = darkModeToggle.querySelector('i');
-    if (icon) {
-        icon.className = theme === 'dark' ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
     }
 }
 
@@ -144,7 +163,7 @@ function updateDarkModeIcon(theme) {
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
         const href = this.getAttribute('href');
-        
+
         // Skip empty anchors and wiki article links
         if (href === '#') {
             if (!this.dataset.article) {
@@ -152,16 +171,16 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             }
             return;
         }
-        
-        const targetElement = document.querySelector(href);
-        
+
+        const targetElement = getHashTarget(href);
+
         if (targetElement) {
             e.preventDefault();
-            
+
             const headerOffset = 80; // Height of sticky nav
             const elementPosition = targetElement.getBoundingClientRect().top;
-            const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-            
+            const offsetPosition = elementPosition + window.scrollY - headerOffset;
+
             window.scrollTo({
                 top: offsetPosition,
                 behavior: 'smooth'
@@ -173,28 +192,27 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 // ====================================
 // Active Navigation Link
 // ====================================
-window.addEventListener('scroll', function() {
-    const sections = document.querySelectorAll('section[id]');
-    const navLinks = document.querySelectorAll('nav a[href^="#"]');
-    
-    let currentSection = '';
-    
-    sections.forEach(section => {
-        const sectionTop = section.offsetTop;
-        const sectionHeight = section.clientHeight;
-        
-        if (pageYOffset >= sectionTop - 100) {
-            currentSection = section.getAttribute('id');
-        }
-    });
-    
-    navLinks.forEach(link => {
-        link.classList.remove('active');
-        if (link.getAttribute('href') === '#' + currentSection) {
-            link.classList.add('active');
-        }
-    });
-});
+(function initActiveNavLink() {
+    const updateActiveNavigation = function() {
+        const sections = document.querySelectorAll('section[id]');
+        const navLinks = document.querySelectorAll('nav a[href^="#"]');
+        let currentSection = '';
+
+        sections.forEach(section => {
+            if (window.scrollY >= section.offsetTop - 100) {
+                currentSection = section.getAttribute('id');
+            }
+        });
+
+        navLinks.forEach(link => {
+            link.classList.toggle('active', link.getAttribute('href') === `#${currentSection}`);
+        });
+    };
+
+    window.addEventListener('scroll', updateActiveNavigation, { passive: true });
+    window.addEventListener('load', updateActiveNavigation);
+    document.addEventListener('DOMContentLoaded', updateActiveNavigation);
+})();
 
 // ====================================
 // Nav Scroll Shadow
@@ -226,32 +244,39 @@ window.addEventListener('scroll', function() {
     bar.setAttribute('aria-valuemin', '0');
     bar.setAttribute('aria-valuemax', '100');
     document.body.prepend(bar);
+
+    const updateScrollProgress = function() {
+        const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+        const progress = scrollable > 0 ? Math.round(window.scrollY / scrollable * 100) : 0;
+        bar.style.width = progress + '%';
+        bar.setAttribute('aria-valuenow', String(progress));
+    };
+
     let ticking = false;
     window.addEventListener('scroll', function() {
         if (!ticking) {
             requestAnimationFrame(function() {
-                const scrollable = document.documentElement.scrollHeight - window.innerHeight;
-                const progress = scrollable > 0 ? Math.round(window.scrollY / scrollable * 100) : 0;
-                bar.style.width = progress + '%';
-                bar.setAttribute('aria-valuenow', progress);
+                updateScrollProgress();
                 ticking = false;
             });
             ticking = true;
         }
     }, { passive: true });
+
+    window.addEventListener('resize', updateScrollProgress, { passive: true });
+    document.addEventListener('DOMContentLoaded', updateScrollProgress);
+    window.addEventListener('load', updateScrollProgress);
 })();
 
 // ====================================
 // Image Lazy Loading Fallback
 // ====================================
 if ('loading' in HTMLImageElement.prototype) {
-    // Browser supports lazy loading
     const images = document.querySelectorAll('img[loading="lazy"]');
     images.forEach(img => {
         img.src = img.src;
     });
 } else {
-    // Fallback for browsers that don't support lazy loading
     const script = document.createElement('script');
     script.src = 'https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.3.2/lazysizes.min.js';
     document.body.appendChild(script);
@@ -275,7 +300,6 @@ const observer = 'IntersectionObserver' in window
     }, observerOptions)
     : null;
 
-// Observe elements
 document.addEventListener('DOMContentLoaded', function() {
     const animateElements = document.querySelectorAll('.team-card, .soft-item, .rehab-box');
 
@@ -289,7 +313,6 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-// Add CSS for fade-in animation
 const style = document.createElement('style');
 style.textContent = `
     .team-card,
@@ -299,7 +322,7 @@ style.textContent = `
         transform: translateY(20px);
         transition: opacity 0.6s ease, transform 0.6s ease;
     }
-    
+
     .fade-in {
         opacity: 1 !important;
         transform: translateY(0) !important;
@@ -329,22 +352,13 @@ function preloadResource(href, as) {
 }
 
 // ====================================
-// Console Info
-// ====================================
-console.log('%cLaboratorium Robotów Humanoidalnych', 'color: #003366; font-size: 20px; font-weight: bold;');
-console.log('%cPolitechnika Rzeszowska', 'color: #c5a059; font-size: 14px;');
-console.log('System Version: 2.3.0-stable');
-console.log('GitHub: https://github.com/AI-robot-lab');
-
-// ====================================
 // Keyboard Navigation Enhancement
 // ====================================
 document.addEventListener('keydown', function(e) {
-    // Press 'Esc' to close mobile menu
     if (e.key === 'Escape') {
         const navFlex = document.querySelector('.nav-flex');
         const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
-        
+
         if (navFlex && navFlex.classList.contains('active')) {
             navFlex.classList.remove('active');
             if (mobileMenuToggle) {
@@ -359,14 +373,12 @@ document.addEventListener('keydown', function(e) {
 // Print Optimization
 // ====================================
 window.addEventListener('beforeprint', function() {
-    // Expand all collapsed sections before printing
     document.querySelectorAll('.nav-flex').forEach(nav => {
         nav.style.display = 'none';
     });
 });
 
 window.addEventListener('afterprint', function() {
-    // Restore original state after printing
     document.querySelectorAll('.nav-flex').forEach(nav => {
         nav.style.display = '';
     });
