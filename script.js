@@ -543,3 +543,142 @@ document.addEventListener('DOMContentLoaded', function() {
     renderScenario('rehab');
     renderSpotlight('perception');
 });
+
+// ====================================
+// Task Reminders — Weekly Task Panel
+// ====================================
+(function () {
+    'use strict';
+
+    function escapeHTML(str) {
+        return String(str)
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;');
+    }
+
+    const MS_PER_DAY = 86400000;
+
+    function getISOWeekString(date) {
+        const d = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
+        const day = d.getUTCDay() || 7;
+        d.setUTCDate(d.getUTCDate() + 4 - day);
+        const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
+        const week = Math.ceil(((d - yearStart) / MS_PER_DAY + 1) / 7);
+        return `${d.getUTCFullYear()}-W${String(week).padStart(2, '0')}`;
+    }
+
+    function createPWABottomNav() {
+        if (document.querySelector('.pwa-bottom-nav')) return;
+
+        const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+
+        const links = [
+            { href: 'index.html', icon: 'fa-house',    label: 'Start',   caption: 'Strona główna' },
+            { href: 'wiki.html',  icon: 'fa-book',     label: 'WIKI',    caption: 'Baza wiedzy'   },
+            { href: 'pdf.html',   icon: 'fa-file-pdf', label: 'PDF',     caption: 'Materiały'     },
+            { href: 'contact.html', icon: 'fa-envelope', label: 'Kontakt', caption: 'Napisz do nas' },
+        ];
+
+        const linksHTML = links.map(link => {
+            const active = link.href === currentPage ? ' active' : '';
+            return `<a href="${link.href}" class="pwa-bottom-nav-item${active}" aria-label="${link.caption}">` +
+                `<span class="pwa-bottom-nav-icon"><i class="fa-solid ${link.icon}" aria-hidden="true"></i></span>` +
+                `<span class="pwa-bottom-nav-meta">` +
+                `<span class="pwa-bottom-nav-label">${link.label}</span>` +
+                `<span class="pwa-bottom-nav-caption">${link.caption}</span>` +
+                `</span></a>`;
+        }).join('');
+
+        const nav = document.createElement('nav');
+        nav.className = 'pwa-bottom-nav';
+        nav.setAttribute('aria-label', 'Szybka nawigacja');
+        nav.innerHTML =
+            `<div class="pwa-bottom-nav-shell">` +
+            linksHTML +
+            `<button class="pwa-bottom-nav-item pwa-notif-btn" type="button" aria-label="Zadania tygodniowe">` +
+            `<span class="pwa-bottom-nav-icon"><i class="fa-solid fa-bell" aria-hidden="true"></i></span>` +
+            `<span class="pwa-bottom-nav-meta">` +
+            `<span class="pwa-bottom-nav-label">Zadania</span>` +
+            `<span class="pwa-bottom-nav-caption">Ten tydzień</span>` +
+            `</span>` +
+            `</button>` +
+            `</div>`;
+
+        document.body.appendChild(nav);
+
+        nav.querySelector('.pwa-notif-btn').addEventListener('click', function () {
+            const existing = document.querySelector('.notif-panel');
+            if (existing) {
+                existing.remove();
+                this.classList.remove('notif-active');
+                return;
+            }
+            const bellBtn = this;
+            bellBtn.classList.add('notif-active');
+            fetch('./task.json')
+                .then(r => r.json())
+                .then(data => renderNotifPanel(data, bellBtn))
+                .catch(() => renderNotifPanel(null, bellBtn));
+        });
+    }
+
+    function renderNotifPanel(data, bellBtn) {
+        const currentWeek = getISOWeekString(new Date());
+        const panel = document.createElement('div');
+        panel.className = 'notif-panel';
+        panel.setAttribute('role', 'dialog');
+        panel.setAttribute('aria-modal', 'true');
+        panel.setAttribute('aria-label', 'Zadania tygodniowe');
+
+        let bodyHTML;
+        if (data && data.weeks) {
+            const relevantWeeks = Object.entries(data.weeks)
+                .filter(([week]) => week >= currentWeek);
+
+            if (relevantWeeks.length === 0) {
+                bodyHTML = '<p class="notif-no-tasks">Brak zadań na ten i kolejne tygodnie.</p>';
+            } else {
+                bodyHTML = relevantWeeks.map(([week, teams]) => {
+                    const label = week === currentWeek
+                        ? `Bieżący tydzień (${escapeHTML(week)})`
+                        : escapeHTML(week);
+                    const teamsHTML = Object.entries(teams).map(([key, tasks]) => {
+                        const name = escapeHTML((data.teams && data.teams[key]) || key);
+                        const items = tasks.map(t => `<li>${escapeHTML(t)}</li>`).join('');
+                        return `<div class="notif-team"><h4>${name}</h4><ol>${items}</ol></div>`;
+                    }).join('');
+                    return `<section><strong>${label}</strong>${teamsHTML}</section>`;
+                }).join('');
+            }
+        } else {
+            bodyHTML = '<p class="notif-no-tasks">Nie udało się załadować zadań.</p>';
+        }
+
+        panel.innerHTML =
+            `<div class="notif-panel-header">` +
+            `<h3><i class="fa-solid fa-bell" aria-hidden="true"></i> Zadania <small>${escapeHTML(currentWeek)}</small></h3>` +
+            `<button class="notif-panel-close" aria-label="Zamknij">\u00D7</button>` +
+            `</div>` +
+            `<div class="notif-panel-body">${bodyHTML}</div>`;
+
+        function closePanel() {
+            panel.remove();
+            if (bellBtn) bellBtn.classList.remove('notif-active');
+        }
+
+        panel.querySelector('.notif-panel-close').addEventListener('click', closePanel);
+        panel.addEventListener('click', function (e) {
+            if (e.target === panel) closePanel();
+        });
+
+        document.body.appendChild(panel);
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', createPWABottomNav);
+    } else {
+        createPWABottomNav();
+    }
+})();
