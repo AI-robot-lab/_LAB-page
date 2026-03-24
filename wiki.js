@@ -71,6 +71,7 @@ const ARTICLES = {
     'github-releases': 'wiki/github-releases.md',
     'github_releases_packages': 'wiki/github_releases_packages.md',
     'git-github': 'wiki/git-github.md',
+    'git-submodule': 'wiki/git-submodule.md',
     'github-tests': 'wiki/github-tests.md',
 
     // Inne
@@ -138,6 +139,7 @@ const METADATA = {
     'github-releases': { category: 'Praca w zespole', title: 'GitHub Releases — czym są i jak je tworzyć' },
     'github_releases_packages': { category: 'Praca w zespole', title: 'GitHub Releases i Packages' },
     'git-github': { category: 'Praca w zespole', title: 'Git i GitHub — kompleksowy poradnik' },
+    'git-submodule': { category: 'Praca w zespole', title: 'Git Submodule — zarządzanie zagnieżdżonymi repozytoriami' },
     'github-tests': { category: 'Praca w zespole', title: 'Testy w GitHub — profesjonalny przewodnik dla studentów' },
 
     // Inne
