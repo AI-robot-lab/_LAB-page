@@ -431,6 +431,11 @@ document.addEventListener('DOMContentLoaded', function() {
             ['listen', 'System analizuje mowę, gesty i sygnały afektywne użytkownika.'],
             ['align', 'LLM buduje kontekst dialogu i intencję zadania.'],
             ['engage', 'Awatar ruchowy dopasowuje gesty oraz odpowiedzi robota.']
+        ],
+        intralogistics: [
+            ['map', 'Robot mapuje halę magazynową i identyfikuje punkty załadunku.'],
+            ['plan', 'Moduł ROS2 generuje optymalną trasę i kolejkę zadań transportowych.'],
+            ['execute', 'Autonomiczny transport komponentów z potwierdzeniem przez system WMS.']
         ]
     };
 
