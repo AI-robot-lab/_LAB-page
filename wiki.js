@@ -568,7 +568,7 @@ function updateBreadcrumbs(articleId) {
     document.getElementById('currentCategory').textContent = metadata.category;
     document.getElementById('currentArticle').textContent = metadata.title;
 
-    breadcrumbs.style.display = 'flex';
+    breadcrumbs.classList.remove('is-hidden');
 }
 
 function processInternalLinks(container) {
@@ -613,7 +613,7 @@ function showError(message) {
 
     const breadcrumbs = document.getElementById('breadcrumbs');
     if (breadcrumbs) {
-        breadcrumbs.style.display = 'none';
+        breadcrumbs.classList.add('is-hidden');
     }
 }
 
