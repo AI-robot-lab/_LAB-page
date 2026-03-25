@@ -5925,6 +5925,8 @@ body {
 .feed-line p {
     margin: 0;
     color: var(--text-dark);
+    overflow-wrap: anywhere;
+    word-break: break-word;
 }
 
 .command-controls {
@@ -6083,6 +6085,24 @@ body {
 .spotlight-panel h3 { color: var(--white); margin-bottom: 12px; }
 .spotlight-panel p, .spotlight-panel li, .roadmap-step p { color: rgba(255,255,255,0.82); }
 .spotlight-panel ul { padding-left: 18px; display: grid; gap: 10px; }
+.spotlight-panel li,
+.experience-card p,
+.roadmap-step p,
+.hero-description,
+.hero-subtitle {
+    overflow-wrap: anywhere;
+}
+
+.js-reveal {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.js-reveal.fade-in {
+    opacity: 1;
+    transform: translateY(0);
+}
 
 .roadmap-track {
     display: grid;
@@ -6113,6 +6133,18 @@ body {
 @keyframes floatOrb {
     0%, 100% { transform: translateY(0); }
     50% { transform: translateY(-18px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .hero-orb {
+        animation: none;
+    }
+
+    .js-reveal {
+        opacity: 1;
+        transform: none;
+        transition: none;
+    }
 }
 
 @media (max-width: 1100px) {
