@@ -290,11 +290,13 @@ const observerOptions = {
     rootMargin: '0px 0px -50px 0px'
 };
 
-const observer = 'IntersectionObserver' in window
+const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const observer = (!prefersReducedMotion && 'IntersectionObserver' in window)
     ? new IntersectionObserver(function(entries) {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add('fade-in');
+                observer.unobserve(entry.target);
             }
         });
     }, observerOptions)
@@ -302,6 +304,8 @@ const observer = 'IntersectionObserver' in window
 
 document.addEventListener('DOMContentLoaded', function() {
     const animateElements = document.querySelectorAll('.team-card, .soft-item, .rehab-box, .experience-card, .spotlight-panel, .roadmap-step, .metric-pill');
+
+    animateElements.forEach(el => el.classList.add('js-reveal'));
 
     if (!observer) {
         animateElements.forEach(el => el.classList.add('fade-in'));
@@ -312,27 +316,6 @@ document.addEventListener('DOMContentLoaded', function() {
         observer.observe(el);
     });
 });
-
-const style = document.createElement('style');
-style.textContent = `
-    .team-card,
-    .soft-item,
-    .rehab-box,
-    .experience-card,
-    .spotlight-panel,
-    .roadmap-step,
-    .metric-pill {
-        opacity: 0;
-        transform: translateY(20px);
-        transition: opacity 0.6s ease, transform 0.6s ease;
-    }
-
-    .fade-in {
-        opacity: 1 !important;
-        transform: translateY(0) !important;
-    }
-`;
-document.head.appendChild(style);
 
 // ====================================
 // External Links - Open in New Tab
