@@ -79,7 +79,8 @@ const ARTICLES = {
     'hri': 'wiki/hri.md',
     'hitl': 'wiki/hitl.md',
     'safety': 'wiki/safety.md',
-    'ethics': 'wiki/ethics.md'
+    'ethics': 'wiki/ethics.md',
+    'path-integral': 'wiki/path-integral.md'
 };
 
 // Article metadata
@@ -148,7 +149,8 @@ const METADATA = {
     'hri': { category: 'Inne', title: 'Interakcja Człowiek-Robot' },
     'hitl': { category: 'Inne', title: 'Hardware-in-the-Loop i Human-in-the-Loop' },
     'safety': { category: 'Inne', title: 'Bezpieczeństwo Robotów' },
-    'ethics': { category: 'Inne', title: 'Etyka w Robotyce' }
+    'ethics': { category: 'Inne', title: 'Etyka w Robotyce' },
+    'path-integral': { category: 'Inne', title: 'Path Integral Formulation — Całkowanie po Ścieżkach' }
 };
 
 // Initialize on page load
