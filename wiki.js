@@ -73,6 +73,7 @@ const ARTICLES = {
     'git-github': 'wiki/git-github.md',
     'git-submodule': 'wiki/git-submodule.md',
     'github-tests': 'wiki/github-tests.md',
+    'github-webhooks': 'wiki/github-webhooks.md',
 
     // Inne
     'hri': 'wiki/hri.md',
@@ -141,6 +142,7 @@ const METADATA = {
     'git-github': { category: 'Praca w zespole', title: 'Git i GitHub — kompleksowy poradnik' },
     'git-submodule': { category: 'Praca w zespole', title: 'Git Submodule — zarządzanie zagnieżdżonymi repozytoriami' },
     'github-tests': { category: 'Praca w zespole', title: 'Testy w GitHub — profesjonalny przewodnik dla studentów' },
+    'github-webhooks': { category: 'Praca w zespole', title: 'GitHub Webhooks — automatyczne powiadomienia z repozytoriów' },
 
     // Inne
     'hri': { category: 'Inne', title: 'Interakcja Człowiek-Robot' },
