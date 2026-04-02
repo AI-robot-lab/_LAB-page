@@ -6,11 +6,9 @@
 
 'use strict';
 
-const WIKI_THEME_TRANSITION_MS = 300;
-const DARK_MODE_LABELS = {
-    dark: 'Włącz jasny motyw',
-    light: 'Włącz ciemny motyw'
-};
+// ====================================
+// Data — Article Registry & Metadata
+// ====================================
 
 // Article database - maps article IDs to markdown files
 // Wszystkie pliki są w folderze wiki/
@@ -153,6 +151,10 @@ const METADATA = {
     'path-integral': { category: 'Inne', title: 'Path Integral Formulation — Całkowanie po Ścieżkach' }
 };
 
+// ====================================
+// Initialization
+// ====================================
+
 // Initialize on page load
 document.addEventListener('DOMContentLoaded', function() {
     initWiki();
@@ -168,61 +170,6 @@ function normalizeArticleId(rawArticleId) {
         .replace(/^wiki\//, '')
         .replace(/^wiki-/, '')
         .trim();
-}
-
-function getStoredTheme() {
-    try {
-        return localStorage.getItem('theme') || 'light';
-    } catch (error) {
-        console.warn('Theme preference unavailable:', error);
-        return 'light';
-    }
-}
-
-function setStoredTheme(theme) {
-    try {
-        localStorage.setItem('theme', theme);
-    } catch (error) {
-        console.warn('Failed to persist theme preference:', error);
-    }
-}
-
-function syncDarkModeControl(theme) {
-    const darkModeToggle = document.getElementById('darkModeToggle');
-    if (!darkModeToggle) return;
-
-    const icon = darkModeToggle.querySelector('i');
-    if (icon) {
-        icon.className = theme === 'dark' ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
-    }
-
-    darkModeToggle.setAttribute('aria-pressed', String(theme === 'dark'));
-    darkModeToggle.setAttribute('aria-label', DARK_MODE_LABELS[theme] || DARK_MODE_LABELS.light);
-    darkModeToggle.title = DARK_MODE_LABELS[theme] || DARK_MODE_LABELS.light;
-}
-
-function initDarkMode() {
-    const darkModeToggle = document.getElementById('darkModeToggle');
-    const savedTheme = getStoredTheme();
-    document.documentElement.setAttribute('data-theme', savedTheme);
-    syncDarkModeControl(savedTheme);
-
-    if (darkModeToggle && !darkModeToggle.dataset.darkModeInit) {
-        darkModeToggle.dataset.darkModeInit = '1';
-        darkModeToggle.addEventListener('click', function() {
-            const currentTheme = document.documentElement.getAttribute('data-theme');
-            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-
-            document.documentElement.style.transition = 'background-color 0.2s ease, color 0.2s ease';
-            document.documentElement.setAttribute('data-theme', newTheme);
-            setStoredTheme(newTheme);
-            syncDarkModeControl(newTheme);
-
-            setTimeout(() => {
-                document.documentElement.style.transition = '';
-            }, WIKI_THEME_TRANSITION_MS);
-        });
-    }
 }
 
 function initScrollProgress() {
@@ -297,6 +244,10 @@ function initWiki() {
         }, 150 + (index * 50));
     });
 }
+
+// ====================================
+// Sidebar & Navigation
+// ====================================
 
 function setupCollapsibleCategories() {
     const categories = document.querySelectorAll('.wiki-category');
@@ -386,6 +337,10 @@ function setupArticleLinks() {
         });
     });
 }
+
+// ====================================
+// Search
+// ====================================
 
 function setupSearch() {
     const searchInput = document.getElementById('wikiSearch');
@@ -592,25 +547,20 @@ function showError(message) {
             <i class="fa-solid fa-triangle-exclamation"></i>
             <h3>${message}</h3>
             <p>Wybierz artykuł z menu po lewej stronie lub użyj wyszukiwarki.</p>
-            <div style="margin-top: 25px;">
-                <a href="#" onclick="window.location.reload()" style="
-                    display: inline-flex;
-                    align-items: center;
-                    gap: 8px;
-                    padding: 12px 24px;
-                    background: linear-gradient(135deg, var(--prz-blue) 0%, #004d99 100%);
-                    color: white;
-                    border-radius: 8px;
-                    text-decoration: none;
-                    font-weight: 600;
-                    transition: all 0.3s ease;
-                ">
-                    <i class="fa-solid fa-rotate-right"></i>
-                    Odśwież stronę
-                </a>
-            </div>
+            <div class="wiki-error-reload-btn-container"></div>
         </div>
     `;
+
+    const btnContainer = articleContainer.querySelector('.wiki-error-reload-btn-container');
+    const reloadBtn = document.createElement('a');
+    reloadBtn.href = '#';
+    reloadBtn.className = 'wiki-error-reload-btn';
+    reloadBtn.innerHTML = '<i class="fa-solid fa-rotate-right"></i> Odśwież stronę';
+    reloadBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        window.location.reload();
+    });
+    btnContainer.appendChild(reloadBtn);
 
     const breadcrumbs = document.getElementById('breadcrumbs');
     if (breadcrumbs) {

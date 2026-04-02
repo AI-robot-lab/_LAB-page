@@ -6,29 +6,6 @@
 'use strict';
 
 const MOBILE_BREAKPOINT = 768;
-const DEFAULT_THEME = 'light';
-const THEME_TRANSITION_MS = 200;
-const DARK_MODE_LABELS = {
-    dark: 'Włącz jasny motyw',
-    light: 'Włącz ciemny motyw'
-};
-
-function getStoredTheme() {
-    try {
-        return localStorage.getItem('theme') || DEFAULT_THEME;
-    } catch (error) {
-        console.warn('Theme preference unavailable:', error);
-        return DEFAULT_THEME;
-    }
-}
-
-function setStoredTheme(theme) {
-    try {
-        localStorage.setItem('theme', theme);
-    } catch (error) {
-        console.warn('Failed to persist theme preference:', error);
-    }
-}
 
 function getHashTarget(hash) {
     if (!hash || hash === '#') return null;
@@ -41,26 +18,6 @@ function getHashTarget(hash) {
     return document.getElementById(decodedHash)
         || document.querySelector(`[name="${CSS.escape(decodedHash)}"]`);
 }
-
-function syncDarkModeControl(theme) {
-    const darkModeToggle = document.getElementById('darkModeToggle');
-    if (!darkModeToggle) return;
-
-    const icon = darkModeToggle.querySelector('i');
-    if (icon) {
-        icon.className = theme === 'dark' ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
-    }
-
-    darkModeToggle.setAttribute('aria-pressed', String(theme === 'dark'));
-    darkModeToggle.setAttribute('aria-label', DARK_MODE_LABELS[theme] || DARK_MODE_LABELS.light);
-    darkModeToggle.title = DARK_MODE_LABELS[theme] || DARK_MODE_LABELS.light;
-}
-
-// Apply saved theme immediately to prevent flash of wrong theme
-(function() {
-    const savedTheme = getStoredTheme();
-    document.documentElement.setAttribute('data-theme', savedTheme);
-})();
 
 // ====================================
 // Mobile Menu Toggle
@@ -142,33 +99,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     })();
 });
-
-// ====================================
-// Dark Mode
-// ====================================
-function initDarkMode() {
-    const darkModeToggle = document.getElementById('darkModeToggle');
-    const savedTheme = getStoredTheme();
-
-    syncDarkModeControl(savedTheme);
-
-    if (darkModeToggle && !darkModeToggle.dataset.darkModeInit) {
-        darkModeToggle.dataset.darkModeInit = '1';
-        darkModeToggle.addEventListener('click', function() {
-            const currentTheme = document.documentElement.getAttribute('data-theme');
-            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-
-            document.documentElement.style.transition = 'background-color 0.2s ease, color 0.2s ease';
-            document.documentElement.setAttribute('data-theme', newTheme);
-            setStoredTheme(newTheme);
-            syncDarkModeControl(newTheme);
-
-            setTimeout(function() {
-                document.documentElement.style.transition = '';
-            }, THEME_TRANSITION_MS);
-        });
-    }
-}
 
 // ====================================
 // Smooth Scrolling Enhancement
@@ -389,12 +319,13 @@ window.addEventListener('afterprint', function() {
 // ====================================
 document.querySelectorAll('img').forEach(img => {
     img.addEventListener('error', function() {
-        const inlineHandler = this.getAttribute('onerror');
+        const fallbackSrc = this.dataset.fallbackSrc;
         const currentSrc = this.currentSrc || this.src;
 
-        if (inlineHandler && !this.dataset.fallbackAttempted) {
+        if (fallbackSrc && !this.dataset.fallbackAttempted) {
             this.dataset.fallbackAttempted = '1';
             console.warn('Primary image failed, attempting fallback:', currentSrc);
+            this.src = fallbackSrc;
             return;
         }
 

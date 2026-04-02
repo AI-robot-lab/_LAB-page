@@ -3,6 +3,8 @@
    ==================================== */
 :root {
     --prz-blue: #003366;
+    --prz-blue-dark: #002244;
+    --prz-blue-light: #004d99;
     --prz-gold: #c5a059;
     --text-dark: #1a1a1a;
     --text-light: #5e6d77;
@@ -330,7 +332,7 @@ nav a:focus {
 }
 
 .btn-primary:hover {
-    background: #002244;
+    background: var(--prz-blue-dark);
     box-shadow: var(--shadow-md);
     transform: translateY(-2px);
 }
@@ -814,12 +816,6 @@ footer a:hover {
         flex-direction: column;
     }
 
-    .btn-primary,
-    .btn-secondary {
-        width: 100%;
-        text-align: center;
-    }
-
     .hero-visual img {
         box-shadow: 10px 10px 0px var(--prz-blue);
     }
@@ -1229,7 +1225,7 @@ footer a:hover {
    WIKI Page Styles
    ==================================== */
 .wiki-hero {
-    background: linear-gradient(135deg, #003366 0%, #004d99 100%);
+    background: linear-gradient(135deg, var(--prz-blue) 0%, var(--prz-blue-light) 100%);
     padding: 25px 0 15px;
     position: relative;
     overflow: hidden;
@@ -1363,7 +1359,7 @@ footer a:hover {
 }
 
 .sidebar-sticky::-webkit-scrollbar-thumb:hover {
-    background: #002244;
+    background: var(--prz-blue-dark);
 }
 
 .wiki-search {
@@ -1750,7 +1746,7 @@ footer a:hover {
 }
 
 .wiki-article thead {
-    background: linear-gradient(135deg, var(--prz-blue) 0%, #004d99 100%);
+    background: linear-gradient(135deg, var(--prz-blue) 0%, var(--prz-blue-light) 100%);
 }
 
 .wiki-article th {
@@ -1975,7 +1971,7 @@ footer a:hover {
 .quick-link-icon {
     width: 40px;
     height: 40px;
-    background: linear-gradient(135deg, var(--prz-blue) 0%, #004d99 100%);
+    background: linear-gradient(135deg, var(--prz-blue) 0%, var(--prz-blue-light) 100%);
     border-radius: 8px;
     display: flex;
     align-items: center;
@@ -2233,6 +2229,20 @@ footer a:hover {
     color: #6c757d;
 }
 
+.wiki-error-reload-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 24px;
+    background: linear-gradient(135deg, var(--prz-blue) 0%, var(--prz-blue-light) 100%);
+    color: white;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: background 0.3s ease, transform 0.3s ease;
+    margin-top: 25px;
+}
+
 /* Edit Link */
 .wiki-edit-link {
     margin-top: 50px;
@@ -2433,12 +2443,12 @@ footer a:hover {
 }
 
 ::-webkit-scrollbar-thumb {
-    background: linear-gradient(180deg, var(--prz-blue) 0%, #004d99 100%);
+    background: linear-gradient(180deg, var(--prz-blue) 0%, var(--prz-blue-light) 100%);
     border-radius: 5px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: linear-gradient(180deg, #004d99 0%, var(--prz-blue) 100%);
+    background: linear-gradient(180deg, var(--prz-blue-light) 0%, var(--prz-blue) 100%);
 }
 
 /* Selection Color */
@@ -2716,7 +2726,7 @@ footer a:hover {
     height: 60px;
     border-radius: 50%;
     
-    background: linear-gradient(135deg, var(--prz-blue) 0%, #004d99 100%);
+    background: linear-gradient(135deg, var(--prz-blue) 0%, var(--prz-blue-light) 100%);
     border: 3px solid var(--prz-gold);
     
     color: white;
@@ -3629,7 +3639,7 @@ footer a:hover {
 }
 
 .pdf-download-btn:hover {
-    background: #002244;
+    background: var(--prz-blue-dark);
 }
 
 @media (max-width: 768px) {
@@ -4015,14 +4025,6 @@ footer a:hover {
    PWA: Mobile App-Like Touch Styles
    ==================================== */
 @media (max-width: 768px) {
-    .btn-primary,
-    .btn-secondary {
-        min-height: 48px;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-    }
-
     .team-card,
     .soft-item,
     .rehab-box {
@@ -4784,7 +4786,6 @@ html, body {
         width: 100%;
         text-align: center;
         padding: 14px 20px;
-        font-size: 0.9rem;
         min-height: 48px;
         display: flex;
         align-items: center;
