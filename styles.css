@@ -3167,17 +3167,6 @@ footer a:hover {
     opacity: 1;
 }
 
-/* Enhanced Mobile Menu */
-@media (max-width: 768px) {
-    .dark-mode-toggle {
-        top: 8px;
-        right: 10px;
-        width: 44px;
-        height: 44px;
-        font-size: 1.1rem;
-    }
-}
-
 /* Particle background effect */
 .particles-bg {
     position: fixed;
