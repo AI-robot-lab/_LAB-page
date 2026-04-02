@@ -6,6 +6,10 @@
 
 'use strict';
 
+// ====================================
+// Data — Article Registry & Metadata
+// ====================================
+
 // Article database - maps article IDs to markdown files
 // Wszystkie pliki są w folderze wiki/
 const ARTICLES = {
@@ -147,6 +151,10 @@ const METADATA = {
     'path-integral': { category: 'Inne', title: 'Path Integral Formulation — Całkowanie po Ścieżkach' }
 };
 
+// ====================================
+// Initialization
+// ====================================
+
 // Initialize on page load
 document.addEventListener('DOMContentLoaded', function() {
     initWiki();
@@ -237,6 +245,10 @@ function initWiki() {
     });
 }
 
+// ====================================
+// Sidebar & Navigation
+// ====================================
+
 function setupCollapsibleCategories() {
     const categories = document.querySelectorAll('.wiki-category');
 
@@ -325,6 +337,10 @@ function setupArticleLinks() {
         });
     });
 }
+
+// ====================================
+// Search
+// ====================================
 
 function setupSearch() {
     const searchInput = document.getElementById('wikiSearch');

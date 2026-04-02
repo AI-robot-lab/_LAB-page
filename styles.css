@@ -816,12 +816,6 @@ footer a:hover {
         flex-direction: column;
     }
 
-    .btn-primary,
-    .btn-secondary {
-        width: 100%;
-        text-align: center;
-    }
-
     .hero-visual img {
         box-shadow: 10px 10px 0px var(--prz-blue);
     }
@@ -4031,14 +4025,6 @@ footer a:hover {
    PWA: Mobile App-Like Touch Styles
    ==================================== */
 @media (max-width: 768px) {
-    .btn-primary,
-    .btn-secondary {
-        min-height: 48px;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-    }
-
     .team-card,
     .soft-item,
     .rehab-box {
@@ -4800,7 +4786,6 @@ html, body {
         width: 100%;
         text-align: center;
         padding: 14px 20px;
-        font-size: 0.9rem;
         min-height: 48px;
         display: flex;
         align-items: center;
