@@ -115,6 +115,19 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+    // Mark the current page's nav link as active
+    (function initActivePageLink() {
+        const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+        document.querySelectorAll('nav a[href]').forEach(function(link) {
+            const href = link.getAttribute('href');
+            if (!href || href.startsWith('#') || href.startsWith('http')) return;
+            const linkPage = href.split('/').pop().split('#')[0];
+            if (linkPage === currentPage || (currentPage === '' && linkPage === 'index.html')) {
+                link.classList.add('active');
+            }
+        });
+    })();
+
     initDarkMode();
 
     // iOS viewport height fix (--vh variable for 100vh workaround)

@@ -155,7 +155,6 @@ const METADATA = {
 
 // Initialize on page load
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('Starting WIKI initialization...');
     initWiki();
     initDarkMode();
     initScrollProgress();
@@ -480,7 +479,6 @@ async function loadArticle(articleId) {
 
     try {
         const articlePath = ARTICLES[articleId];
-        console.log('Loading article from:', articlePath);
 
         // Fetch markdown file
         const response = await fetch(articlePath);
@@ -490,7 +488,6 @@ async function loadArticle(articleId) {
         }
 
         const markdown = await response.text();
-        console.log('Markdown loaded, length:', markdown.length);
 
         // Wait for marked if not yet available (up to 3 s), then fall back to built-in parser
         if (typeof marked === 'undefined') {
