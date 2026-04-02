@@ -531,14 +531,14 @@ function showError(message) {
             <i class="fa-solid fa-triangle-exclamation"></i>
             <h3>${message}</h3>
             <p>Wybierz artykuł z menu po lewej stronie lub użyj wyszukiwarki.</p>
-            <div class="wiki-error-btn-container"></div>
+            <div class="wiki-error-reload-btn-container"></div>
         </div>
     `;
 
-    const btnContainer = articleContainer.querySelector('.wiki-error-btn-container');
+    const btnContainer = articleContainer.querySelector('.wiki-error-reload-btn-container');
     const reloadBtn = document.createElement('a');
     reloadBtn.href = '#';
-    reloadBtn.className = 'wiki-error-btn';
+    reloadBtn.className = 'wiki-error-reload-btn';
     reloadBtn.innerHTML = '<i class="fa-solid fa-rotate-right"></i> Odśwież stronę';
     reloadBtn.addEventListener('click', function(e) {
         e.preventDefault();
