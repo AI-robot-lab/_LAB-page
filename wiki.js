@@ -45,6 +45,8 @@ const ARTICLES = {
     'neural-networks': 'wiki/neural-networks.md',
     'transformers': 'wiki/transformers.md',
     'transfer-learning': 'wiki/transfer-learning.md',
+    'prompt-engineering-intro': 'wiki/prompt-engineering-intro.md',
+    'prompt-few-shot': 'wiki/prompt-few-shot.md',
 
     // Akcja
     'motion-planning': 'wiki/motion-planning.md',
@@ -115,6 +117,8 @@ const METADATA = {
     'neural-networks': { category: 'Kognicja', title: 'Sieci Neuronowe' },
     'transformers': { category: 'Kognicja', title: 'Architektury Transformer' },
     'transfer-learning': { category: 'Kognicja', title: 'Transfer Learning' },
+    'prompt-engineering-intro': { category: 'Kognicja', title: 'Wprowadzenie do Prompt Engineering' },
+    'prompt-few-shot': { category: 'Kognicja', title: 'Few-Shot Prompting' },
 
     // Akcja
     'motion-planning': { category: 'Akcja', title: 'Planowanie Ruchu' },
